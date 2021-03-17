@@ -1,6 +1,6 @@
-addGraphQLSubscriptions = require("../addGraphQLSubscriptions")
+addGraphQL8Subscriptions = require("../addGraphQL8Subscriptions")
 
-describe("addGraphQLSubscriptions", () => {
+describe("addGraphQL8Subscriptions", () => {
   it("delegates to the subscriber", () => {
     var state = {}
     var subscriber = {
@@ -14,7 +14,7 @@ describe("addGraphQLSubscriptions", () => {
       }
     }
 
-    var dummyNetworkInterface = addGraphQLSubscriptions({}, {subscriber: subscriber})
+    var dummyNetworkInterface = addGraphQL8Subscriptions({}, {subscriber: subscriber})
 
     var id = dummyNetworkInterface.subscribe("abc", "def")
     expect(id).toEqual("abc/def")

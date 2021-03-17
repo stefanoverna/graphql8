@@ -6,7 +6,7 @@ if (argv.help || argv.h) {
   console.log(`usage: graphql-ruby-client sync <options>
 
   Read .graphql files and push the contained
-  operations to a GraphQL::Pro::OperationStore
+  operations to a GraphQL8::Pro::OperationStore
 
 required arguments:
   --url=<endpoint-url>    URL where data should be POSTed

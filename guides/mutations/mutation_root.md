@@ -9,7 +9,7 @@ class_based_api: true
 index: 0
 ---
 
-GraphQL mutations all begin with the `mutation` keyword:
+GraphQL8 mutations all begin with the `mutation` keyword:
 
 ```graphql
 mutation($accountNumber: ID!, $newBalance: Int!) {
@@ -20,10 +20,10 @@ mutation($accountNumber: ID!, $newBalance: Int!) {
 }
 ```
 
-Operations that begin with `mutation` get special treatment by the GraphQL runtime: root fields are guaranteed
+Operations that begin with `mutation` get special treatment by the GraphQL8 runtime: root fields are guaranteed
 to be executed sequentially. This way, the effect of a series of mutations is predictable.
 
-Mutations are executed by a specific GraphQL object, `Mutation`. This object is defined like any other GraphQL object:
+Mutations are executed by a specific GraphQL8 object, `Mutation`. This object is defined like any other GraphQL8 object:
 
 ```ruby
 class Types::Mutation < Types::BaseObject
@@ -34,7 +34,7 @@ end
 Then, it must be attached to your schema with the `mutation(...)` configuration:
 
 ```ruby
-class Schema < GraphQL::Schema
+class Schema < GraphQL8::Schema
   # ...
   mutation(Types::Mutation)
 end

@@ -1,9 +1,9 @@
 var fs = require("fs")
-var graphql = require("graphql")
+var graphql = require("graphql8")
 var addTypenameToSelectionSet = require("./addTypenameToSelectionSet")
 
 /**
- * Take a whole bunch of GraphQL in one big string
+ * Take a whole bunch of GraphQL8 in one big string
  * and validate it, especially:
  *
  * - operation names are unique
@@ -14,12 +14,12 @@ var addTypenameToSelectionSet = require("./addTypenameToSelectionSet")
  */
 
 function prepareProject(filenames, addTypename) {
-  var allGraphQL = ""
+  var allGraphQL8 = ""
   filenames.forEach(function(filename) {
-    allGraphQL += fs.readFileSync(filename)
+    allGraphQL8 += fs.readFileSync(filename)
   })
 
-  var ast = graphql.parse(allGraphQL)
+  var ast = graphql.parse(allGraphQL8)
 
   // This will contain { name: [name, name] } pairs
   var definitionDependencyNames = {}

@@ -1,8 +1,8 @@
-var printer = require("graphql/language/printer")
+var printer = require("graphql8/language/printer")
 var registry = require("./registry")
 
 /**
- * Make a new subscriber for `addGraphQLSubscriptions`
+ * Make a new subscriber for `addGraphQL8Subscriptions`
  * @param {ActionCable.Consumer} cable ActionCable client
 */
 function ActionCableSubscriber(cable, networkInterface) {
@@ -52,7 +52,7 @@ ActionCableSubscriber.prototype.subscribe = function subscribeToActionCable(requ
     },
     // Payload from ActionCable should have at least two keys:
     // - more: true if this channel should stay open
-    // - result: the GraphQL response for this result
+    // - result: the GraphQL8 response for this result
     received: function(payload) {
       if (!payload.more) {
         registry.unsubscribe(this)

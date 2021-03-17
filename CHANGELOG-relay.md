@@ -17,7 +17,7 @@
   To migrate, assign your node identification helper to the schema:
 
   ```ruby
-  NodeIdentification = GraphQL::Relay::GlobalNodeIdentification.define { ... }
+  NodeIdentification = GraphQL8::Relay::GlobalNodeIdentification.define { ... }
   MySchema.node_identification = NodeIdentification
   ```
 
@@ -52,7 +52,7 @@
     # Capture the returned type:
     SomethingCustomConnectionType = SomethingType.define_connection { ... }
 
-    DifferentThingType = GraphQL::ObjectType.define do
+    DifferentThingType = GraphQL8::ObjectType.define do
       # And pass it to the connection helper:
       connection :somethings, SomethingCustomConnectionType
     end
@@ -83,7 +83,7 @@
 
 ### Bug Fix
 
-- Fix Node interface to support GraphQL 0.13.0+
+- Fix Node interface to support GraphQL8 0.13.0+
 
 ## 0.9.2 (29 Apr 2016)
 

@@ -9,7 +9,7 @@ index: 11
 experimental: true
 ---
 
-{{ "GraphQL::Tracing" | api_doc }} provides a `.trace` hook to observe events from the GraphQL runtime.
+{{ "GraphQL8::Tracing" | api_doc }} provides a `.trace` hook to observe events from the GraphQL8 runtime.
 
 A tracer must implement `.trace`, for example:
 
@@ -32,7 +32,7 @@ To run a tracer for __every query__, add it to the schema with `tracer`:
 
 ```ruby
 # Run `MyCustomTracer` for all queries
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   tracer(MyCustomTracer)
 end
 ```
@@ -44,7 +44,7 @@ Or, to run a tracer for __one query only__, add it to `context:` as `tracers: [.
 MySchema.execute(..., context: { tracers: [MyCustomTracer]})
 ```
 
-For a full list of events, see the {{ "GraphQL::Tracing" | api_doc }} API docs.
+For a full list of events, see the {{ "GraphQL8::Tracing" | api_doc }} API docs.
 
 ## ActiveSupport::Notifications
 
@@ -54,14 +54,14 @@ To enable it, install the tracer:
 
 ```ruby
 # Send execution events to ActiveSupport::Notifications
-class MySchema < GraphQL::Schema
-  tracer(GraphQL::Tracing::ActiveSupportNotificationsTracing)
+class MySchema < GraphQL8::Schema
+  tracer(GraphQL8::Tracing::ActiveSupportNotificationsTracing)
 end
 ```
 
 ## Monitoring
 
-Several monitoring platforms are supported out-of-the box by GraphQL-Ruby (see platforms below).
+Several monitoring platforms are supported out-of-the box by GraphQL8-Ruby (see platforms below).
 
 Leaf fields are _not_ monitored (to avoid high cardinality in the metrics service).
 
@@ -72,8 +72,8 @@ Implementations are based on {{ "Tracing::PlatformTracing" | api_doc }}.
 To add [AppSignal](https://appsignal.com/) instrumentation:
 
 ```ruby
-class MySchema < GraphQL::Schema
-  use(GraphQL::Tracing::AppsignalTracing)
+class MySchema < GraphQL8::Schema
+  use(GraphQL8::Tracing::AppsignalTracing)
 end
 ```
 
@@ -86,10 +86,10 @@ end
 To add [New Relic](https://newrelic.com/) instrumentation:
 
 ```ruby
-class MySchema < GraphQL::Schema
-  use(GraphQL::Tracing::NewRelicTracing)
+class MySchema < GraphQL8::Schema
+  use(GraphQL8::Tracing::NewRelicTracing)
   # Optional, use the operation name to set the new relic transaction name:
-  # use(GraphQL::Tracing::NewRelicTracing, set_transaction_name: true)
+  # use(GraphQL8::Tracing::NewRelicTracing, set_transaction_name: true)
 end
 ```
 
@@ -103,8 +103,8 @@ end
 To add [Scout APM](https://scoutapp.com/) instrumentation:
 
 ```ruby
-class MySchema < GraphQL::Schema
-  use(GraphQL::Tracing::ScoutTracing)
+class MySchema < GraphQL8::Schema
+  use(GraphQL8::Tracing::ScoutTracing)
 end
 ```
 
@@ -117,8 +117,8 @@ end
 To add [Skylight](http://skylight.io) instrumentation:
 
 ```ruby
-class MySchema < GraphQL::Schema
-  use(GraphQL::Tracing::SkylightTracing)
+class MySchema < GraphQL8::Schema
+  use(GraphQL8::Tracing::SkylightTracing)
 end
 ```
 
@@ -132,8 +132,8 @@ end
 To add [Datadog](https://www.datadoghq.com) instrumentation:
 
 ```ruby
-class MySchema < GraphQL::Schema
-  use(GraphQL::Tracing::DataDogTracing)
+class MySchema < GraphQL8::Schema
+  use(GraphQL8::Tracing::DataDogTracing)
 end
 ```
 
@@ -144,20 +144,20 @@ To add [Prometheus](https://prometheus.io) instrumentation:
 ```ruby
 require 'prometheus_exporter/client'
 
-class MySchema < GraphQL::Schema
-  use(GraphQL::Tracing::PrometheusTracing)
+class MySchema < GraphQL8::Schema
+  use(GraphQL8::Tracing::PrometheusTracing)
 end
 ```
 
 The PrometheusExporter server must be run with a custom type collector that extends
-`GraphQL::Tracing::PrometheusTracing::GraphQLCollector`:
+`GraphQL8::Tracing::PrometheusTracing::GraphQL8Collector`:
 
 ```ruby
 # lib/graphql_collector.rb
 
-require 'graphql/tracing'
+require 'graphql8/tracing'
 
-class GraphQLCollector < GraphQL::Tracing::PrometheusTracing::GraphQLCollector
+class GraphQL8Collector < GraphQL8::Tracing::PrometheusTracing::GraphQL8Collector
 end
 ```
 

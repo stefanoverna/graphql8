@@ -1,35 +1,35 @@
 # frozen_string_literal: true
-require "graphql"
+require "graphql8"
 require_relative "./data"
 module Dummy
   class NoSuchDairyError < StandardError; end
 
-  GraphQL::Field.accepts_definitions(joins: GraphQL::Define.assign_metadata_key(:joins))
-  GraphQL::BaseType.accepts_definitions(class_names: GraphQL::Define.assign_metadata_key(:class_names))
+  GraphQL8::Field.accepts_definitions(joins: GraphQL8::Define.assign_metadata_key(:joins))
+  GraphQL8::BaseType.accepts_definitions(class_names: GraphQL8::Define.assign_metadata_key(:class_names))
 
-  class BaseField < GraphQL::Schema::Field
+  class BaseField < GraphQL8::Schema::Field
     accepts_definition :joins
   end
 
   module BaseInterface
-    include GraphQL::Schema::Interface
+    include GraphQL8::Schema::Interface
   end
 
-  class BaseObject < GraphQL::Schema::Object
+  class BaseObject < GraphQL8::Schema::Object
     field_class BaseField
     accepts_definition :class_names
   end
 
-  class BaseUnion < GraphQL::Schema::Union
+  class BaseUnion < GraphQL8::Schema::Union
   end
 
-  class BaseEnum < GraphQL::Schema::Enum
+  class BaseEnum < GraphQL8::Schema::Enum
   end
 
-  class BaseInputObject < GraphQL::Schema::InputObject
+  class BaseInputObject < GraphQL8::Schema::InputObject
   end
 
-  class BaseScalar < GraphQL::Schema::Scalar
+  class BaseScalar < GraphQL8::Schema::Scalar
   end
 
   module LocalProduct
@@ -119,7 +119,7 @@ module Dummy
 
     # Keywords can be used for definition methods
     field :fat_content,
-      type: GraphQL::FLOAT_TYPE,
+      type: GraphQL8::FLOAT_TYPE,
       null: false,
       description: "Percentage which is milkfat",
       deprecation_reason: "Diet fashion has changed"
@@ -144,7 +144,7 @@ module Dummy
     end
 
     field :execution_error, String, null: true
-    def execution_error; raise(GraphQL::ExecutionError, "There was an execution error"); end
+    def execution_error; raise(GraphQL8::ExecutionError, "There was an execution error"); end
 
     field :all_dairy, ["Dummy::DairyProduct", null: true], null: true
     def all_dairy; CHEESES.values + MILKS.values; end
@@ -205,7 +205,7 @@ module Dummy
     def cant_be_null_but_is; nil; end
 
     field :cant_be_null_but_raises_execution_error, String, null: false
-    def cant_be_null_but_raises_execution_error; raise(GraphQL::ExecutionError, "BOOM"); end
+    def cant_be_null_but_raises_execution_error; raise(GraphQL8::ExecutionError, "BOOM"); end
   end
 
   class Goat < BaseObject
@@ -262,7 +262,7 @@ module Dummy
     def self.coerce_input(value, ctx)
       Time.at(Float(value))
     rescue ArgumentError
-      raise GraphQL::CoercionError, 'cannot coerce to Float'
+      raise GraphQL8::CoercionError, 'cannot coerce to Float'
     end
 
     def self.coerce_result(value, ctx)
@@ -270,14 +270,14 @@ module Dummy
     end
   end
 
-  class FetchItem < GraphQL::Function
+  class FetchItem < GraphQL8::Function
     attr_reader :type, :description, :arguments
 
-    def initialize(type:, data:, id_type: !GraphQL::INT_TYPE)
+    def initialize(type:, data:, id_type: !GraphQL8::INT_TYPE)
       @type = type
       @data = data
       @description = "Find a #{type.name} by id"
-      @arguments = self.class.arguments.merge({"id" => GraphQL::Argument.define(name: "id", type: id_type)})
+      @arguments = self.class.arguments.merge({"id" => GraphQL8::Argument.define(name: "id", type: id_type)})
     end
 
     def call(obj, args, ctx)
@@ -287,7 +287,7 @@ module Dummy
     end
   end
 
-  class GetSingleton < GraphQL::Function
+  class GetSingleton < GraphQL8::Function
     attr_reader :description, :type
 
     def initialize(type:, data:)
@@ -301,7 +301,7 @@ module Dummy
     end
   end
 
-  FavoriteFieldDefn = GraphQL::Field.define do
+  FavoriteFieldDefn = GraphQL8::Field.define do
     name "favoriteEdible"
     description "My favorite food"
     type Edible
@@ -317,7 +317,7 @@ module Dummy
       object
     end
     field :cheese, function: FetchItem.new(type: Cheese, data: CHEESES)
-    field :milk, function: FetchItem.new(type: Milk, data: MILKS, id_type: GraphQL::Types::ID.to_non_null_type)
+    field :milk, function: FetchItem.new(type: Milk, data: MILKS, id_type: GraphQL8::Types::ID.to_non_null_type)
     field :dairy, function: GetSingleton.new(type: Dairy, data: DAIRY)
     field :from_source, [Cheese, null: true], null: true, description: "Cheese from source" do
       argument :source, DairyAnimal, required: false, default_value: 1
@@ -357,7 +357,7 @@ module Dummy
     def all_dairy(execution_error_at_index: nil)
       result = CHEESES.values + MILKS.values
       if execution_error_at_index
-        result[execution_error_at_index] = GraphQL::ExecutionError.new("missing dairy")
+        result[execution_error_at_index] = GraphQL8::ExecutionError.new("missing dairy")
       end
       result
     end
@@ -376,7 +376,7 @@ module Dummy
 
     field :execution_error, String, null: true
     def execution_error
-      raise(GraphQL::ExecutionError, "There was an execution error")
+      raise(GraphQL8::ExecutionError, "There was an execution error")
     end
 
     field :value_with_execution_error, Integer, null: false, extras: [:execution_errors]
@@ -388,19 +388,19 @@ module Dummy
     field :multiple_errors_on_non_nullable_field, String, null: false
     def multiple_errors_on_non_nullable_field
       [
-        GraphQL::ExecutionError.new("This is an error message for some error."),
-        GraphQL::ExecutionError.new("This is another error message for a different error.")
+        GraphQL8::ExecutionError.new("This is an error message for some error."),
+        GraphQL8::ExecutionError.new("This is another error message for a different error.")
       ]
     end
 
     field :execution_error_with_options, Integer, null: true
     def execution_error_with_options
-      GraphQL::ExecutionError.new("Permission Denied!", options: { "code" => "permission_denied" })
+      GraphQL8::ExecutionError.new("Permission Denied!", options: { "code" => "permission_denied" })
     end
 
     field :execution_error_with_extensions, Integer, null: true
     def execution_error_with_extensions
-      GraphQL::ExecutionError.new("Permission Denied!", extensions: { "code" => "permission_denied" })
+      GraphQL8::ExecutionError.new("Permission Denied!", extensions: { "code" => "permission_denied" })
     end
 
     # To test possibly-null fields
@@ -455,7 +455,7 @@ module Dummy
     def test; "Test"; end
   end
 
-  class Schema < GraphQL::Schema
+  class Schema < GraphQL8::Schema
     query DairyAppQuery
     mutation DairyAppMutation
     subscription Subscription

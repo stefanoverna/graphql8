@@ -11,21 +11,21 @@ redirect_from:
   - /fields/functions
 ---
 
-A {{ "GraphQL::Schema::Resolver" | api_doc }} is a container for field signature and resolution logic. It can be attached to a field with the `resolver:` keyword:
+A {{ "GraphQL8::Schema::Resolver" | api_doc }} is a container for field signature and resolution logic. It can be attached to a field with the `resolver:` keyword:
 
 ```ruby
 # Use the resolver class to execute this field
 field :pending_orders, resolver: PendingOrders
 ```
 
-Under the hood, {{ "GraphQL::Schema::Mutation" | api_doc }} is a specialized subclass of `Resolver`.
+Under the hood, {{ "GraphQL8::Schema::Mutation" | api_doc }} is a specialized subclass of `Resolver`.
 
 ## First, ask yourself ...
 
 Do you really need a `Resolver`? Putting logic in a Resolver has some downsides:
 
-- Since it's coupled to GraphQL, it's harder to test than a plain ol' Ruby object in your app
-- Since the base class comes from GraphQL-Ruby, it's subject to upstream changes which may require updates in your code
+- Since it's coupled to GraphQL8, it's harder to test than a plain ol' Ruby object in your app
+- Since the base class comes from GraphQL8-Ruby, it's subject to upstream changes which may require updates in your code
 
 Here are a few alternatives to consider:
 
@@ -103,9 +103,9 @@ So, if there are other, better options, why does `Resolver` exist? Here are a fe
 To add resolvers to your project, make a base class:
 
 ```ruby
-# app/graphql/resolvers/base.rb
+# app/graphql8/resolvers/base.rb
 module Resolvers
-  class Base < GraphQL::Schema::Resolver
+  class Base < GraphQL8::Schema::Resolver
     # if you have a custom argument class, you can attach it:
     argument_class Arguments::Base
   end
@@ -147,4 +147,4 @@ class Types::User < Types::BaseObject
 end
 ```
 
-Since the `Resolver` lifecycle is managed by the GraphQL runtime, the best way to test it is to execute GraphQL queries and check the results.
+Since the `Resolver` lifecycle is managed by the GraphQL8 runtime, the best way to test it is to execute GraphQL8 queries and check the results.

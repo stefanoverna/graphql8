@@ -4,11 +4,11 @@ doc_stub: false
 search: true
 section: Subscriptions
 title: Overview
-desc: Introduction to Subscriptions in GraphQL-Ruby
+desc: Introduction to Subscriptions in GraphQL8-Ruby
 index: 0
 ---
 
-_Subscriptions_ allow GraphQL clients to observe specific events and receive updates from the server when those events occur. This supports live updates, such as websocket pushes. Subscriptions introduce several new concepts:
+_Subscriptions_ allow GraphQL8 clients to observe specific events and receive updates from the server when those events occur. This supports live updates, such as websocket pushes. Subscriptions introduce several new concepts:
 
 - The __Subscription type__ is the entry point for subscription queries
 - __Triggers__ begin the update process
@@ -16,19 +16,19 @@ _Subscriptions_ allow GraphQL clients to observe specific events and receive upd
 
 ### Subscription Type
 
-`subscription` is an entry point to your GraphQL schema, like `query` or `mutation`. It is defined by your `SubscriptionType`, a root-level `GraphQL::Schema::Object`.
+`subscription` is an entry point to your GraphQL8 schema, like `query` or `mutation`. It is defined by your `SubscriptionType`, a root-level `GraphQL8::Schema::Object`.
 
 Read more in the {% internal_link "Subscription Type guide", "subscriptions/subscription_type" %}.
 
 ### Triggers
 
-After an event occurs in our application, _triggers_ begin the update process by sending a name and payload to GraphQL.
+After an event occurs in our application, _triggers_ begin the update process by sending a name and payload to GraphQL8.
 
 Read more in the {% internal_link "Triggers guide","subscriptions/triggers" %}.
 
 ### Implementation
 
-Besides the GraphQL component, your application must provide some subscription-related plumbing, for example:
+Besides the GraphQL8 component, your application must provide some subscription-related plumbing, for example:
 
 - __state management__: How does your application keep track of who is subscribed to what?
 - __transport__: How does your application deliver payloads to clients?

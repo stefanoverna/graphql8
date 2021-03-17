@@ -1,6 +1,6 @@
 var ApolloLink = require("apollo-link").ApolloLink
 var Observable = require("apollo-link").Observable
-var printer = require("graphql/language/printer")
+var printer = require("graphql8/language/printer")
 
 function ActionCableLink(options) {
   var cable = options.cable

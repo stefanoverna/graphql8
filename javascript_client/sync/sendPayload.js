@@ -46,7 +46,7 @@ function sendPayload(payload, options) {
     authDigest = crypto.createHmac('sha256', key)
       .update(postData)
       .digest('hex')
-    options.headers["Authorization"] = "GraphQL::Pro " + clientName + " " + authDigest
+    options.headers["Authorization"] = "GraphQL8::Pro " + clientName + " " + authDigest
   }
 
   var httpClient = parsedURL.protocol === "https:" ? https : http

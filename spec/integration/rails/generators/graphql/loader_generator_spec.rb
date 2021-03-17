@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 require "spec_helper"
-require "generators/graphql/loader_generator"
+require "generators/graphql8/loader_generator"
 
-class GraphQLGeneratorsLoaderGeneratorTest < BaseGeneratorTest
-  tests Graphql::Generators::LoaderGenerator
+class GraphQL8GeneratorsLoaderGeneratorTest < BaseGeneratorTest
+  tests graphql8::Generators::LoaderGenerator
 
   test "it generates an empty loader by name" do
     run_generator(["RecordLoader"])
 
     expected_content = <<-RUBY
 module Loaders
-  class RecordLoader < GraphQL::Batch::Loader
+  class RecordLoader < GraphQL8::Batch::Loader
     # Define `initialize` to store grouping arguments, eg
     #
     #     Loaders::RecordLoader.for(group).load(value)
@@ -28,7 +28,7 @@ module Loaders
 end
 RUBY
 
-    assert_file "app/graphql/loaders/record_loader.rb", expected_content
+    assert_file "app/graphql8/loaders/record_loader.rb", expected_content
   end
 
   test "it generates a namespaced loader by name" do
@@ -36,7 +36,7 @@ RUBY
 
     expected_content = <<-RUBY
 module Loaders
-  class ActiveRecord::RecordLoader < GraphQL::Batch::Loader
+  class ActiveRecord::RecordLoader < GraphQL8::Batch::Loader
     # Define `initialize` to store grouping arguments, eg
     #
     #     Loaders::ActiveRecord::RecordLoader.for(group).load(value)
@@ -54,6 +54,6 @@ module Loaders
 end
 RUBY
 
-    assert_file "app/graphql/loaders/active_record/record_loader.rb", expected_content
+    assert_file "app/graphql8/loaders/active_record/record_loader.rb", expected_content
   end
 end

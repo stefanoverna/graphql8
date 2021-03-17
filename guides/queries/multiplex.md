@@ -101,7 +101,7 @@ This will be available to instrumentation as `multiplex.context[:current_user]` 
 You can analyze _all_ queries in a multiplex by adding a multiplex analyzer. For example:
 
 ```ruby
-class MySchema < GraphQL::Schema do
+class MySchema < GraphQL8::Schema do
   # ...
   multiplex_analyzer(MyAnalyzer)
 end
@@ -136,7 +136,7 @@ end
 
 # ...
 
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   # ...
   instrument(:multiplex, MultiplexCounter)
 end

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'generators/graphql/type_generator'
+require 'generators/graphql8/type_generator'
 
 module Graphql
   module Generators
@@ -7,17 +7,17 @@ module Graphql
     # with the specified member types.
     #
     # ```
-    # rails g graphql:union SearchResultType ImageType AudioType
+    # rails g graphql8:union SearchResultType ImageType AudioType
     # ```
     class UnionGenerator < TypeGeneratorBase
-      desc "Create a GraphQL::UnionType with the given name and possible types"
+      desc "Create a GraphQL8::UnionType with the given name and possible types"
       source_root File.expand_path('../templates', __FILE__)
 
       argument :possible_types,
         type: :array,
         default: [],
         banner: "type type ...",
-        desc: "Possible types for this union (expressed as Ruby or GraphQL)"
+        desc: "Possible types for this union (expressed as Ruby or GraphQL8)"
 
       def create_type_file
         template "union.erb", "#{options[:directory]}/types/#{type_file_name}.rb"

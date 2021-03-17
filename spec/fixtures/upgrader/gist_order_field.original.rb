@@ -2,7 +2,7 @@
 
 module Platform
   module Enums
-    GistOrderField = GraphQL::EnumType.define do
+    GistOrderField = GraphQL8::EnumType.define do
       name "GistOrderField"
       description "Properties by which gist connections can be ordered."
 

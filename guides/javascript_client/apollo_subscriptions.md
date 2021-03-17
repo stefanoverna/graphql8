@@ -4,11 +4,11 @@ doc_stub: false
 search: true
 section: JavaScript Client
 title: Apollo Subscriptions
-desc: GraphQL subscriptions with GraphQL-Ruby and Apollo Client
+desc: GraphQL8 subscriptions with GraphQL8-Ruby and Apollo Client
 index: 2
 ---
 
-GraphQL-Ruby's JavaScript client includes four kinds of support for Apollo Client:
+GraphQL8-Ruby's JavaScript client includes four kinds of support for Apollo Client:
 
 - Apollo 2.x:
   - [Overview](#apollo-2)
@@ -158,7 +158,7 @@ const client = new ApolloClient({
 
 `graphql-ruby-client` includes support for Apollo 1 client subscriptions over {% internal_link "Pusher", "/subscriptions/pusher_implementation" %} or {% internal_link "ActionCable", "/subscriptions/action_cable_implementation" %}.
 
-To use it, require `subscriptions/addGraphQLSubscriptions` and call the function with your network interface and transport client (example below).
+To use it, require `subscriptions/addGraphQL8Subscriptions` and call the function with your network interface and transport client (example below).
 
 See the {% internal_link "Subscriptions guide", "/subscriptions/overview" %} for information about server-side setup.
 
@@ -172,8 +172,8 @@ var Pusher = require("pusher-js")
 var pusherClient = new Pusher(appKey, options)
 
 // Add subscriptions to the network interface with the `pusher:` options
-var addGraphQLSubscriptions = require("graphql-ruby-client/subscriptions/addGraphQLSubscriptions")
-addGraphQLSubscriptions(myNetworkInterface, {pusher: pusherClient})
+var addGraphQL8Subscriptions = require("graphql-ruby-client/subscriptions/addGraphQL8Subscriptions")
+addGraphQL8Subscriptions(myNetworkInterface, {pusher: pusherClient})
 
 // Optionally, add persisted query support:
 var OperationStoreClient = require("./OperationStoreClient")
@@ -205,8 +205,8 @@ var RailsNetworkInterface = apollo.createNetworkInterface({
 });
 
 // Add subscriptions to the network interface
-var addGraphQLSubscriptions = require("graphql-ruby-client/subscriptions/addGraphQLSubscriptions")
-addGraphQLSubscriptions(RailsNetworkInterface, {cable: cable})
+var addGraphQL8Subscriptions = require("graphql-ruby-client/subscriptions/addGraphQL8Subscriptions")
+addGraphQL8Subscriptions(RailsNetworkInterface, {cable: cable})
 
 // Optionally, add persisted query support:
 var OperationStoreClient = require("./OperationStoreClient")

@@ -15,7 +15,7 @@ Interfaces are lists of fields which may be implemented by object types.
 
 An interface has fields, but it's never actually instantiated. Instead, objects may _implement_ interfaces, which makes them a _member_ of that interface. Also, fields may _return_ interface types. When this happens, the returned object may be any member of that interface.
 
-For example, let's say a `Customer` (interface) may be either an `Individual` (object) or a `Company` (object). Here's the structure in the [GraphQL Schema Definition Language](http://graphql.org/learn/schema/#type-language) (SDL):
+For example, let's say a `Customer` (interface) may be either an `Individual` (object) or a `Company` (object). Here's the structure in the [GraphQL8 Schema Definition Language](http://graphql.org/learn/schema/#type-language) (SDL):
 
 ```graphql
 interface Customer {
@@ -68,11 +68,11 @@ Interfaces are a good choice whenever a set of objects are used interchangeably,
 
 ## Defining Interface Types
 
-Interfaces are Ruby modules which include {{ "GraphQL::Schema::Interface" | api_doc }}. First, make a base module:
+Interfaces are Ruby modules which include {{ "GraphQL8::Schema::Interface" | api_doc }}. First, make a base module:
 
 ```ruby
 module Types::BaseInterface
-  include GraphQL::Schema::Interface
+  include GraphQL8::Schema::Interface
 end
 ```
 
@@ -151,7 +151,7 @@ For example, you can add definition helpers to your base interface, then use the
 ```ruby
 # First, add a helper method to `BaseInterface`'s definition methods
 module Types::BaseInterface
-  include GraphQL::Schema::Interface
+  include GraphQL8::Schema::Interface
 
   definition_methods do
     # Use this to add a price field + default implementation
@@ -176,7 +176,7 @@ The type definition DSL uses this mechanism, too, so you can override those meth
 
 ### Resolve Type
 
-When a field's return type is an interface, GraphQL has to figure out what _specific_ object type to use for the return value. In the example above, each `customer` must be categorized as an `Individual` or `Company`. You can do this by:
+When a field's return type is an interface, GraphQL8 has to figure out what _specific_ object type to use for the return value. In the example above, each `customer` must be categorized as an `Individual` or `Company`. You can do this by:
 
 - Providing a top-level `Schema.resolve_type` method; _OR_
 - Providing an interface-level `.resolve_type` method in `definition_methods`.
@@ -216,7 +216,7 @@ end
 Alternatively you can add the object types to the schema's `orphan_types`:
 
 ```ruby
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   orphan_types Types::Comment
 end
 ```

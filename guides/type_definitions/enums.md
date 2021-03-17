@@ -9,7 +9,7 @@ index: 2
 class_based_api: true
 ---
 
-Enum types are sets of discrete values. An enum field must return one of the possible values of the enum. In the [GraphQL Schema Definition Language](http://graphql.org/learn/schema/#type-language) (SDL), enums are described like this:
+Enum types are sets of discrete values. An enum field must return one of the possible values of the enum. In the [GraphQL8 Schema Definition Language](http://graphql.org/learn/schema/#type-language) (SDL), enums are described like this:
 
 ```ruby
 enum MediaCategory {
@@ -22,7 +22,7 @@ enum MediaCategory {
 
 So, a `MediaCategory` value is one of: `AUDIO`, `IMAGE`, `TEXT`, or `VIDEO`. This is similar to [ActiveRecord enums](http://api.rubyonrails.org/classes/ActiveRecord/Enum.html).
 
-In a GraphQL query, enums are written as identifiers (not strings), for example:
+In a GraphQL8 query, enums are written as identifiers (not strings), for example:
 
 ```ruby
 search(term: "puppies", mediaType: IMAGE) { ... }
@@ -30,7 +30,7 @@ search(term: "puppies", mediaType: IMAGE) { ... }
 
 (Notice that `IMAGE` doesn't have quotes.)
 
-But, when GraphQL responses or variables are transported using JSON, enum values are expressed as strings, for example:
+But, when GraphQL8 responses or variables are transported using JSON, enum values are expressed as strings, for example:
 
 ```ruby
 # in a graphql controller:
@@ -40,15 +40,15 @@ params["variables"]
 
 ## Defining Enum Types
 
-In your application, enums extend {{ "GraphQL::Schema::Enum" | api_doc }} and define values with the `value(...)` method:
+In your application, enums extend {{ "GraphQL8::Schema::Enum" | api_doc }} and define values with the `value(...)` method:
 
 ```ruby
 # First, a base class
-# app/graphql/types/base_enum
-class Types::BaseEnum < GraphQL::Schema::Enum
+# app/graphql8/types/base_enum
+class Types::BaseEnum < GraphQL8::Schema::Enum
 end
 
-# app/graphql/types/media_category.rb
+# app/graphql8/types/media_category.rb
 class Types::MediaCategory < Types::BaseEnum
   value "AUDIO", "An audio file, such as music or spoken word"
   value "IMAGE", "A still image, such as a photo or graphic"
@@ -63,12 +63,12 @@ Each value may have:
 - A deprecation reason (as `deprecation_reason:`), marking this value as deprecated
 - A corresponding Ruby value (as `value:`), see below
 
-By default, Ruby strings correspond to GraphQL enum values. But, you can provide `value:` options to specify a different mapping. For example, if you use symbols instead of strings, you can say:
+By default, Ruby strings correspond to GraphQL8 enum values. But, you can provide `value:` options to specify a different mapping. For example, if you use symbols instead of strings, you can say:
 
 ```ruby
 value "AUDIO", value: :audio
 ```
 
-Then, GraphQL inputs of `AUDIO` will be converted to `:audio` and Ruby values of `:audio` will be converted to `"AUDIO"` in GraphQL responses.
+Then, GraphQL8 inputs of `AUDIO` will be converted to `:audio` and Ruby values of `:audio` will be converted to `"AUDIO"` in GraphQL8 responses.
 
 Enum classes are never instantiated and their methods are never called.

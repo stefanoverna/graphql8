@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "spec_helper"
 
-describe GraphQL::Relay::RangeAdd do
+describe GraphQL8::Relay::RangeAdd do
   # Make sure that the encoder is found through `ctx.schema`:
   module PassThroughEncoder
     def self.encode(unencoded_text, nonce: false)
@@ -24,21 +24,21 @@ describe GraphQL::Relay::RangeAdd do
       )
     ]
 
-    item = GraphQL::ObjectType.define do
+    item = GraphQL8::ObjectType.define do
       name "Item"
       field :price, !types.Int
       field :name, !types.String
     end
-    menu = GraphQL::ObjectType.define do
+    menu = GraphQL8::ObjectType.define do
       name "Menu"
       field :name, !types.String
       field :items, !item.connection_type
     end
-    query = GraphQL::ObjectType.define do
+    query = GraphQL8::ObjectType.define do
       name "Query"
       field :menus, types[menu], resolve: Proc.new { menus }
     end
-    add_item = GraphQL::Relay::Mutation.define do
+    add_item = GraphQL8::Relay::Mutation.define do
       name "AddItem"
       input_field :name, !types.String
       input_field :price, !types.Int
@@ -51,7 +51,7 @@ describe GraphQL::Relay::RangeAdd do
         this_menu = menus[input[:menu_idx]]
         new_item = OpenStruct.new(name: input[:name], price: input[:price])
         this_menu.items << new_item
-        range_add = GraphQL::Relay::RangeAdd.new(
+        range_add = GraphQL8::Relay::RangeAdd.new(
           parent: this_menu,
           item: new_item,
           collection: this_menu.items,
@@ -65,12 +65,12 @@ describe GraphQL::Relay::RangeAdd do
         }
       }
     end
-    mutation = GraphQL::ObjectType.define do
+    mutation = GraphQL8::ObjectType.define do
       name "Mutation"
       field :add_item, add_item.field
     end
 
-    Class.new(GraphQL::Schema) do
+    Class.new(GraphQL8::Schema) do
       self.query(query)
       self.mutation(mutation)
       self.cursor_encoder(PassThroughEncoder)

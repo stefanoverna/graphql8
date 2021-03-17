@@ -1,4 +1,4 @@
-// This file/concept was borrowed from https://github.com/apollographql/apollo-client/blob/fec6457746b1cb63c759f128349e66499328ae43/src/queries/queryTransform.ts#L22-L56
+// This file/concept was borrowed from https://github.com/apollographql8/apollo-client/blob/fec6457746b1cb63c759f128349e66499328ae43/src/queries/queryTransform.ts#L22-L56
 
 const TYPENAME_FIELD = {
   kind: "Field",

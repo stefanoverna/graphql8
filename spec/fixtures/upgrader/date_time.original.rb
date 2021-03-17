@@ -2,7 +2,7 @@
 
 module Platform
   module Scalars
-    DateTime = GraphQL::ScalarType.define do
+    DateTime = GraphQL8::ScalarType.define do
       name "DateTime"
       description "An ISO-8601 encoded UTC date string."
 

@@ -6,7 +6,7 @@
 [![Test Coverage](https://codeclimate.com/github/rmosolgo/graphql-ruby/badges/coverage.svg)](https://codeclimate.com/github/rmosolgo/graphql-ruby)
 [![built with love](https://cloud.githubusercontent.com/assets/2231765/6766607/d07992c6-cfc9-11e4-813f-d9240714dd50.png)](http://rmosolgo.github.io/react-badges/)
 
-A Ruby implementation of [GraphQL](http://graphql.org/).
+A Ruby implementation of [GraphQL8](http://graphql.org/).
 
 - [Website](https://rmosolgo.github.io/graphql-ruby)
 - [API Documentation](http://www.rubydoc.info/gems/graphql)
@@ -28,7 +28,7 @@ $ bundle install
 ## Getting Started
 
 ```
-$ rails generate graphql:install
+$ rails generate graphql8:install
 ```
 
 After this, you may need to run `bundle install` again, as by default graphiql-rails is added on installation.
@@ -37,11 +37,11 @@ Or, see ["Getting Started"](https://rmosolgo.github.io/graphql-ruby/).
 
 ## Upgrade
 
-I also sell [GraphQL::Pro](http://graphql.pro) which provides several features on top of the GraphQL runtime, including [Pundit authorization](http://rmosolgo.github.io/graphql-ruby/authorization/pundit_integration), [CanCan authorization](http://rmosolgo.github.io/graphql-ruby/authorization/can_can_integration), [Pusher-based subscriptions](http://graphql-ruby.org/subscriptions/pusher_implementation) and [persisted queries](http://rmosolgo.github.io/graphql-ruby/operation_store/overview). Besides that, Pro customers get email support and an opportunity to support graphql-ruby's development!
+I also sell [GraphQL8::Pro](http://graphql.pro) which provides several features on top of the GraphQL8 runtime, including [Pundit authorization](http://rmosolgo.github.io/graphql-ruby/authorization/pundit_integration), [CanCan authorization](http://rmosolgo.github.io/graphql-ruby/authorization/can_can_integration), [Pusher-based subscriptions](http://graphql-ruby.org/subscriptions/pusher_implementation) and [persisted queries](http://rmosolgo.github.io/graphql-ruby/operation_store/overview). Besides that, Pro customers get email support and an opportunity to support graphql-ruby's development!
 
 ## Goals
 
-- Implement the GraphQL spec & support a Relay front end
+- Implement the GraphQL8 spec & support a Relay front end
 - Provide idiomatic, plain-Ruby API with similarities to reference implementation where possible
 - Support Ruby on Rails and Relay
 

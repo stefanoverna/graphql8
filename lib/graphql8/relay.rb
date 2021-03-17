@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+require 'graphql8/relay/page_info'
+require 'graphql8/relay/edge'
+require 'graphql8/relay/edge_type'
+require 'graphql8/relay/edges_instrumentation'
+require 'graphql8/relay/base_connection'
+require 'graphql8/relay/array_connection'
+require 'graphql8/relay/range_add'
+require 'graphql8/relay/relation_connection'
+require 'graphql8/relay/mongo_relation_connection'
+require 'graphql8/relay/global_id_resolve'
+require 'graphql8/relay/mutation'
+require 'graphql8/relay/node'
+require 'graphql8/relay/connection_instrumentation'
+require 'graphql8/relay/connection_resolve'
+require 'graphql8/relay/connection_type'
+require 'graphql8/relay/type_extensions'

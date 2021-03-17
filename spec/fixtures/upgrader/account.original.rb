@@ -2,7 +2,7 @@
 
 module Platform
   module Unions
-    Account = GraphQL::UnionType.define do
+    Account = GraphQL8::UnionType.define do
       name "Account"
       description "Users and organizations."
       visibility :internal

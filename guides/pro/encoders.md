@@ -2,19 +2,19 @@
 layout: guide
 doc_stub: false
 search: true
-section: GraphQL Pro
+section: GraphQL8 Pro
 title: Encrypted, Versioned Cursors and IDs
 desc: Increased opacity and configurability for Relay identifiers
 index: 6
 pro: true
 ---
 
-`GraphQL::Pro` includes a mechanism for serving encrypted, versioned cursors and IDs.  This provides some benefits:
+`GraphQL8::Pro` includes a mechanism for serving encrypted, versioned cursors and IDs.  This provides some benefits:
 
 - Users can't reverse-engineer node IDs or connection cursors, removing a possible attack vector.
 - You can gradually transition between cursor strategies, adding encrypting while supporting any "stale" encoders which clients already have.
 
-`GraphQL::Pro`'s encrypted encoders provide a few security features:
+`GraphQL8::Pro`'s encrypted encoders provide a few security features:
 
 - Key-based encryption by `aes-128-gcm` by default
 - Authentication
@@ -25,7 +25,7 @@ pro: true
 Encoders can be created with `Encoder.define { ... }`:
 
 ```ruby
-MyEncoder = GraphQL::Pro::Encoder.define do
+MyEncoder = GraphQL8::Pro::Encoder.define do
   key("f411f30495fe688cb349d...")
   # optional:
   tag("81ce51c307")
@@ -40,14 +40,14 @@ end
 Encrypt cursors by attaching an encrypted encoder to `Schema#cursor_encoder`:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   cursor_encoder(MyCursorEncoder)
 end
 ```
 
 Now, built-in connection implementations will use that encoder for cursors.
 
-If you implement your own connections, you can access the encoder's encryption methods via {{ "GraphQL::Relay::BaseConnection#encode" | api_doc }} and {{ "GraphQL::Relay::BaseConnection#decode" | api_doc }}.
+If you implement your own connections, you can access the encoder's encryption methods via {{ "GraphQL8::Relay::BaseConnection#encode" | api_doc }} and {{ "GraphQL8::Relay::BaseConnection#decode" | api_doc }}.
 
 
 ## Encrypting IDs
@@ -55,7 +55,7 @@ If you implement your own connections, you can access the encoder's encryption m
 Encrypt IDs by using encoders in `Schema#id_from_object` and `Schema#object_from_id`:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   id_from_object ->(object, type, ctx) {
     id_data = "#{object.class.name}/#{object.id}"
     MyIDEncoder.encode(id_data)
@@ -77,12 +77,12 @@ You can combine several encoders into a single chain of versioned encoders. Pass
 
 ```ruby
 # Define some encoders ...
-NewSecureEncoder       = GraphQL::Pro::Encoder.define { ... }
-OldSecureEncoder       = GraphQL::Pro::Encoder.define { ... }
-LegacyInsecureEncoder  = GraphQL::Pro::Encoder.define { ... }
+NewSecureEncoder       = GraphQL8::Pro::Encoder.define { ... }
+OldSecureEncoder       = GraphQL8::Pro::Encoder.define { ... }
+LegacyInsecureEncoder  = GraphQL8::Pro::Encoder.define { ... }
 
 # Then order them by priority:
-VersionedEncoder = GraphQL::Pro::Encoder.versioned(
+VersionedEncoder = GraphQL8::Pro::Encoder.versioned(
   # Newest:
   NewSecureEncoder,
   OldSecureEncoder,
@@ -127,7 +127,7 @@ end
 Then attach it to your encoder:
 
 ```ruby
-MyURLSafeEncoder = GraphQL::Pro::Encoder.define do
+MyURLSafeEncoder = GraphQL8::Pro::Encoder.define do
   encoder URLSafeEncoder
 end
 ```

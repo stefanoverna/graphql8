@@ -2,7 +2,7 @@
 
 module Platform
   module Mutations
-    IncrementThing = GraphQL::Relay::Mutation.define do
+    IncrementThing = GraphQL8::Relay::Mutation.define do
       name "IncrementThing"
       description "increments the thing by 1."
       visibility :internal

@@ -1,8 +1,8 @@
-var printer = require("graphql/language/printer")
+var printer = require("graphql8/language/printer")
 var registry = require("./registry")
 
 /**
- * Make a new subscriber for `addGraphQLSubscriptions`
+ * Make a new subscriber for `addGraphQL8Subscriptions`
  *
  * @param {Pusher} pusher
 */

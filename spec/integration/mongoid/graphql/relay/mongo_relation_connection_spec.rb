@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe GraphQL::Relay::MongoRelationConnection do
+describe GraphQL8::Relay::MongoRelationConnection do
   def get_names(result)
     ships = result["data"]["federation"]["bases"]["edges"]
     ships.map { |e| e["node"]["name"] }
@@ -459,7 +459,7 @@ describe GraphQL::Relay::MongoRelationConnection do
   end
 
   describe "#cursor_from_node" do
-    let(:connection) { GraphQL::Relay::MongoRelationConnection.new(StarTrek::Base.where(faction_id: 1), {}) }
+    let(:connection) { GraphQL8::Relay::MongoRelationConnection.new(StarTrek::Base.where(faction_id: 1), {}) }
 
     it "returns the cursor for a node in the connection" do
       assert_equal "MQ==", connection.cursor_from_node(StarTrek::Base.all[0])
@@ -477,8 +477,8 @@ describe GraphQL::Relay::MongoRelationConnection do
   it "is chosen for a relation" do
     relation = StarTrek::Base.where(faction_id: 1)
     assert relation.is_a?(Mongoid::Criteria)
-    connection = GraphQL::Relay::BaseConnection.connection_for_nodes(relation)
-    assert_equal GraphQL::Relay::MongoRelationConnection, connection
+    connection = GraphQL8::Relay::BaseConnection.connection_for_nodes(relation)
+    assert_equal GraphQL8::Relay::MongoRelationConnection, connection
   end
 
   describe "relations" do

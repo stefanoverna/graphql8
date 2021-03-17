@@ -8,7 +8,7 @@ desc: The root type for subscriptions
 index: 1
 ---
 
-`Subscription` is the entry point for all subscriptions in a GraphQL system. Each field corresponds to an event which may be subscribed to:
+`Subscription` is the entry point for all subscriptions in a GraphQL8 system. Each field corresponds to an event which may be subscribed to:
 
 ```graphql
 type Subscription {
@@ -38,8 +38,8 @@ subscription {
 To add subscriptions to your system, define an `ObjectType` named `Subscription`:
 
 ```ruby
-# app/graphql/types/subscription_type.rb
-class Types::SubscriptionType < GraphQL::Schema::Object
+# app/graphql8/types/subscription_type.rb
+class Types::SubscriptionType < GraphQL8::Schema::Object
   field :post_was_published, Types::PostType, null: false,
     description: "A post was published to the blog"
   # ...
@@ -49,8 +49,8 @@ end
 Then, add it as the subscription root with `subscription(...)`:
 
 ```ruby
-# app/graphql/my_schema.rb
-class MySchema < GraphQL::Schema
+# app/graphql8/my_schema.rb
+class MySchema < GraphQL8::Schema
   query(Types::QueryType)
   # ...
   # Add Subscription to
@@ -65,7 +65,7 @@ See {% internal_link "Implementing Subscriptions","subscriptions/implementation"
 When a client first sends a `subscription` operation, the root fields are resolved, so their corresponding methods are called, for example:
 
 ```ruby
-class Types::SubscriptionType < GraphQL::Schema::Object
+class Types::SubscriptionType < GraphQL8::Schema::Object
   field :post_was_published, Types::PostType, null: false,
     description: "A post was published to the blog" do
       argument :topic, Types::PostTopic, required: true
@@ -84,7 +84,7 @@ def post_was_published(topic:)
   if context[:viewer].can_subscribe_to?(topic)
     # Allow the request
   else
-    raise GraphQL::ExecutionError.new("Can't subscribe to this topic: #{topic}")
+    raise GraphQL8::ExecutionError.new("Can't subscribe to this topic: #{topic}")
   end
 end
 ```

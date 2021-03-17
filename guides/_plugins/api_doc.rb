@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-require_relative "../../lib/graphql/version"
+require_relative "../../lib/graphql8/version"
 
-module GraphQLSite
-  API_DOC_ROOT = "/api-doc/#{GraphQL::VERSION}/"
+module GraphQL8Site
+  API_DOC_ROOT = "/api-doc/#{GraphQL8::VERSION}/"
 
   module APIDoc
     def api_doc(input)
-      if !input.start_with?("GraphQL")
-        ruby_ident = "GraphQL::#{input}"
+      if !input.start_with?("GraphQL8")
+        ruby_ident = "GraphQL8::#{input}"
       else
         ruby_ident = input
       end
@@ -96,7 +96,7 @@ end
 
 
 
-Liquid::Template.register_filter(GraphQLSite::APIDoc)
-Liquid::Template.register_tag("api_doc_root", GraphQLSite::APIDocRoot)
-Liquid::Template.register_tag("open_an_issue", GraphQLSite::OpenAnIssue)
-Liquid::Template.register_tag("internal_link", GraphQLSite::InternalLink)
+Liquid::Template.register_filter(GraphQL8Site::APIDoc)
+Liquid::Template.register_tag("api_doc_root", GraphQL8Site::APIDocRoot)
+Liquid::Template.register_tag("open_an_issue", GraphQL8Site::OpenAnIssue)
+Liquid::Template.register_tag("internal_link", GraphQL8Site::InternalLink)

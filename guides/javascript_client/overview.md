@@ -4,11 +4,11 @@ doc_stub: false
 search: true
 section: JavaScript Client
 title: Overview
-desc: Getting Started with GraphQL-Ruby's Javascript client, graphql-ruby-client.
+desc: Getting Started with GraphQL8-Ruby's Javascript client, graphql-ruby-client.
 index: 0
 ---
 
-There is a JavaScript client for GraphQL-Ruby, `graphql-ruby-client`.
+There is a JavaScript client for GraphQL8-Ruby, `graphql-ruby-client`.
 
 You can install it from NPM or Yarn:
 

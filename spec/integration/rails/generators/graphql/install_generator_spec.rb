@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 require "spec_helper"
-require "generators/graphql/install_generator"
+require "generators/graphql8/install_generator"
 
-class GraphQLGeneratorsInstallGeneratorTest < Rails::Generators::TestCase
-  tests Graphql::Generators::InstallGenerator
+class GraphQL8GeneratorsInstallGeneratorTest < Rails::Generators::TestCase
+  tests graphql8::Generators::InstallGenerator
   destination File.expand_path("../../../tmp/dummy", File.dirname(__FILE__))
 
   setup do
@@ -17,10 +17,10 @@ class GraphQLGeneratorsInstallGeneratorTest < Rails::Generators::TestCase
   test "it generates a folder structure" do
     run_generator
 
-    assert_file "app/graphql/types/.keep"
-    assert_file "app/graphql/mutations/.keep"
+    assert_file "app/graphql8/types/.keep"
+    assert_file "app/graphql8/mutations/.keep"
     ["base_object", "base_input_object", "base_enum", "base_scalar", "base_union", "base_interface"].each do |base_type|
-      assert_file "app/graphql/types/#{base_type}.rb"
+      assert_file "app/graphql8/types/#{base_type}.rb"
     end
     expected_query_route = %|post "/graphql", to: "graphql#execute"|
     expected_graphiql_route = %|
@@ -39,12 +39,12 @@ class GraphQLGeneratorsInstallGeneratorTest < Rails::Generators::TestCase
     end
 
     expected_schema = <<-RUBY
-class DummySchema < GraphQL::Schema
+class DummySchema < GraphQL8::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
 end
 RUBY
-    assert_file "app/graphql/dummy_schema.rb", expected_schema
+    assert_file "app/graphql8/dummy_schema.rb", expected_schema
 
 
     expected_query_type = <<-RUBY
@@ -63,7 +63,7 @@ module Types
 end
 RUBY
 
-    assert_file "app/graphql/types/query_type.rb", expected_query_type
+    assert_file "app/graphql8/types/query_type.rb", expected_query_type
     assert_file "app/controllers/graphql_controller.rb", EXPECTED_GRAPHQLS_CONTROLLER
   end
 
@@ -76,7 +76,7 @@ RUBY
 
   test "it generates graphql-batch and relay boilerplate" do
     run_generator(["--batch", "--relay"])
-    assert_file "app/graphql/loaders/.keep"
+    assert_file "app/graphql8/loaders/.keep"
     assert_file "Gemfile" do |contents|
       assert_match %r{gem ('|")graphql-batch('|")}, contents
     end
@@ -94,13 +94,13 @@ module Types
       \"Hello World!\"
     end
 
-    field :node, field: GraphQL::Relay::Node.field
+    field :node, field: GraphQL8::Relay::Node.field
   end
 end
 RUBY
 
-    assert_file "app/graphql/types/query_type.rb", expected_query_type
-    assert_file "app/graphql/dummy_schema.rb", EXPECTED_RELAY_BATCH_SCHEMA
+    assert_file "app/graphql8/types/query_type.rb", expected_query_type
+    assert_file "app/graphql8/dummy_schema.rb", EXPECTED_RELAY_BATCH_SCHEMA
   end
 
   test "it doesn't install graphiql when API Only" do
@@ -117,10 +117,10 @@ RUBY
 
   test "it can skip keeps, skip graphiql and customize schema name" do
     run_generator(["--skip-keeps", "--skip-graphiql", "--schema=CustomSchema"])
-    assert_no_file "app/graphql/types/.keep"
-    assert_no_file "app/graphql/mutations/.keep"
-    assert_file "app/graphql/types"
-    assert_file "app/graphql/mutations"
+    assert_no_file "app/graphql8/types/.keep"
+    assert_no_file "app/graphql8/mutations/.keep"
+    assert_file "app/graphql8/types"
+    assert_file "app/graphql8/mutations"
     assert_file "Gemfile" do |contents|
       refute_includes contents, "graphiql-rails"
     end
@@ -129,7 +129,7 @@ RUBY
       refute_includes contents, "GraphiQL::Rails"
     end
 
-    assert_file "app/graphql/custom_schema.rb", /class CustomSchema < GraphQL::Schema/
+    assert_file "app/graphql8/custom_schema.rb", /class CustomSchema < GraphQL8::Schema/
     assert_file "app/controllers/graphql_controller.rb", /CustomSchema\.execute/
   end
 
@@ -180,7 +180,7 @@ end
 RUBY
 
   EXPECTED_RELAY_BATCH_SCHEMA = <<-RUBY
-class DummySchema < GraphQL::Schema
+class DummySchema < GraphQL8::Schema
 
   mutation(Types::MutationType)
   query(Types::QueryType)
@@ -191,13 +191,13 @@ class DummySchema < GraphQL::Schema
     # Here's a simple implementation which:
     # - joins the type name & object.id
     # - encodes it with base64:
-    # GraphQL::Schema::UniqueWithinType.encode(type_definition.name, object.id)
+    # GraphQL8::Schema::UniqueWithinType.encode(type_definition.name, object.id)
   end
 
   # Given a string UUID, find the object
   def self.object_from_id(id, query_ctx)
     # For example, to decode the UUIDs generated above:
-    # type_name, item_id = GraphQL::Schema::UniqueWithinType.decode(id)
+    # type_name, item_id = GraphQL8::Schema::UniqueWithinType.decode(id)
     #
     # Then, based on `type_name` and `id`
     # find an object in your application
@@ -211,8 +211,8 @@ class DummySchema < GraphQL::Schema
     raise(NotImplementedError)
   end
 
-  # GraphQL::Batch setup:
-  use GraphQL::Batch
+  # GraphQL8::Batch setup:
+  use GraphQL8::Batch
 end
 RUBY
 end

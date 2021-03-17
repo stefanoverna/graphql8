@@ -10,9 +10,9 @@ ENV["BACKTRACE"] = "1"
 require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 
-require "graphql"
+require "graphql8"
 require "rake"
-require "graphql/rake_task"
+require "graphql8/rake_task"
 require "benchmark"
 require "pry"
 require "minitest/autorun"
@@ -30,15 +30,15 @@ Minitest.backtrace_filter = Minitest::BacktraceFilter.new
 # This is for convenient access to metadata in test definitions
 assign_metadata_key = ->(target, key, value) { target.metadata[key] = value }
 assign_metadata_flag = ->(target, flag) { target.metadata[flag] = true }
-GraphQL::Schema.accepts_definitions(set_metadata: assign_metadata_key)
-GraphQL::BaseType.accepts_definitions(metadata: assign_metadata_key)
-GraphQL::BaseType.accepts_definitions(metadata2: assign_metadata_key)
-GraphQL::Field.accepts_definitions(metadata: assign_metadata_key)
-GraphQL::Argument.accepts_definitions(metadata: assign_metadata_key)
-GraphQL::Argument.accepts_definitions(metadata_flag: assign_metadata_flag)
-GraphQL::EnumType::EnumValue.accepts_definitions(metadata: assign_metadata_key)
+GraphQL8::Schema.accepts_definitions(set_metadata: assign_metadata_key)
+GraphQL8::BaseType.accepts_definitions(metadata: assign_metadata_key)
+GraphQL8::BaseType.accepts_definitions(metadata2: assign_metadata_key)
+GraphQL8::Field.accepts_definitions(metadata: assign_metadata_key)
+GraphQL8::Argument.accepts_definitions(metadata: assign_metadata_key)
+GraphQL8::Argument.accepts_definitions(metadata_flag: assign_metadata_flag)
+GraphQL8::EnumType::EnumValue.accepts_definitions(metadata: assign_metadata_key)
 
-# Can be used as a GraphQL::Schema::Warden for some purposes, but allows nothing
+# Can be used as a GraphQL8::Schema::Warden for some purposes, but allows nothing
 module NothingWarden
   def self.enum_values(enum_type)
     []
@@ -77,11 +77,11 @@ def star_wars_query(string, variables={}, context: {})
 end
 
 def with_bidirectional_pagination
-  prev_value = GraphQL::Relay::ConnectionType.bidirectional_pagination
-  GraphQL::Relay::ConnectionType.bidirectional_pagination = true
+  prev_value = GraphQL8::Relay::ConnectionType.bidirectional_pagination
+  GraphQL8::Relay::ConnectionType.bidirectional_pagination = true
   yield
 ensure
-  GraphQL::Relay::ConnectionType.bidirectional_pagination = prev_value
+  GraphQL8::Relay::ConnectionType.bidirectional_pagination = prev_value
 end
 
 module TestTracing

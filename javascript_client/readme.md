@@ -1,4 +1,4 @@
-Find the `graphql-ruby-client` docs on the [GraphQL-Ruby website](http://graphql-ruby.org/javascript_client/overview).
+Find the `graphql-ruby-client` docs on the [GraphQL8-Ruby website](http://graphql-ruby.org/javascript_client/overview).
 
 ## License
 
@@ -7,7 +7,7 @@ Find the `graphql-ruby-client` docs on the [GraphQL-Ruby website](http://graphql
 
 ## Development
 
-- With GraphQL-Ruby:
+- With GraphQL8-Ruby:
   - Install the dependencies with `rake js:install`
   - Run the tests with `rake js:test`
 - Stand-alone:

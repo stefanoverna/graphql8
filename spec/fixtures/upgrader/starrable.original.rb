@@ -2,7 +2,7 @@
 
 module Platform
   module Interfaces
-    Starrable = GraphQL::InterfaceType.define do
+    Starrable = GraphQL8::InterfaceType.define do
       name "Starrable"
       description "Things that can be starred."
 

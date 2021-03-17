@@ -29,12 +29,12 @@ def resolve(id:, attributes:)
   if post.update(attributes)
     { post: post }
   else
-    raise GraphQL::ExecutionError, post.errors.full_messages.join(", ")
+    raise GraphQL8::ExecutionError, post.errors.full_messages.join(", ")
   end
 end
 ```
 
-This kind of error handling _does_ express error state (either via `HTTP 500` or by the top-level `"errors"` key), but it doesn't take advantage of GraphQL's type system and can only express one error at a time. It works, but a stronger solution is to treat errors as data.
+This kind of error handling _does_ express error state (either via `HTTP 500` or by the top-level `"errors"` key), but it doesn't take advantage of GraphQL8's type system and can only express one error at a time. It works, but a stronger solution is to treat errors as data.
 
 ## Errors as Data
 
@@ -71,9 +71,9 @@ def resolve(id:, attributes:)
       errors: [],
     }
   else
-    # Convert Rails model errors into GraphQL-ready error hashes
+    # Convert Rails model errors into GraphQL8-ready error hashes
     user_errors = post.errors.map do |attribute, message|
-      # This is the GraphQL argument which corresponds to the validation error:
+      # This is the GraphQL8 argument which corresponds to the validation error:
       path = ["attributes", attribute.camelize]
       {
         path: path,
@@ -131,9 +131,9 @@ Then, client apps can show the error messages to end users, so they might correc
 
 To benefit from "Errors as Data" described above, mutation fields must have `null: true`. Why?
 
-Well, for _non-null_ fields (which have `null: false`), if they return `nil`, then GraphQL aborts the query and removes those fields from the response altogether.
+Well, for _non-null_ fields (which have `null: false`), if they return `nil`, then GraphQL8 aborts the query and removes those fields from the response altogether.
 
-In mutations, when errors happen, the other fields may return `nil`. So, if those other fields have `null: false`, but they return `nil`, the GraphQL will panic and remove the whole mutation from the response, _including_ the errors!
+In mutations, when errors happen, the other fields may return `nil`. So, if those other fields have `null: false`, but they return `nil`, the GraphQL8 will panic and remove the whole mutation from the response, _including_ the errors!
 
 In order to have the rich error data, even when other fields are `nil`, those fields must have `null: true` so that the type system can be obeyed when errors happen.
 

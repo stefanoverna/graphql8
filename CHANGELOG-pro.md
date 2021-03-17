@@ -34,7 +34,7 @@
 
 ### New Features
 
-- Add `GraphQL::Pro::AblySubscriptions` for GraphQL subscriptions over Ably.io transport
+- Add `GraphQL8::Pro::AblySubscriptions` for GraphQL8 subscriptions over Ably.io transport
 
 ## 1.8.2 (22 Oct 2018)
 
@@ -64,7 +64,7 @@
 
 ### Breaking Change
 
-- `PunditIntegration`: instead of raising `MutationAuthorizationFailed` when an argument fails authorization, it will send a `GraphQL::UnauthorizedError` to your `Schema.unauthorized_object` hook. (This is what all other authorization failures do.) To retain the previous behavior, in your base mutation, add:
+- `PunditIntegration`: instead of raising `MutationAuthorizationFailed` when an argument fails authorization, it will send a `GraphQL8::UnauthorizedError` to your `Schema.unauthorized_object` hook. (This is what all other authorization failures do.) To retain the previous behavior, in your base mutation, add:
 
   ```ruby
   def unauthorized_by_pundit(owner, value)
@@ -83,7 +83,7 @@
 
 ### New Features
 
-- Add `GraphQL::Pro::CanCanIntegration` which leverages GraphQL-Ruby's built-in auth
+- Add `GraphQL8::Pro::CanCanIntegration` which leverages GraphQL8-Ruby's built-in auth
 
 ## 1.7.11 (21 Aug 2018)
 
@@ -119,7 +119,7 @@
 
 ### New Features
 
-- Authorization: Add `view`/`access`/`authorize` methods to `GraphQL::Schema::Mutation`
+- Authorization: Add `view`/`access`/`authorize` methods to `GraphQL8::Schema::Mutation`
 
 ## 1.7.5 (19 Apr 2018)
 
@@ -155,7 +155,7 @@
 
 ### New Features
 
-- Support `1.8-pre` versions of GraphQL-Ruby
+- Support `1.8-pre` versions of GraphQL8-Ruby
 
 ### Bug Fix
 
@@ -198,7 +198,7 @@
 
 ### Breaking Changes
 
-- `GraphQL::Pro::UI` renamed to `GraphQL::Pro::Dashboard`
+- `GraphQL8::Pro::UI` renamed to `GraphQL8::Pro::Dashboard`
 
 ### Deprecations
 
@@ -206,7 +206,7 @@
 
 ### New Features
 
-- Added `GraphQL::Pro::Subscriptions`
+- Added `GraphQL8::Pro::Subscriptions`
 - Added subscriptions component to Dashboard
 
 ## 1.5.9 (10 Oct 2017)
@@ -270,17 +270,17 @@
 
 ### New Features
 
-- Routing extensions moved to `using GraphQL::Pro::Routes`
+- Routing extensions moved to `using GraphQL8::Pro::Routes`
 
 ### Deprecations
 
-- Deprecate `using GraphQL::Pro`, move extensions to `GraphQL::Pro::Routes`
+- Deprecate `using GraphQL8::Pro`, move extensions to `GraphQL8::Pro::Routes`
 
 ## 1.5.0 (31 Jul 2017)
 
 ### New Features
 
-- Add `GraphQL::Pro::OperationStore` for persisted queries with Rails
+- Add `GraphQL8::Pro::OperationStore` for persisted queries with Rails
 
 ## 1.4.8 (14 Jul 2017)
 
@@ -352,7 +352,7 @@
 
 ### New Features
 
-- Serve static, persisted queries with `GraphQL::Pro::Repository`
+- Serve static, persisted queries with `GraphQL8::Pro::Repository`
 
 ## 1.2.3 (2 May 2017)
 
@@ -364,7 +364,7 @@
 
 ### Bug Fix
 
-- Raise `GraphQL::Pro::RelationConnection::InvalidRelationError` when a grouped, unordered relation is returned from a field. (This relation can't be stably paginated.)
+- Raise `GraphQL8::Pro::RelationConnection::InvalidRelationError` when a grouped, unordered relation is returned from a field. (This relation can't be stably paginated.)
 
 ## 1.2.1 (3 Mar 2017)
 
@@ -374,7 +374,7 @@
 
 ### Bug Fix
 
-- Support grouped relations in `GraphQL::Pro::RelationConnection`
+- Support grouped relations in `GraphQL8::Pro::RelationConnection`
 
 ## 1.2.0 (1 Mar 2017)
 
@@ -383,7 +383,7 @@
 - Authorize fields based on their parent object, for example:
 
   ```ruby
-  AccountType = GraphQL::ObjectType.define do
+  AccountType = GraphQL8::ObjectType.define do
     name "Account"
     # This field is visible to all users:
     field :name, types.String
@@ -442,4 +442,4 @@
 
 ## 1.0.0
 
-- `GraphQL::Pro` released
+- `GraphQL8::Pro` released

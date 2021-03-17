@@ -14,9 +14,9 @@ module Graphql
         type: :string,
         required: true,
         banner: "TypeName",
-        desc: "Name of this object type (expressed as Ruby or GraphQL)"
+        desc: "Name of this object type (expressed as Ruby or GraphQL8)"
 
-      # Take a type expression in any combination of GraphQL or Ruby styles
+      # Take a type expression in any combination of GraphQL8 or Ruby styles
       # and return it in a specified output style
       # TODO: nullability / list with `mode: :graphql` doesn't work
       # @param type_expresson [String]
@@ -63,7 +63,7 @@ module Graphql
         @type_ruby_name ||= self.class.normalize_type_expression(type_name, mode: :ruby)[0]
       end
 
-      # @return [String] The user-provided type name, as a GraphQL name
+      # @return [String] The user-provided type name, as a GraphQL8 name
       def type_graphql_name
         @type_graphql_name ||= self.class.normalize_type_expression(type_name, mode: :graphql)[0]
       end

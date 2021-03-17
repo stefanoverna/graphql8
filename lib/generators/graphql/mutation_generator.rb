@@ -6,8 +6,8 @@ module Graphql
   module Generators
     # TODO: What other options should be supported?
     #
-    # @example Generate a `GraphQL::Schema::RelayClassicMutation` by name
-    #     rails g graphql:mutation CreatePostMutation
+    # @example Generate a `GraphQL8::Schema::RelayClassicMutation` by name
+    #     rails g graphql8:mutation CreatePostMutation
     class MutationGenerator < Rails::Generators::Base
       include Core
 

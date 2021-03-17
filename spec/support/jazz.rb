@@ -45,7 +45,7 @@ module Jazz
     end
   end
 
-  class BaseArgument < GraphQL::Schema::Argument
+  class BaseArgument < GraphQL8::Schema::Argument
     def initialize(*args, custom: nil, **kwargs)
       @custom = custom
       super(*args, **kwargs)
@@ -59,7 +59,7 @@ module Jazz
   end
 
   # A custom field class that supports the `upcase:` option
-  class BaseField < GraphQL::Schema::Field
+  class BaseField < GraphQL8::Schema::Field
     argument_class BaseArgument
     attr_reader :upcase
     def initialize(*args, **options, &block)
@@ -77,7 +77,7 @@ module Jazz
     end
   end
 
-  class BaseObject < GraphQL::Schema::Object
+  class BaseObject < GraphQL8::Schema::Object
     # Use this overridden field class
     field_class BaseField
 
@@ -101,7 +101,7 @@ module Jazz
   end
 
   module BaseInterface
-    include GraphQL::Schema::Interface
+    include GraphQL8::Schema::Interface
     # Use this overridden field class
     field_class BaseField
 
@@ -113,7 +113,7 @@ module Jazz
     end
   end
 
-  class BaseEnumValue < GraphQL::Schema::EnumValue
+  class BaseEnumValue < GraphQL8::Schema::EnumValue
     def initialize(*args, custom_setting: nil, **kwargs, &block)
       @custom_setting = custom_setting
       super(*args, **kwargs, &block)
@@ -126,7 +126,7 @@ module Jazz
     end
   end
 
-  class BaseEnum < GraphQL::Schema::Enum
+  class BaseEnum < GraphQL8::Schema::Enum
     enum_value_class BaseEnumValue
   end
 
@@ -158,7 +158,7 @@ module Jazz
   end
 
   # A legacy-style interface used by new-style types
-  NamedEntity = GraphQL::InterfaceType.define do
+  NamedEntity = GraphQL8::InterfaceType.define do
     name "NamedEntity"
     field :name, !types.String
   end
@@ -179,7 +179,7 @@ module Jazz
   end
 
 
-  # Here's a new-style GraphQL type definition
+  # Here's a new-style GraphQL8 type definition
   class Ensemble < ObjectWithUpcasedName
     # Test string type names
     # This method should override inherited one
@@ -214,8 +214,8 @@ module Jazz
   end
 
   # Lives side-by-side with an old-style definition
-  using GraphQL::DeprecatedDSL # for ! and types[]
-  InstrumentType = GraphQL::ObjectType.define do
+  using GraphQL8::DeprecatedDSL # for ! and types[]
+  InstrumentType = GraphQL8::ObjectType.define do
     name "Instrument"
     interfaces [NamedEntity]
     implements GloballyIdentifiableType
@@ -230,7 +230,7 @@ module Jazz
     end
   end
 
-  class Key < GraphQL::Schema::Scalar
+  class Key < GraphQL8::Schema::Scalar
     description "A musical key"
     def self.coerce_input(val, ctx)
       Models::Key.from_notation(val)
@@ -241,7 +241,7 @@ module Jazz
     end
   end
 
-  class RawJson < GraphQL::Schema::Scalar
+  class RawJson < GraphQL8::Schema::Scalar
     def self.coerce_input(val, ctx)
       val
     end
@@ -277,12 +277,12 @@ module Jazz
     end
   end
 
-  LegacyInputType = GraphQL::InputObjectType.define do
+  LegacyInputType = GraphQL8::InputObjectType.define do
     name "LegacyInput"
     argument :intValue, !types.Int
   end
 
-  class InspectableInput < GraphQL::Schema::InputObject
+  class InspectableInput < GraphQL8::Schema::InputObject
     argument :string_value, String, required: true, description: "Test description kwarg"
     argument :nested_input, InspectableInput, required: false
     argument :legacy_input, LegacyInputType, required: false
@@ -290,7 +290,7 @@ module Jazz
       [
         # Context is available in the InputObject
         context[:message],
-        # A GraphQL::Query::Arguments instance is available
+        # A GraphQL8::Query::Arguments instance is available
         arguments[:stringValue],
         # Legacy inputs have underscored method access too
         legacy_input ? legacy_input.int_value : "-",
@@ -306,7 +306,7 @@ module Jazz
     field :is_flat, Boolean, null: false, method: :flat
   end
 
-  class PerformingAct < GraphQL::Schema::Union
+  class PerformingAct < GraphQL8::Schema::Union
     possible_types Musician, Ensemble
 
     def self.resolve_type(object, context)
@@ -444,11 +444,11 @@ module Jazz
     end
   end
 
-  class EnsembleInput < GraphQL::Schema::InputObject
+  class EnsembleInput < GraphQL8::Schema::InputObject
     argument :name, String, required: true
   end
 
-  class AddInstrument < GraphQL::Schema::Mutation
+  class AddInstrument < GraphQL8::Schema::Mutation
     null true
     description "Register a new musical instrument in the database"
 
@@ -469,7 +469,7 @@ module Jazz
     end
   end
 
-  class AddSitar < GraphQL::Schema::RelayClassicMutation
+  class AddSitar < GraphQL8::Schema::RelayClassicMutation
     null true
     description "Get Sitar to musical instrument"
 
@@ -481,7 +481,7 @@ module Jazz
     end
   end
 
-  class RenameNamedEntity < GraphQL::Schema::RelayClassicMutation
+  class RenameNamedEntity < GraphQL8::Schema::RelayClassicMutation
     argument :named_entity_id, ID, required: true, loads: NamedEntity
     argument :new_name, String, required: true
 
@@ -498,7 +498,7 @@ module Jazz
     end
   end
 
-  class RenamePerformingAct < GraphQL::Schema::RelayClassicMutation
+  class RenamePerformingAct < GraphQL8::Schema::RelayClassicMutation
     argument :performing_act_id, ID, required: true, loads: PerformingAct
     argument :new_name, String, required: true
 
@@ -515,7 +515,7 @@ module Jazz
     end
   end
 
-  class RenameEnsemble < GraphQL::Schema::RelayClassicMutation
+  class RenameEnsemble < GraphQL8::Schema::RelayClassicMutation
     argument :ensemble_id, ID, required: true, loads: Ensemble
     argument :new_name, String, required: true
 
@@ -531,7 +531,7 @@ module Jazz
     end
   end
 
-  class UpvoteEnsembles < GraphQL::Schema::RelayClassicMutation
+  class UpvoteEnsembles < GraphQL8::Schema::RelayClassicMutation
     argument :ensemble_ids, [ID], required: true, loads: Ensemble
 
     field :ensembles, [Ensemble], null: false
@@ -543,7 +543,7 @@ module Jazz
     end
   end
 
-  class UpvoteEnsemblesAsBands < GraphQL::Schema::RelayClassicMutation
+  class UpvoteEnsemblesAsBands < GraphQL8::Schema::RelayClassicMutation
     argument :ensemble_ids, [ID], required: true, loads: Ensemble, as: :bands
 
     field :ensembles, [Ensemble], null: false
@@ -555,7 +555,7 @@ module Jazz
     end
   end
 
-  class UpvoteEnsemblesIds < GraphQL::Schema::RelayClassicMutation
+  class UpvoteEnsemblesIds < GraphQL8::Schema::RelayClassicMutation
     argument :ensembles_ids, [ID], required: true, loads: Ensemble
 
     field :ensembles, [Ensemble], null: false
@@ -616,7 +616,7 @@ module Jazz
     end
   end
 
-  class CustomContext < GraphQL::Query::Context
+  class CustomContext < GraphQL8::Query::Context
     def [](key)
       if key == :magic_key
         "magic_value"
@@ -631,25 +631,25 @@ module Jazz
   end
 
   module Introspection
-    class TypeType < GraphQL::Introspection::TypeType
+    class TypeType < GraphQL8::Introspection::TypeType
       def name
         object.name.upcase
       end
     end
 
-    class NestedType < GraphQL::Introspection::TypeType
+    class NestedType < GraphQL8::Introspection::TypeType
       def name
         object.name.upcase
       end
 
-      class DeeplyNestedType < GraphQL::Introspection::TypeType
+      class DeeplyNestedType < GraphQL8::Introspection::TypeType
         def name
           object.name.upcase
         end
       end
     end
 
-    class SchemaType < GraphQL::Introspection::SchemaType
+    class SchemaType < GraphQL8::Introspection::SchemaType
       graphql_name "__Schema"
 
       field :is_jazzy, Boolean, null: false
@@ -658,7 +658,7 @@ module Jazz
       end
     end
 
-    class DynamicFields < GraphQL::Introspection::DynamicFields
+    class DynamicFields < GraphQL8::Introspection::DynamicFields
       field :__typename_length, Int, null: false, extras: [:irep_node]
       field :__ast_node_class, String, null: false, extras: [:ast_node]
       def __typename_length(irep_node:)
@@ -670,7 +670,7 @@ module Jazz
       end
     end
 
-    class EntryPoints < GraphQL::Introspection::EntryPoints
+    class EntryPoints < GraphQL8::Introspection::EntryPoints
       field :__classname, String, "The Ruby class name of the root object", null: false
       def __classname
         object.class.name
@@ -679,7 +679,7 @@ module Jazz
   end
 
   # New-style Schema definition
-  class Schema < GraphQL::Schema
+  class Schema < GraphQL8::Schema
     query(Query)
     mutation(Mutation)
     context_class CustomContext

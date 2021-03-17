@@ -4,7 +4,7 @@ var PusherSubscriber = require("./PusherSubscriber")
 /**
  * Modify an Apollo network interface to
  * subscribe an unsubscribe using `cable:`.
- * Based on `addGraphQLSubscriptions` from `subscriptions-transport-ws`.
+ * Based on `addGraphQL8Subscriptions` from `subscriptions-transport-ws`.
  *
  * This function assigns `.subscribe` and `.unsubscribe` functions
  * to the provided networkInterface.
@@ -27,8 +27,8 @@ var PusherSubscriber = require("./PusherSubscriber")
  *   });
  *
  *   // Add subscriptions to the network interface
- *   var addGraphQLSubscriptions = require("graphql-ruby-client/subscriptions/addGraphQLSubscriptions")
- *   addGraphQLSubscriptions(RailsNetworkInterface, {cable: cable})
+ *   var addGraphQL8Subscriptions = require("graphql-ruby-client/subscriptions/addGraphQL8Subscriptions")
+ *   addGraphQL8Subscriptions(RailsNetworkInterface, {cable: cable})
  *
  *   // Optionally, add persisted query support:
  *   var OperationStoreClient = require("./OperationStoreClient")
@@ -36,14 +36,14 @@ var PusherSubscriber = require("./PusherSubscriber")
  *
  * @example Subscriptions with Pusher & graphql-pro
  *   var pusher = new Pusher(appId, options)
- *   addGraphQLSubscriptions(RailsNetworkInterface, {pusher: pusher})
+ *   addGraphQL8Subscriptions(RailsNetworkInterface, {pusher: pusher})
  *
  * @param {Object} networkInterface - an HTTP NetworkInterface
  * @param {ActionCable.Consumer} options.cable - A cable for subscribing with
  * @param {Pusher} options.pusher - A pusher client for subscribing with
  * @return {void}
 */
-function addGraphQLSubscriptions(networkInterface, options) {
+function addGraphQL8Subscriptions(networkInterface, options) {
   if (!options) {
     options = {}
   }
@@ -72,4 +72,4 @@ function addGraphQLSubscriptions(networkInterface, options) {
   return networkInterfaceWithSubscriptions
 }
 
-module.exports = addGraphQLSubscriptions
+module.exports = addGraphQL8Subscriptions

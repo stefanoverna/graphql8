@@ -9,7 +9,7 @@ index: 1
 class_based_api: true
 ---
 
-Scalars are "leaf" values in GraphQL. There are several built-in scalars, and you can define custom scalars, too. ({% internal_link "Enums", "/type_definitions/enums" %} are also leaf values.) The built-in scalars are:
+Scalars are "leaf" values in GraphQL8. There are several built-in scalars, and you can define custom scalars, too. ({% internal_link "Enums", "/type_definitions/enums" %} are also leaf values.) The built-in scalars are:
 
 - `String`, like a JSON or Ruby string
 - `Int`, like a JSON or Ruby integer
@@ -34,7 +34,7 @@ field :is_top_ranked, Boolean, null: false
 # ID field
 field :id, ID, null: false
 # ISO8601DateTime field
-field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+field :created_at, GraphQL8::Types::ISO8601DateTime, null: false
 ```
 
 Custom scalars (see below) can also be used by name:
@@ -52,15 +52,15 @@ scalar DateTime
 
 ## Custom Scalars
 
-You can implement your own scalars by extending {{ "GraphQL::Schema::Scalar" | api_doc }}. For example:
+You can implement your own scalars by extending {{ "GraphQL8::Schema::Scalar" | api_doc }}. For example:
 
 ```ruby
-# app/graphql/types/base_scalar.rb
+# app/graphql8/types/base_scalar.rb
 # Make a base class:
-class Types::BaseScalar < GraphQL::Schema::Scalar
+class Types::BaseScalar < GraphQL8::Schema::Scalar
 end
 
-# app/graphql/types/url.rb
+# app/graphql8/types/url.rb
 class Types::Url < Types::BaseScalar
   description "A valid URL, transported as a string"
 
@@ -71,7 +71,7 @@ class Types::Url < Types::BaseScalar
       # It's valid, return the URI object
       url
     else
-      raise GraphQL::CoercionError, "#{input_value.inspect} is not a valid URL"
+      raise GraphQL8::CoercionError, "#{input_value.inspect} is not a valid URL"
     end
   end
 
@@ -84,10 +84,10 @@ end
 
 Your class must define two class methods:
 
-- `self.coerce_input` takes a GraphQL input and converts it into a Ruby value
-- `self.coerce_result` takes the return value of a field and prepares it for the GraphQL response JSON
+- `self.coerce_input` takes a GraphQL8 input and converts it into a Ruby value
+- `self.coerce_result` takes the return value of a field and prepares it for the GraphQL8 response JSON
 
-When incoming data is incorrect, the method may raise {{ "GraphQL::CoercionError" | api_doc }}, which will be returned to the client in the `"errors"` key.
+When incoming data is incorrect, the method may raise {{ "GraphQL8::CoercionError" | api_doc }}, which will be returned to the client in the `"errors"` key.
 
 
 Scalar classes are never initialized; only their `.coerce_*` methods are called at runtime.

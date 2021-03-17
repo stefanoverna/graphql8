@@ -10,7 +10,7 @@ desc: How to do common tasks
 
 Returning Route URLs
 ====================
-With GraphQL there is less of a need to include resource URLs to other REST resources, however sometimes you want to use Rails routing to include a URL as one of your fields. A common use case would be to build HTML format URLs to render a link in your React UI. In that case you can add the Rails route helpers to the execution context as shown below.
+With GraphQL8 there is less of a need to include resource URLs to other REST resources, however sometimes you want to use Rails routing to include a URL as one of your fields. A common use case would be to build HTML format URLs to render a link in your React UI. In that case you can add the Rails route helpers to the execution context as shown below.
 
 Example
 -------

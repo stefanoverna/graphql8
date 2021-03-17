@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 require "spec_helper"
-require "generators/graphql/mutation_generator"
+require "generators/graphql8/mutation_generator"
 
-class GraphQLGeneratorsMutationGeneratorTest < BaseGeneratorTest
-  tests Graphql::Generators::MutationGenerator
+class GraphQL8GeneratorsMutationGeneratorTest < BaseGeneratorTest
+  tests graphql8::Generators::MutationGenerator
 
   destination File.expand_path("../../../tmp/dummy", File.dirname(__FILE__))
 
@@ -15,13 +15,13 @@ class GraphQLGeneratorsMutationGeneratorTest < BaseGeneratorTest
     end
 
     FileUtils.cd(destination_root) do
-      `rails g graphql:install --directory #{directory}`
+      `rails g graphql8:install --directory #{directory}`
     end
   end
 
   UPDATE_NAME_MUTATION = <<-RUBY
 module Mutations
-  class UpdateName < GraphQL::Schema::RelayClassicMutation
+  class UpdateName < GraphQL8::Schema::RelayClassicMutation
     # TODO: define return fields
     # field :post, Types::PostType, null: false
 
@@ -53,13 +53,13 @@ RUBY
   test "it generates an empty resolver by name" do
     setup
     run_generator(["UpdateName"])
-    assert_file "app/graphql/mutations/update_name.rb", UPDATE_NAME_MUTATION
+    assert_file "app/graphql8/mutations/update_name.rb", UPDATE_NAME_MUTATION
   end
 
   test "it inserts the field into the MutationType" do
     setup
     run_generator(["UpdateName"])
-    assert_file "app/graphql/types/mutation_type.rb", EXPECTED_MUTATION_TYPE
+    assert_file "app/graphql8/types/mutation_type.rb", EXPECTED_MUTATION_TYPE
   end
 
   test "it allows for user-specified directory" do

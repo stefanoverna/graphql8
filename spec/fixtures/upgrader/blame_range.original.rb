@@ -2,7 +2,7 @@
 
 module Platform
   module Objects
-    BlameRange = GraphQL::ObjectType.define do
+    BlameRange = GraphQL8::ObjectType.define do
       name "BlameRange"
       description "Represents a range of information from a Git blame."
 

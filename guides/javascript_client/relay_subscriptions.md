@@ -4,7 +4,7 @@ doc_stub: false
 search: true
 section: JavaScript Client
 title: Relay Subscriptions
-desc: GraphQL subscriptions with GraphQL-Ruby and Relay Modern
+desc: GraphQL8 subscriptions with GraphQL8-Ruby and Relay Modern
 index: 3
 ---
 
@@ -124,7 +124,7 @@ function fetchOperation(operation, variables, cacheConfig) {
 For example, `Environment.js` may look like:
 
 ```js
-// This function sends a GraphQL query to the server
+// This function sends a GraphQL8 query to the server
 const fetchOperation = function(operation, variables, cacheConfig) {
   const bodyValues = {
     variables,
@@ -164,5 +164,5 @@ const subscriptionHandler = createHandler({pusher: pusherClient, fetchOperation:
 const network = Network.create(fetchQuery, subscriptionHandler)
 ```
 
-Since `OperationStoreClient` is in the `fetchOperation` function, it will apply to all GraphQL operations.
+Since `OperationStoreClient` is in the `fetchOperation` function, it will apply to all GraphQL8 operations.
 

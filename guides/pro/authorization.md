@@ -2,30 +2,30 @@
 layout: guide
 doc_stub: false
 search: true
-section: GraphQL Pro
+section: GraphQL8 Pro
 title: Authorization Framework
-desc: GraphQL::Pro's comprehensive access control system, including CanCan and Pundit integrations
+desc: GraphQL8::Pro's comprehensive access control system, including CanCan and Pundit integrations
 index: 2
 pro: true
 ---
 
 __NOTE:__ A new {% internal_link "Pundit integration", "/authorization/pundit_integration" %} and {% internal_link "CanCan integration",
-"/authorization/can_can_integration" %} are available. They leverage GraphQL-Ruby's new {% internal_link "built-in auth", "/authorization/overview" %} system and has better support for inheritance and customization. If possible, use those instead!
+"/authorization/can_can_integration" %} are available. They leverage GraphQL8-Ruby's new {% internal_link "built-in auth", "/authorization/overview" %} system and has better support for inheritance and customization. If possible, use those instead!
 
 ------
 
-`GraphQL::Pro` provides a comprehensive, unified authorization framework for the GraphQL runtime.
+`GraphQL8::Pro` provides a comprehensive, unified authorization framework for the GraphQL8 runtime.
 
 Fields and types can be [authorized at runtime](#runtime-authorization), [rejected during validation](#access-authorization), or [hidden entirely](#visibility-authorization). Default authorization can be [applied at schema-level](#fallback-authorization)
 
-`GraphQL::Pro` integrates has out-of-the-box [Pundit support](#pundit) and [CanCan support](#cancan) and supports [custom authorization strategies](#custom-authorization-strategy)
+`GraphQL8::Pro` integrates has out-of-the-box [Pundit support](#pundit) and [CanCan support](#cancan) and supports [custom authorization strategies](#custom-authorization-strategy)
 
 ## Configuration
 
 To use authorization, specify an authorization strategy in your schema:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   # ...
   authorization :pundit
   # or:
@@ -52,7 +52,7 @@ result = MySchema.execute(query_string, context: { current_user: current_user })
 You can specify a fallback auth configuration for the entire schema:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   # Always require logged-in users to see anything:
   authorization(..., fallback: { view: :logged_in })
 end
@@ -65,7 +65,7 @@ This rule will be applied to fields which don't have a rule of their own or a ru
 You can customize the `current_user:` context key with `authorization(..., current_user: ...)`:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   # Current user is identified as `ctx[:viewer]`
   authorization :pundit, current_user: :viewer
 end
@@ -93,7 +93,7 @@ end
 Also, you can specify authentication at __type-level__, for example:
 
 ```ruby
-AccountBalanceType = GraphQL::ObjectType.define do
+AccountBalanceType = GraphQL8::ObjectType.define do
   name "AccountBalance"
   # Only billing administrators can see
   # objects of this type:
@@ -113,7 +113,7 @@ If an object doesn't pass permission checks, it is removed from the response. If
 You can also limit access to fields based on their parent objects with `parent_role:`. For example, to restrict a student's GPA to that student:
 
 ```ruby
-StudentType = GraphQL::ObjectType.define do
+StudentType = GraphQL8::ObjectType.define do
   name "Student"
   field :name, !types.String
   field :gpa, types.Float do
@@ -136,11 +136,11 @@ When an object fails a runtime authorization check, the default behavior is:
 You can override this behavior by providing a schema-level `unauthorized_object` function:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   unauthorized_object ->(obj, ctx) { ... }
 end
 # OR
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   unauthorized_object(MyUnauthorizedObjectHook)
 end
 ```
@@ -153,11 +153,11 @@ The function is called with two arguments:
 Within the function, you can:
 
 - Write log entries
-- Add GraphQL errors, for example:
+- Add GraphQL8 errors, for example:
 
   ```ruby
   # Add an error to the graphql response:
-  err = GraphQL::ExecutionError.new("You don't have permission to see #{obj.name}")
+  err = GraphQL8::ExecutionError.new("You don't have permission to see #{obj.name}")
   ctx.add_error(err)
   ```
 
@@ -204,28 +204,28 @@ You can prevent access to fields and types from certain users. (They can see the
 # but they may not request them:
 field :telephone_number, types.String, access: :owner
 
-AddressType = GraphQL::ObjectType.define do
+AddressType = GraphQL8::ObjectType.define do
   name "Address"
   access :owner
   # ...
 end
 ```
 
-When a user requests access to an unpermitted field, GraphQL returns an error message. You can customize this error message by providing an `unauthorized_fields` hook:
+When a user requests access to an unpermitted field, GraphQL8 returns an error message. You can customize this error message by providing an `unauthorized_fields` hook:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   # ...
   unauthorized_fields ->(irep_nodes, ctx) {
-    GraphQL::AnalysisError.new("Sorry, you're not allowed to see that!")
+    GraphQL8::AnalysisError.new("Sorry, you're not allowed to see that!")
   }
 end
 ```
 
-The hook should return a {{ "GraphQL::AnalysisError" | api_doc }}. It is called with:
+The hook should return a {{ "GraphQL8::AnalysisError" | api_doc }}. It is called with:
 
-- `irep_nodes`: an array of {{ "GraphQL::InternalRepresentation::Node" | api_doc }}s which represent unpermitted fields in the incoming query.
-- `ctx`: the {{ "GraphQL::Query::Context" | api_doc }} (which includes `:current_user`).
+- `irep_nodes`: an array of {{ "GraphQL8::InternalRepresentation::Node" | api_doc }}s which represent unpermitted fields in the incoming query.
+- `ctx`: the {{ "GraphQL8::Query::Context" | api_doc }} (which includes `:current_user`).
 
 ## Visibility Authorization
 
@@ -241,7 +241,7 @@ The `view` keyword specifies visibility permission:
 field :social_security_number, types.String, view: :admin
 
 # type-level:
-PassportApplicationType = GraphQL::ObjectType.define do
+PassportApplicationType = GraphQL8::ObjectType.define do
   name "PassportApplication"
   view :admin
   # ...
@@ -250,17 +250,17 @@ end
 
 ## Pundit
 
-__NOTE:__ A new {% internal_link "Pundit integration", "/authorization/pundit_integration" %} is available. It leverages GraphQL-Ruby's new {% internal_link "built-in auth", "/authorization/overview" %} system and has better support for inheritance and customization. If possible, use that one instead!
+__NOTE:__ A new {% internal_link "Pundit integration", "/authorization/pundit_integration" %} is available. It leverages GraphQL8-Ruby's new {% internal_link "built-in auth", "/authorization/overview" %} system and has better support for inheritance and customization. If possible, use that one instead!
 
-`GraphQL::Pro` includes built-in support for [Pundit](https://github.com/elabs/pundit):
+`GraphQL8::Pro` includes built-in support for [Pundit](https://github.com/elabs/pundit):
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   authorization(:pundit)
 end
 ```
 
-Now, GraphQL will use your `*Policy` classes during execution. To find a policy class:
+Now, GraphQL8 will use your `*Policy` classes during execution. To find a policy class:
 
 - [access](#access-authorization) and [visibility](#visibility-authorization) checks use the type name (or return type name) to find a policy class
 - [runtime](#runtime-authorization) checks use the object to find a policy class (using Pundit's provided lookup)
@@ -301,7 +301,7 @@ authorize(:pundit, namespace: Policies)
 Now, policies will be looked up by name inside `Policies::`, for example:
 
 ```ruby
-AccountType = GraphQL::ObjectType.define do
+AccountType = GraphQL8::ObjectType.define do
   name "Account"
   access :admin # will use Policies::AccountPolicy#admin?
   # ...
@@ -316,17 +316,17 @@ See [Scoping](#scoping) for details.
 
 ## CanCan
 
-__NOTE:__ A new {% internal_link "CanCan integration", "/authorization/can_can_integration" %} is available. It leverages GraphQL-Ruby's new {% internal_link "built-in auth", "/authorization/overview" %} system and has better support for inheritance and customization. If possible, use that one instead!
+__NOTE:__ A new {% internal_link "CanCan integration", "/authorization/can_can_integration" %} is available. It leverages GraphQL8-Ruby's new {% internal_link "built-in auth", "/authorization/overview" %} system and has better support for inheritance and customization. If possible, use that one instead!
 
-`GraphQL::Pro` includes built-in support for [CanCan](https://github.com/CanCanCommunity/cancancan):
+`GraphQL8::Pro` includes built-in support for [CanCan](https://github.com/CanCanCommunity/cancancan):
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   authorization(:cancan)
 end
 ```
 
-GraphQL will initialize your `Ability` class at the beginning of the query and pass permissions to the `#can?` method.
+GraphQL8 will initialize your `Ability` class at the beginning of the query and pass permissions to the `#can?` method.
 
 ```ruby
 field :phone_number, PhoneNumberType, authorize: :view
@@ -348,22 +348,22 @@ See [Scoping](#scoping) for details.
 
 ### Custom Ability Class
 
-By default, GraphQL looks for a top-level `Ability` class. You can specify a different class with the `ability_class:` option. For example:
+By default, GraphQL8 looks for a top-level `Ability` class. You can specify a different class with the `ability_class:` option. For example:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   authorization(:cancan, ability_class: Permissions::CustomAbility)
 end
 ```
 
-Now, GraphQL will use `Permissions::CustomAbility#can?` to determine permissions.
+Now, GraphQL8 will use `Permissions::CustomAbility#can?` to determine permissions.
 
 ## Custom Authorization Strategy
 
 You can provide custom authorization logic by providing a class:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   # Custom authorization strategy class:
   authorization(MyAuthStrategy)
 end

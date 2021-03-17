@@ -13,8 +13,8 @@
 module StaticValidationHelpers
   def errors
     target_schema = schema
-    validator = GraphQL::StaticValidation::Validator.new(schema: target_schema)
-    query = GraphQL::Query.new(target_schema, query_string)
+    validator = GraphQL8::StaticValidation::Validator.new(schema: target_schema)
+    query = GraphQL8::Query.new(target_schema, query_string)
     validator.validate(query)[:errors].map(&:to_h)
   end
 

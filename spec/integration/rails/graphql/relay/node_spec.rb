@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 require "spec_helper"
 
-describe GraphQL::Relay::Node do
+describe GraphQL8::Relay::Node do
   describe ".interface" do
     it "is a default relay type" do
-      assert_equal true, GraphQL::Relay::Node.interface.default_relay?
+      assert_equal true, GraphQL8::Relay::Node.interface.default_relay?
     end
   end
 
@@ -13,7 +13,7 @@ describe GraphQL::Relay::Node do
       it 'creates a field with the custom definition' do
         faction = StarWars::DATA['Faction'][0]
 
-        node_field = GraphQL::Relay::Node.field do
+        node_field = GraphQL8::Relay::Node.field do
           name "nod3"
           description "The Relay Node Field"
           resolve ->(_, _ , _) { faction }
@@ -103,14 +103,14 @@ describe GraphQL::Relay::Node do
 
     describe "setting a description" do
       it "allows you to set a description" do
-        node_field = GraphQL::Relay::Node.field
+        node_field = GraphQL8::Relay::Node.field
         node_field.description = "Hello, World!"
         assert_equal "Hello, World!", node_field.description
       end
     end
 
     it 'finds objects by id' do
-      id = GraphQL::Schema::UniqueWithinType.encode("Faction", "1")
+      id = GraphQL8::Schema::UniqueWithinType.encode("Faction", "1")
       result = star_wars_query(%|{
         node(id: "#{id}") {
           id,
@@ -149,7 +149,7 @@ describe GraphQL::Relay::Node do
       it 'creates a field with the custom definition' do
         factions = StarWars::DATA['Faction']
 
-        node_field = GraphQL::Relay::Node.plural_field do
+        node_field = GraphQL8::Relay::Node.plural_field do
           name "nodez"
           description "The Relay Nodes Field"
           resolve ->(_, _ , _) { factions }
@@ -209,8 +209,8 @@ describe GraphQL::Relay::Node do
     end
 
     it 'finds objects by ids' do
-      id = GraphQL::Schema::UniqueWithinType.encode("Faction", "1")
-      id2 = GraphQL::Schema::UniqueWithinType.encode("Faction", "2")
+      id = GraphQL8::Schema::UniqueWithinType.encode("Faction", "1")
+      id2 = GraphQL8::Schema::UniqueWithinType.encode("Faction", "2")
 
       result = star_wars_query(%|{
         nodes(ids: ["#{id}", "#{id2}"]) {
@@ -257,7 +257,7 @@ describe GraphQL::Relay::Node do
     end
 
     it 'is marked as relay_nodes_field' do
-      assert GraphQL::Relay::Node.plural_field.relay_nodes_field
+      assert GraphQL8::Relay::Node.plural_field.relay_nodes_field
     end
   end
 end

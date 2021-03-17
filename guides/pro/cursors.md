@@ -2,14 +2,14 @@
 layout: guide
 doc_stub: false
 search: true
-section: GraphQL Pro
+section: GraphQL8 Pro
 title: Stable Cursors for ActiveRecord
 desc: Value-based cursors for stable pagination over ActiveRecord::Relations
 index: 5
 pro: true
 ---
 
-`GraphQL::Pro` includes a mechanism for serving _stable_ cursors for `ActiveRecord::Relation`s based on column values. If objects are created or destroyed during pagination, the list of items won't be disrupted.
+`GraphQL8::Pro` includes a mechanism for serving _stable_ cursors for `ActiveRecord::Relation`s based on column values. If objects are created or destroyed during pagination, the list of items won't be disrupted.
 
 A new `RelationConnection` is applied by default. It is backwards-compatible with existing offset-based cursors. See ["Opting Out"](#opting-out) below if you wish to continue using offset-based pagination.
 
@@ -54,29 +54,29 @@ Products.select("max(price) as price").group("category_id").order("price, catego
 
 For ungrouped relations, this issue is handled automatically by adding the model's `primary_key` to the order values.
 
-If you provide an unordered, grouped relation, `GraphQL::Pro::RelationConnection::InvalidRelationError` will be raised because an unordered relation _cannot_ be paginated in a stable way.
+If you provide an unordered, grouped relation, `GraphQL8::Pro::RelationConnection::InvalidRelationError` will be raised because an unordered relation _cannot_ be paginated in a stable way.
 
 ## Backwards Compatibility
 
-`GraphQL::Pro`'s `RelationConnection` is backwards-compatible. If it receives an offset-based cursor, it uses that cursor for the next resolution, then returns value-based cursors in the next result.
+`GraphQL8::Pro`'s `RelationConnection` is backwards-compatible. If it receives an offset-based cursor, it uses that cursor for the next resolution, then returns value-based cursors in the next result.
 
 If you're also switching to {% internal_link "encrypted cursors","/pro/encoders" %}, you'll need a {% internal_link "versioned encoder","/pro/encoders#versioning" %}, too. This way, _both_ unencrypted _and_ encrypted cursors will be accepted! For example:
 
 ```ruby
 # Define an encrypted encoder for use with cursors:
-EncryptedCursorEncoder = MyEncoder = GraphQL::Pro::Encoder.define do
+EncryptedCursorEncoder = MyEncoder = GraphQL8::Pro::Encoder.define do
   key("f411f30495fe688cb349d...")
 end
 
 # Make a versioned encoder combining new & old
-VersionedCursorEncoder = GraphQL::Pro::Encoder.versioned(
+VersionedCursorEncoder = GraphQL8::Pro::Encoder.versioned(
   # New encrypted encoder:
   EncryptedCursorEncoder
   # Old plaintext encoder (this is the default):
-  GraphQL::Schema::Base64Encoder
+  GraphQL8::Schema::Base64Encoder
 )
 
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   # Apply the versioned encoder:
   cursor_encoder(VersionedCursorEncoder)
 end
@@ -86,16 +86,16 @@ Now, _both_ unencrypted and encrypted cursors will be accepted.
 
 ## Opting Out
 
-If you don't want `GraphQL::Pro`'s new cursor behavior, re-register the offset-based `RelationConnection`:
+If you don't want `GraphQL8::Pro`'s new cursor behavior, re-register the offset-based `RelationConnection`:
 
 ```ruby
-MySchema = GraphQL::Schema.define { ... }
-# Always use the offset-based connection, override `GraphQL::Pro::RelationConnection`
-GraphQL::Relay::BaseConnection.register_connection_implementation(
-  ActiveRecord::Relation, GraphQL::Relay::RelationConnection
+MySchema = GraphQL8::Schema.define { ... }
+# Always use the offset-based connection, override `GraphQL8::Pro::RelationConnection`
+GraphQL8::Relay::BaseConnection.register_connection_implementation(
+  ActiveRecord::Relation, GraphQL8::Relay::RelationConnection
 )
 ```
 
 ## ActiveRecord Versions
 
-`GraphQL::Pro::RelationConnection` supports ActiveRecord `>= 4.1.0`.
+`GraphQL8::Pro::RelationConnection` supports ActiveRecord `>= 4.1.0`.

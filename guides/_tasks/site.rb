@@ -101,10 +101,10 @@ namespace :site do
   YARD::Rake::YardocTask.new(:prepare_yardoc)
 
   task build_doc: :prepare_yardoc do
-    require_relative "../../lib/graphql/version"
+    require_relative "../../lib/graphql8/version"
 
     def to_rubydoc_url(path)
-      "/api-doc/#{GraphQL::VERSION}/" + path
+      "/api-doc/#{GraphQL8::VERSION}/" + path
         .gsub("::", "/")                        # namespaces
         .sub(/#(.+)$/, "#\\1-instance_method")  # instance methods
         .sub(/\.(.+)$/, "#\\1-class_method")    # class methods
@@ -123,7 +123,7 @@ doc_stub: true
 %{documentation}
 PAGE
 
-    puts "Preparing YARD docs @ v#{GraphQL::VERSION} for search index..."
+    puts "Preparing YARD docs @ v#{GraphQL8::VERSION} for search index..."
     registry = YARD::Registry.load!(".yardoc")
     files_target = "guides/yardoc"
     FileUtils.rm_rf(files_target)

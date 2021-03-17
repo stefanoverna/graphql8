@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 require "spec_helper"
-require "generators/graphql/union_generator"
+require "generators/graphql8/union_generator"
 
-class GraphQLGeneratorsUnionGeneratorTest < BaseGeneratorTest
-  tests Graphql::Generators::UnionGenerator
+class GraphQL8GeneratorsUnionGeneratorTest < BaseGeneratorTest
+  tests graphql8::Generators::UnionGenerator
 
   test "it generates a union with possible types" do
     commands = [
-      # GraphQL-style:
+      # GraphQL8-style:
       ["WingedCreature", "Insect", "Bird"],
       # Ruby-style:
       ["Types::WingedCreatureType", "Types::InsectType", "Types::BirdType"],
@@ -24,13 +24,13 @@ RUBY
     commands.each do |c|
       prepare_destination
       run_generator(c)
-      assert_file "app/graphql/types/winged_creature_type.rb", expected_content
+      assert_file "app/graphql8/types/winged_creature_type.rb", expected_content
     end
   end
 
   test "it works with no possible types" do
     commands = [
-      # GraphQL-style:
+      # GraphQL8-style:
       ["WingedCreature"],
       # Ruby-style:
       ["Types::WingedCreatureType"],
@@ -46,7 +46,7 @@ RUBY
     commands.each do |c|
       prepare_destination
       run_generator(c)
-      assert_file "app/graphql/types/winged_creature_type.rb", expected_content
+      assert_file "app/graphql8/types/winged_creature_type.rb", expected_content
     end
   end
 

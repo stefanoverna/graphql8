@@ -8,9 +8,9 @@ desc: Build and customize Relay-style connection types
 index: 1
 ---
 
-Relay expresses [one-to-many relationships with _connections_](https://facebook.github.io/relay/graphql/connections.htm). Connections support pagination, filtering and metadata in a robust way.
+Relay expresses [one-to-many relationships with _connections_](https://facebook.github.io/relay/graphql8/connections.htm). Connections support pagination, filtering and metadata in a robust way.
 
-`graphql-ruby` includes built-in connection support for `Array`, `ActiveRecord::Relation`s, `Sequel::Dataset`s, and `Mongoid::Criteria`s. You can define custom connection classes to expose other collections with GraphQL.
+`graphql-ruby` includes built-in connection support for `Array`, `ActiveRecord::Relation`s, `Sequel::Dataset`s, and `Mongoid::Criteria`s. You can define custom connection classes to expose other collections with GraphQL8.
 
 ## Connection fields
 
@@ -19,9 +19,9 @@ To define a connection field, use the `field` method. For a return type, get a t
 For example:
 
 ```ruby
-class PostType < GraphQL::Schema::Object
+class PostType < GraphQL8::Schema::Object
   # `Post#comments` returns an ActiveRecord::Relation
-  # The GraphQL field returns a Connection
+  # The GraphQL8 field returns a Connection
   field :comments, CommentType.connection_type, null: false
   # `Post#similar_posts` returns an Array
   field :similar_posts, PostType.connection_type, null: false
@@ -30,7 +30,7 @@ class PostType < GraphQL::Schema::Object
 end
 ```
 
-(GraphQL-Ruby applies connection logic because the return type's name ends in `Connection`. You can manually override this with `connection: true` or `connection: false`.)
+(GraphQL8-Ruby applies connection logic because the return type's name ends in `Connection`. You can manually override this with `connection: true` or `connection: false`.)
 
 You can also define custom arguments and a custom resolve function for connections, just like other fields:
 
@@ -61,7 +61,7 @@ field :featured_comments, CommentType.connection_type, null: false, max_page_siz
 In addition, you can set a global default for all connection that do not specify a `max_page_size`:
 
 ```ruby
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   default_max_page_size 100
 end
 ```
@@ -72,12 +72,12 @@ You can customize connection and edge types by using the class-based API:
 
 ```ruby
 # Make an edge class for use in the connection below:
-class PostEdgeType < GraphQL::Types::Relay::BaseEdge
+class PostEdgeType < GraphQL8::Types::Relay::BaseEdge
   node_type(PostType)
 end
 
 # Make a customized connection type
-class PostConnectionWithTotalCountType < GraphQL::Types::Relay::BaseConnection
+class PostConnectionWithTotalCountType < GraphQL8::Types::Relay::BaseConnection
   edge_type(PostEdgeType)
 
   field :total_count, Integer, null: false
@@ -93,7 +93,7 @@ end
 Now, you can use `PostConnectionWithTotalCountType` to define a connection with the "totalCount" field:
 
 ```ruby
-class AuthorType < GraphQL::Schema::Object
+class AuthorType < GraphQL8::Schema::Object
   # Use the custom connection type:
   field :posts, PostConnectionWithTotalCountType, null: false, connection: true
 end
@@ -117,7 +117,7 @@ In the same vein, you can extend your `*Edge` classes with extra fields.
 
 ### Customizing Base Classes
 
-The provided classes in {{ "GraphQL::Types::Relay" | api_doc }} extend {{ "Schema::Object" | api_doc }}, but if you want to add your own extensions, you can build your own type system using the built-in ones for inspiration.
+The provided classes in {{ "GraphQL8::Types::Relay" | api_doc }} extend {{ "Schema::Object" | api_doc }}, but if you want to add your own extensions, you can build your own type system using the built-in ones for inspiration.
 
 For example, to make your connection classes extend your _own_ base object, you could add a base connection class to your app:
 
@@ -127,7 +127,7 @@ class Types::BaseConnection < Types::BaseObject
 end
 ```
 
-Then take code from {{ "GraphQL::Types::Relay::BaseConnection" | api_doc }} and adapt it to your app.
+Then take code from {{ "GraphQL8::Types::Relay::BaseConnection" | api_doc }} and adapt it to your app.
 
 You can mix-and-match customized and built-in types. For example, if you customize the base `Edge` class, you can still use the built-in {{ "Types::Relay::PageInfo" | api_doc }} class.
 
@@ -136,9 +136,9 @@ You can mix-and-match customized and built-in types. For example, if you customi
 For more robust custom edges, you can define a custom edge class. It will be `obj` in the edge type's resolve function. For example, to define a membership edge:
 
 ```ruby
-# Make sure to familiarize yourself with GraphQL::Relay::Edge --
+# Make sure to familiarize yourself with GraphQL8::Relay::Edge --
 # you have to avoid naming conflicts here!
-class MembershipSinceEdge < GraphQL::Relay::Edge
+class MembershipSinceEdge < GraphQL8::Relay::Edge
   # Cache `membership` to avoid multiple DB queries
   def membership
     @membership ||= begin
@@ -164,7 +164,7 @@ Then, hook it up with custom edge type and custom connection type:
 
 ```ruby
 # Person => Membership => Team
-class MembershipSinceEdgeType < GraphQL::Types::Relay::BaseEdge
+class MembershipSinceEdgeType < GraphQL8::Types::Relay::BaseEdge
   node_type(TeamType)
 
   field :member_since, Integer, null: false,
@@ -174,7 +174,7 @@ class MembershipSinceEdgeType < GraphQL::Types::Relay::BaseEdge
     method: :primary?
 end
 
-class TeamMembershipsConnectionType < GraphQL::Types::Relay::BaseConnection
+class TeamMembershipsConnectionType < GraphQL8::Types::Relay::BaseConnection
   # Here, hook up your custom class with `edge_class:`
   edge_type(MembershipSinceEdgeType, edge_class: MembershipSinceEdge)
 end
@@ -187,7 +187,7 @@ Maybe you need to make a connection object yourself (for example, to return a co
 ```ruby
 items = [...]     # your collection objects
 args = {}         # stub out arguments for this connection object
-connection_class = GraphQL::Relay::BaseConnection.connection_for_nodes(items)
+connection_class = GraphQL8::Relay::BaseConnection.connection_for_nodes(items)
 connection_class.new(items, args)
 ```
 
@@ -199,26 +199,26 @@ For specifying a connection based on an `ActiveRecord::Relation` or `Sequel::Dat
 object = {}       # your newly created object
 items = [...]     # your AR or Sequel collection
 args = {}         # stub out arguments for this connection object
-items_connection = GraphQL::Relay::RelationConnection.new(
+items_connection = GraphQL8::Relay::RelationConnection.new(
   items,
   args
 )
-edge = GraphQL::Relay::Edge.new(object, items_connection)
+edge = GraphQL8::Relay::Edge.new(object, items_connection)
 ```
 
-Additionally, connections may be provided with the `GraphQL::Field` that created them. This may be used for custom introspection or instrumentation. For example,
+Additionally, connections may be provided with the `GraphQL8::Field` that created them. This may be used for custom introspection or instrumentation. For example,
 
 ```ruby
   Schema.get_field(TodoListType, "todos")
-  # => #<GraphQL::Field name="todos">
+  # => #<GraphQL8::Field name="todos">
   context.irep_node.definitions[TodoListType]
-  # => #<GraphQL::Field name="todos">
+  # => #<GraphQL8::Field name="todos">
   # although this one may not work with fields on interfaces
 ```
 
 ### Custom connections
 
-You can define a custom connection class and add it to `GraphQL::Relay`.
+You can define a custom connection class and add it to `GraphQL8::Relay`.
 
 First, define the custom connection:
 
@@ -244,25 +244,25 @@ class SetConnection < BaseConnection
 end
 ```
 
-Then, register the new connection with `GraphQL::Relay::BaseConnection`:
+Then, register the new connection with `GraphQL8::Relay::BaseConnection`:
 
 ```ruby
 # When exposing a `Set`, use `SetConnection`:
-GraphQL::Relay::BaseConnection.register_connection_implementation(Set, SetConnection)
+GraphQL8::Relay::BaseConnection.register_connection_implementation(Set, SetConnection)
 ```
 
-At runtime, `GraphQL::Relay` will use `SetConnection` to expose `Set`s.
+At runtime, `GraphQL8::Relay` will use `SetConnection` to expose `Set`s.
 
 ### Creating connection fields by hand
 
-If you need lower-level access to Connection fields, you can create them programmatically. Given a `GraphQL::Field` which returns a collection of items, you can turn it into a connection field with `ConnectionField.create`.
+If you need lower-level access to Connection fields, you can create them programmatically. Given a `GraphQL8::Field` which returns a collection of items, you can turn it into a connection field with `ConnectionField.create`.
 
 For example, to wrap a field with a connection field:
 
 ```ruby
-field = GraphQL::Field.new
+field = GraphQL8::Field.new
 # ... define the field
-connection_field = GraphQL::Relay::ConnectionField.create(field)
+connection_field = GraphQL8::Relay::ConnectionField.create(field)
 ```
 
 ## Cursors
@@ -282,7 +282,7 @@ module URLSafeBase64Encoder
   end
 end
 
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   # ...
   cursor_encoder(URLSafeBase64Encoder)
 end
@@ -290,4 +290,4 @@ end
 
 Now, all connections will use URL-safe base-64 encoding.
 
-From a connection instance, the `cursor_encoders` methods available via {{ "GraphQL::Relay::BaseConnection#encode" | api_doc }} and {{ "GraphQL::Relay::BaseConnection#decode" | api_doc }}
+From a connection instance, the `cursor_encoders` methods available via {{ "GraphQL8::Relay::BaseConnection#encode" | api_doc }} and {{ "GraphQL8::Relay::BaseConnection#decode" | api_doc }}

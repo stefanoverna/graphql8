@@ -2,7 +2,7 @@
 layout: guide
 doc_stub: false
 search: true
-section: GraphQL Pro - OperationStore
+section: GraphQL8 Pro - OperationStore
 title: Access Control
 desc: Manage authentication & visibility for your OperationStore server.
 index: 4
@@ -28,14 +28,14 @@ For more info about HMAC, see [Wikipedia](https://en.wikipedia.org/wiki/Hash-bas
 The Authorization header takes the form:
 
 ```ruby
-"GraphQL::Pro #{client_name} #{hmac}"
+"GraphQL8::Pro #{client_name} #{hmac}"
 ```
 
 {% internal_link "graphql-ruby-client", "/javascript_client/sync" %} adds this header to outgoing requests by using the provided `--client` and `--secret` values.
 
 ## Authorization
 
-Incoming operations are validated. If you're using `GraphQL::Pro`'s {% internal_link "visibility authorization", "/pro/authorization#visibility-authorization" %}, you must determine whether the current client can _see_ the types and fields which are used in the operation.
+Incoming operations are validated. If you're using `GraphQL8::Pro`'s {% internal_link "visibility authorization", "/pro/authorization#visibility-authorization" %}, you must determine whether the current client can _see_ the types and fields which are used in the operation.
 
 You can implement authorization for incoming queries with the `authorize(..., operation_store:)` option, which accepts a {% internal_link "auth strategy class", "/pro/authorization#custom-authorization-strategy" %}, for example:
 

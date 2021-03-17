@@ -4,11 +4,11 @@ doc_stub: false
 search: true
 section: Subscriptions
 title: Triggers
-desc: Sending updates from your application to GraphQL
+desc: Sending updates from your application to GraphQL8
 index: 2
 ---
 
-From your application, you can push updates to GraphQL clients with `.trigger`.
+From your application, you can push updates to GraphQL8 clients with `.trigger`.
 
 Events are triggered _by name_, and the name must match fields on your {% internal_link "Subscription Type","subscriptions/subscription_type" %}
 
@@ -28,7 +28,7 @@ The arguments are:
 
 To send updates to _certain clients only_, you can use `scope:` to narrow the trigger's reach.
 
-Scopes are based on query context: a value in `context:` is used as the scope; an equivalent value must be passed with `.trigger(... scope:)` to update that client. (The value is serialized with {{ "GraphQL::Subscriptions::Serialize" | api_doc }})
+Scopes are based on query context: a value in `context:` is used as the scope; an equivalent value must be passed with `.trigger(... scope:)` to update that client. (The value is serialized with {{ "GraphQL8::Subscriptions::Serialize" | api_doc }})
 
 To specify that a topic is scoped, edit the field definition on your root `Subscription` type. Use the `subscription_scope:` option to name a `context:` key, for example:
 

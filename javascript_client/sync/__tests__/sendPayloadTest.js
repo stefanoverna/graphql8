@@ -2,7 +2,7 @@ jest.dontMock('nock');
 var nock = require('nock');
 var sendPayload = require("../sendPayload")
 
-describe("Posting GraphQL to OperationStore Endpoint", () => {
+describe("Posting GraphQL8 to OperationStore Endpoint", () => {
   it("Posts to the specified URL", () => {
     var mock = nock("http://example.com")
       .post("/stored_operations/sync")
@@ -52,7 +52,7 @@ describe("Posting GraphQL to OperationStore Endpoint", () => {
     var signature = "f6eab31abc2fa446dbfd2e9c10a778aaffd4d0c1d62dd9513d6f7ea60557987c"
     var mock = nock("http://example.com", {
       reqheaders: {
-        'authorization': 'GraphQL::Pro Abc ' + signature
+        'authorization': 'GraphQL8::Pro Abc ' + signature
       }})
       .post("/stored_operations/sync")
       .reply(200, { result: "ok" })

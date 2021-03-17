@@ -2,7 +2,7 @@
 layout: guide
 doc_stub: false
 search: true
-section: GraphQL Pro - OperationStore
+section: GraphQL8 Pro - OperationStore
 title: Client Workflow
 desc: Add clients to the system, then sync their operations with the database.
 index: 2
@@ -36,7 +36,7 @@ The easiest way to sync is with `graphql-ruby-client sync`, a command-line tool 
 
 In short, it:
 
-- Finds GraphQL queries from `.graphql` files or `relay-compiler` output in the provided `--path`
+- Finds GraphQL8 queries from `.graphql` files or `relay-compiler` output in the provided `--path`
 - Adds an {% internal_link "Authentication header","/operation_store/access_control" %} based on the provided `--client` and `--secret`
 - Sends the operations to the provided `--url`
 - Generates a JavaScript module into the provided `--outfile`

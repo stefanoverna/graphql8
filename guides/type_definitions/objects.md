@@ -9,7 +9,7 @@ index: 0
 class_based_api: true
 ---
 
-GraphQL object types are the bread and butter of GraphQL APIs. Each object has _fields_ which expose data and may be queried by name. For example, we can query a `User` like this:
+GraphQL8 object types are the bread and butter of GraphQL8 APIs. Each object has _fields_ which expose data and may be queried by name. For example, we can query a `User` like this:
 
 ```ruby
 user {
@@ -29,7 +29,7 @@ And get back values like this:
 }
 ```
 
-Generally speaking, GraphQL object types correspond to models in your application, like `User`, `Product`, or `Comment`.  Sometimes, object types are described using the [GraphQL Schema Definition Language](http://graphql.org/learn/schema/#type-language) (SDL):
+Generally speaking, GraphQL8 object types correspond to models in your application, like `User`, `Product`, or `Comment`.  Sometimes, object types are described using the [GraphQL8 Schema Definition Language](http://graphql.org/learn/schema/#type-language) (SDL):
 
 ```ruby
 type User {
@@ -48,26 +48,26 @@ This means that `User` objects have three fields:
 The same object can be defined using Ruby:
 
 ```ruby
-class User < GraphQL::Schema::Object
+class User < GraphQL8::Schema::Object
   field :email, String, null: true
   field :handle, String, null: false
   field :friends, [User], null: false
 end
 ```
 
-The rest of this guide will describe how to define GraphQL object types in Ruby. To learn more about GraphQL object types in general, see the [GraphQL docs](http://graphql.org/learn/schema/#object-types-and-fields).
+The rest of this guide will describe how to define GraphQL8 object types in Ruby. To learn more about GraphQL8 object types in general, see the [GraphQL8 docs](http://graphql.org/learn/schema/#object-types-and-fields).
 
 ## Object classes
 
-Classes extending {{ "GraphQL::Schema::Object" | api_doc }} describe [Object types](http://graphql.org/learn/schema/#object-types-and-fields) and customize their behavior.
+Classes extending {{ "GraphQL8::Schema::Object" | api_doc }} describe [Object types](http://graphql.org/learn/schema/#object-types-and-fields) and customize their behavior.
 
 Object fields can be created with the `field(...)` class method, [described in detail below](#fields)
 
-Field and argument names should be underscored as a convention. They will be converted to camelCase in the underlying GraphQL type and be camelCase in the schema itself.
+Field and argument names should be underscored as a convention. They will be converted to camelCase in the underlying GraphQL8 type and be camelCase in the schema itself.
 
 ```ruby
 # first, somewhere, a base class:
-class Types::BaseObject < GraphQL::Schema::Object
+class Types::BaseObject < GraphQL8::Schema::Object
 end
 
 # then...
@@ -99,13 +99,13 @@ If an object implements any interfaces, they can be added with `implements`, for
 
 ```ruby
 # This object implements some interfaces:
-implements GraphQL::Relay::Node.interface
+implements GraphQL8::Relay::Node.interface
 implements Types::UserAssignableType
 ```
 
 When an object `implements` interfaces, it:
 
-- inherits the GraphQL field definitions from that object
+- inherits the GraphQL8 field definitions from that object
 - includes that module into the object definition
 
 Read more about interfaces in the {% internal_link "Interfaces guide", "/type_definitions/interfaces" %}

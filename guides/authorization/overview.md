@@ -3,13 +3,13 @@ layout: guide
 search: true
 section: Authorization
 title: Overview
-desc: Overview of GraphQL authorization in general and an intro to the built-in framework.
+desc: Overview of GraphQL8 authorization in general and an intro to the built-in framework.
 index: 0
 ---
 
-Here's a conceptual approach to GraphQL authorization, followed by an introduction to the built-in authorization framework. Each part of the framework is described in detail in its own guide.
+Here's a conceptual approach to GraphQL8 authorization, followed by an introduction to the built-in authorization framework. Each part of the framework is described in detail in its own guide.
 
-## Authorization: GraphQL vs REST
+## Authorization: GraphQL8 vs REST
 
 In a REST API, the common authorization pattern is fairly simple. Before performing the requested action, the server asserts that the current client has the required permissions for that action. For example:
 
@@ -29,7 +29,7 @@ class PostsController < ApiController
 end
 ```
 
-However, this request-by-request mindset doesn't map well to GraphQL because there's only one controller and the requests that come to it may be _very_ different. To illustrate the problem:
+However, this request-by-request mindset doesn't map well to GraphQL8 because there's only one controller and the requests that come to it may be _very_ different. To illustrate the problem:
 
 ```ruby
 class GraphqlController < ApplicationController
@@ -43,13 +43,13 @@ class GraphqlController < ApplicationController
 end
 ```
 
-So, what new mindset will work with a GraphQL API?
+So, what new mindset will work with a GraphQL8 API?
 
-For __mutations__, remember that each mutation is like an API request in itself. For example, `Posts#create` above would map to the `createPost(...)` mutation in GraphQL. So, each mutation should be authorized in its own right.
+For __mutations__, remember that each mutation is like an API request in itself. For example, `Posts#create` above would map to the `createPost(...)` mutation in GraphQL8. So, each mutation should be authorized in its own right.
 
 For __queries__, you can think of each individual _object_ like a `GET` request to a REST API. So, each object should be authorized for reading in its own right.
 
-By applying this mindset, each part of the GraphQL query will be properly authorized before it is executed. Also, since the different units of code are each authorized on their own, you can be sure that each incoming query will be properly authorized, even if it's a brand new query that the server has never seen before.
+By applying this mindset, each part of the GraphQL8 query will be properly authorized before it is executed. Also, since the different units of code are each authorized on their own, you can be sure that each incoming query will be properly authorized, even if it's a brand new query that the server has never seen before.
 
 ## What About Authentication?
 
@@ -58,7 +58,7 @@ As a reminder:
 - _Authentication_ is the process of determining what user is making the current request, for example, accepting a username and password, or finding a `User` in the database from `session[:current_user_id]`.
 - _Authorization_ is the process of verifying that the current user has permission to do something (or see something), for example, checking `admin?` status or looking up permission groups from the database.
 
-In general, authentication is _not_ addressed in GraphQL at all. Instead, your controller should get the current user based on the HTTP request (eg, an HTTP header or a cookie) and provide that information to the GraphQL query. For example:
+In general, authentication is _not_ addressed in GraphQL8 at all. Instead, your controller should get the current user based on the HTTP request (eg, an HTTP header or a cookie) and provide that information to the GraphQL8 query. For example:
 
 ```ruby
 class GraphqlController < ApplicationController
@@ -72,17 +72,17 @@ class GraphqlController < ApplicationController
 end
 ```
 
-After your HTTP handler has loaded the current user, you can access it via `context[:current_user]` in your GraphQL code.
+After your HTTP handler has loaded the current user, you can access it via `context[:current_user]` in your GraphQL8 code.
 
 ## Authorization in Your Business Logic
 
-Before introducing GraphQL-specific authorization, consider the advantages of application-level authorization. (See the [GraphQL.org post](https://graphql.org/learn/authorization/) on the same topic.) For example, here's authorization mixed into the GraphQL API layer:
+Before introducing GraphQL8-specific authorization, consider the advantages of application-level authorization. (See the [GraphQL8.org post](https://graphql.org/learn/authorization/) on the same topic.) For example, here's authorization mixed into the GraphQL8 API layer:
 
 ```ruby
 field :posts, [Types::Post], null: false
 
 def posts
-  # Perform an auth check in the GraphQL field code:
+  # Perform an auth check in the GraphQL8 field code:
   if context[:current_user].admin?
     Post.all
   else
@@ -91,7 +91,7 @@ def posts
 end
 ```
 
-The downside of this is that, when `Types::Post` is queried in other contexts, the same authorization check may not be applied. Additionally, since the authorization code is coupled with the GraphQL API, the only way to test it is via GraphQL queries, which adds some complexity to tests.
+The downside of this is that, when `Types::Post` is queried in other contexts, the same authorization check may not be applied. Additionally, since the authorization code is coupled with the GraphQL8 API, the only way to test it is via GraphQL8 queries, which adds some complexity to tests.
 
 Alternatively, you could move the authorization to your business logic, the `Post` class:
 
@@ -108,7 +108,7 @@ class Post < ActiveRecord::Base
 end
 ```
 
-Then, use this application method in your GraphQL code:
+Then, use this application method in your GraphQL8 code:
 
 ```ruby
 field :posts, [Types::Post], null: false
@@ -119,9 +119,9 @@ def posts
 end
 ```
 
-In this case, `Post.posts_for(user)` could be tested _independently_ from GraphQL. Then, you have less to worry about in your GraphQL tests. As a bonus, you can use `Post.posts_for(user)` in _other_ parts of the app, too, such as the web UI or REST API.
+In this case, `Post.posts_for(user)` could be tested _independently_ from GraphQL8. Then, you have less to worry about in your GraphQL8 tests. As a bonus, you can use `Post.posts_for(user)` in _other_ parts of the app, too, such as the web UI or REST API.
 
-## GraphQL-Ruby's Authorization Framework
+## GraphQL8-Ruby's Authorization Framework
 
 Despite the advantages of authorization at the application layer, as described above, there might be some reasons to authorize in the API layer:
 
@@ -129,10 +129,10 @@ Despite the advantages of authorization at the application layer, as described a
 - Authorize the API request _before_ running it (see "visibility" below)
 - Integrate with code that doesn't have authorization built-in
 
-To accomplish these, you can use GraphQL-Ruby's authorization framework. The framework has three levels, each of which is described in its own guide:
+To accomplish these, you can use GraphQL8-Ruby's authorization framework. The framework has three levels, each of which is described in its own guide:
 
-- {% internal_link "Visibility", "/authorization/visibility" %} hides parts of the GraphQL schema from users who don't have full permission.
-- {% internal_link "Accessibility", "/authorization/accessibility" %} prevents running queries which access parts of the GraphQL schema, unless users have the required permission.
+- {% internal_link "Visibility", "/authorization/visibility" %} hides parts of the GraphQL8 schema from users who don't have full permission.
+- {% internal_link "Accessibility", "/authorization/accessibility" %} prevents running queries which access parts of the GraphQL8 schema, unless users have the required permission.
 - {% internal_link "Authorization", "/authorization/authorization" %} checks application objects during execution to be sure the user has permission to access them.
 
-Also, [GraphQL::Pro](http://graphql.pro) has integrations for {% internal_link "CanCan", "/authorization/can_can_integration" %} and {% internal_link "Pundit", "/authorization/pundit_integration" %}.
+Also, [GraphQL8::Pro](http://graphql.pro) has integrations for {% internal_link "CanCan", "/authorization/can_can_integration" %} and {% internal_link "Pundit", "/authorization/pundit_integration" %}.

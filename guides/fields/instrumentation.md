@@ -11,12 +11,12 @@ index: 3
 Field instrumentation can be attached during schema definition:
 
 ```ruby
-MySchema = GraphQL::Schema.define do
+MySchema = GraphQL8::Schema.define do
   instrument(:field, FieldTimerInstrumentation.new)
 end
 ```
 
-The instrumenter is an object which responds to `#instrument(type, field)`. `#instrument` should return a `GraphQL::Field` instance which will be used during query execution. `#instrument` is called with each type-field pair for _all_ Object types and Interface types in your schema.
+The instrumenter is an object which responds to `#instrument(type, field)`. `#instrument` should return a `GraphQL8::Field` instance which will be used during query execution. `#instrument` is called with each type-field pair for _all_ Object types and Interface types in your schema.
 
 Here's an example field instrumenter:
 
@@ -45,6 +45,6 @@ class FieldTimerInstrumentation
 end
 ```
 
-It can be attached as shown above. You can use `redefine { ... }` to make a shallow copy of the  {{ "GraphQL::Field" | api_doc }} and extend its definition.
+It can be attached as shown above. You can use `redefine { ... }` to make a shallow copy of the  {{ "GraphQL8::Field" | api_doc }} and extend its definition.
 
-{{ "GraphQL::Field#lazy_resolve_proc" | api_doc }} can also be instrumented. This is called for objects registered with {% internal_link "lazy execution","/schema/lazy_execution" %}.
+{{ "GraphQL8::Field#lazy_resolve_proc" | api_doc }} can also be instrumented. This is called for objects registered with {% internal_link "lazy execution","/schema/lazy_execution" %}.

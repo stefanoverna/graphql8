@@ -3,8 +3,8 @@ title: Welcome
 ---
 <div class="hero">
   <div class="hero-title">
-    <img src="{{ site.baseurl }}/graphql-ruby.png" alt="GraphQL Ruby Logo"/>
-    <h1>GraphQL Ruby</h1>
+    <img src="{{ site.baseurl }}/graphql-ruby.png" alt="GraphQL8 Ruby Logo"/>
+    <h1>GraphQL8 Ruby</h1>
   </div>
   <div class="hero-part shaded">
     <h2>Install the Gem</h2>
@@ -14,7 +14,7 @@ title: Welcome
 # Download the gem:
 gem install graphql
 # Setup with Rails:
-rails generate graphql:install
+rails generate graphql8:install
 {% endhighlight %}
       </div>
       <div class="teaser">
@@ -31,13 +31,13 @@ rails generate graphql:install
       <div class="teaser">
         <p>
           Describe your application with the
-          <a href="{{ site.baseurl }}/schema/definition">GraphQL type system</a>
+          <a href="{{ site.baseurl }}/schema/definition">GraphQL8 type system</a>
           to create a self-documenting, strongly-typed API.
         </p>
       </div>
       <div class="teaser">
 {% highlight ruby %}
-# app/graphql/types/profile_type.rb
+# app/graphql8/types/profile_type.rb
 class Types::ProfileType < Types::BaseObject
   field :id, ID, null: false
   field :name, String, null: false
@@ -72,5 +72,5 @@ render json: result
 </div>
 
 <h3 style="text-align: center;">
-  Add <a href="http://graphql.org">GraphQL</a> to your Ruby app. <a href="{{ site.baseurl}}/getting_started">Get Started!</a>
+  Add <a href="http://graphql.org">GraphQL8</a> to your Ruby app. <a href="{{ site.baseurl}}/getting_started">Get Started!</a>
 </h3>

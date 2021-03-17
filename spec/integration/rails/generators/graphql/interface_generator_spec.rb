@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 require "spec_helper"
-require "generators/graphql/interface_generator"
+require "generators/graphql8/interface_generator"
 
-class GraphQLGeneratorsInterfaceGeneratorTest < BaseGeneratorTest
-  tests Graphql::Generators::InterfaceGenerator
+class GraphQL8GeneratorsInterfaceGeneratorTest < BaseGeneratorTest
+  tests graphql8::Generators::InterfaceGenerator
 
   test "it generates fields with types" do
     commands = [
-      # GraphQL-style:
+      # GraphQL8-style:
       ["Bird", "wingspan:Int!", "foliage:[Color]"],
       # Ruby-style:
       ["BirdType", "wingspan:Integer!", "foliage:[Types::ColorType]"],
@@ -28,7 +28,7 @@ RUBY
     commands.each do |c|
       prepare_destination
       run_generator(c)
-      assert_file "app/graphql/types/bird_type.rb", expected_content
+      assert_file "app/graphql8/types/bird_type.rb", expected_content
     end
   end
 end

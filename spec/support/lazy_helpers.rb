@@ -46,7 +46,7 @@ module LazyHelpers
     end
   end
 
-  class LazySum < GraphQL::Schema::Object
+  class LazySum < GraphQL8::Schema::Object
     field :value, Integer, null: true, resolve: ->(o, a, c) { o == 13 ? nil : o }
     field :nestedSum, LazySum, null: false do
       argument :value, Integer, required: true
@@ -66,13 +66,13 @@ module LazyHelpers
     alias :nullable_nested_sum :nested_sum
   end
 
-  using GraphQL::DeprecatedDSL
+  using GraphQL8::DeprecatedDSL
   if RUBY_ENGINE == "jruby"
     # JRuby doesn't support refinements, so the `using` above won't work
-    GraphQL::DeprecatedDSL.activate
+    GraphQL8::DeprecatedDSL.activate
   end
 
-  LazyQuery = GraphQL::ObjectType.define do
+  LazyQuery = GraphQL8::ObjectType.define do
     name "Query"
     field :int, !types.Int do
       argument :value, !types.Int
@@ -89,7 +89,7 @@ module LazyHelpers
       argument :value, types.Int
       resolve ->(o, args, c) {
         if args[:value] == 13
-          Wrapper.new { raise GraphQL::ExecutionError.new("13 is unlucky") }
+          Wrapper.new { raise GraphQL8::ExecutionError.new("13 is unlucky") }
         else
           SumAll.new(args[:value])
         end
@@ -134,7 +134,7 @@ module LazyHelpers
     end
   end
 
-  class LazySchema < GraphQL::Schema
+  class LazySchema < GraphQL8::Schema
     query(LazyQuery)
     mutation(LazyQuery)
     lazy_resolve(Wrapper, :item)

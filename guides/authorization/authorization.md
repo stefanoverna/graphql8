@@ -39,14 +39,14 @@ Now, whenever an object of type `Friendship` is going to be returned to the clie
 
 ## Handling Unauthorized Objects
 
-By default, GraphQL-Ruby silently replaces unauthorized objects with `nil`, as if they didn't exist. You can customize this behavior by implementing {{ "Schema.unauthorized_object" | api_doc }} in your schema class, for example:
+By default, GraphQL8-Ruby silently replaces unauthorized objects with `nil`, as if they didn't exist. You can customize this behavior by implementing {{ "Schema.unauthorized_object" | api_doc }} in your schema class, for example:
 
 ```ruby
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   # Override this hook to handle cases when `authorized?` returns false:
   def self.unauthorized_object(error)
     # Add a top-level error to the response instead of returning nil:
-    raise GraphQL::ExecutionError, "An object of type #{error.type.graphql_name} was hidden due to permissions"
+    raise GraphQL8::ExecutionError, "An object of type #{error.type.graphql_name} was hidden due to permissions"
   end
 end
 ```

@@ -16,7 +16,7 @@ function createActionCableHandler(cable, operations) {
       channelId: channelId,
     }, {
       connected: function() {
-        // Once connected, send the GraphQL data over the channel
+        // Once connected, send the GraphQL8 data over the channel
         const channelParams = {
           variables: variables,
           operationName: operation.name,

@@ -4,14 +4,14 @@ doc_stub: false
 search: true
 section: Subscriptions
 title: Ably Implementation
-desc: GraphQL subscriptions over Ably
+desc: GraphQL8 subscriptions over Ably
 index: 7
 pro: true
 ---
 
-[GraphQL Pro](http://graphql.pro) includes a subscription system based on [Redis](http://redis.io) and [Ably](http://ably.io) which works with any Ruby web framework.
+[GraphQL8 Pro](http://graphql.pro) includes a subscription system based on [Redis](http://redis.io) and [Ably](http://ably.io) which works with any Ruby web framework.
 
-After creating an app on Ably, you can hook it up to your GraphQL schema.
+After creating an app on Ably, you can hook it up to your GraphQL8 schema.
 
 - [How it Works](#how-it-works)
 - [Database setup](#database-setup)
@@ -28,7 +28,7 @@ After creating an app on Ably, you can hook it up to your GraphQL schema.
 
 This subscription implementation uses a hybrid approach:
 
-- __Your app__ takes GraphQL queries an runs them
+- __Your app__ takes GraphQL8 queries an runs them
 - __Redis__ stores subscription data for later updates
 - __Ably__ sends updates to subscribed clients
 
@@ -72,7 +72,7 @@ Here's another look:
 ```
 
 
-By using this configuration, you can use GraphQL subscriptions without hosting a push server yourself!
+By using this configuration, you can use GraphQL8 subscriptions without hosting a push server yourself!
 
 ## Ably setup
 Add `ably-rest` to your `Gemfile`:
@@ -115,18 +115,18 @@ $graphql_subscriptions_redis = Redis.new # default connection
 Then, that Redis client is passed to the Subscription configuration:
 
 ```ruby
-class MySchema < GraphQL::Schema
-  use GraphQL::Pro::AblySubscriptions,
+class MySchema < GraphQL8::Schema
+  use GraphQL8::Pro::AblySubscriptions,
     redis: $graphql_subscriptions_redis,
     ably: Ably::Rest.new(key: ABLY_API_KEY)
 end
 ```
 
-That connection will be used for managing subscription state. All writes to Redis are prefixed with `graphql:sub:`.
+That connection will be used for managing subscription state. All writes to Redis are prefixed with `graphql8:sub:`.
 
 ## Execution configuration
 
-During execution, GraphQL will assign a `subscription_id` to the `context` hash. The client will use that ID to listen for updates, so you must return the `subscription_id` in the response headers.
+During execution, GraphQL8 will assign a `subscription_id` to the `context` hash. The client will use that ID to listen for updates, so you must return the `subscription_id` in the response headers.
 
 Return `result.context[:subscription_id]` as the `X-Subscription-ID` header. For example:
 
@@ -165,8 +165,8 @@ Mount the Rack app for handling webhooks from Ably. For example, on Rails:
 ```ruby
 # config/routes.rb
 
-# Include GraphQL::Pro's routing extensions:
-using GraphQL::Pro::Routes
+# Include GraphQL8::Pro's routing extensions:
+using GraphQL8::Pro::Routes
 
 Rails.application.routes.draw do
   # ...
@@ -191,10 +191,10 @@ end
 
 Since subscription state is stored in the database, then reloaded for pushing updates, you have to serialize and reload your query `context`.
 
-By default, this is done with {{ "GraphQL::Subscriptions::Serialize" | api_doc }}'s `dump` and `load` methods, but you can provide custom implementations as well. To customize the serialization logic, create a subclass of `GraphQL::Pro::Subscriptions` and override `#dump_context(ctx)` and `#load_context(ctx_string)`:
+By default, this is done with {{ "GraphQL8::Subscriptions::Serialize" | api_doc }}'s `dump` and `load` methods, but you can provide custom implementations as well. To customize the serialization logic, create a subclass of `GraphQL8::Pro::Subscriptions` and override `#dump_context(ctx)` and `#load_context(ctx_string)`:
 
 ```ruby
-class CustomSubscriptions < GraphQL::Pro::AblySubscriptions
+class CustomSubscriptions < GraphQL8::Pro::AblySubscriptions
   def dump_context(ctx)
     context_hash = ctx.to_h
     # somehow convert this hash to a string, return the string
@@ -210,8 +210,8 @@ end
 Then, use your _custom_ subscriptions class instead of the built-in one for your schema:
 
 ```ruby
-class MySchema < GraphQL::Schema
-  # Use custom subscriptions instead of GraphQL::Pro::AblySubscriptions
+class MySchema < GraphQL8::Schema
+  # Use custom subscriptions instead of GraphQL8::Pro::AblySubscriptions
   # to get custom serialization logic
   use CustomSubscriptions, ...
 end
@@ -221,7 +221,7 @@ That gives you fine-grained control of context reloading.
 
 ## Dashboard
 
-You can monitor subscription state in the {% internal_link "GraphQL-Pro Dashboard", "/pro/dashboard" %}:
+You can monitor subscription state in the {% internal_link "GraphQL8-Pro Dashboard", "/pro/dashboard" %}:
 
 {{ "/subscriptions/redis_dashboard_1.png" | link_to_img:"Redis Subscription Dashboard" }}
 
@@ -231,7 +231,7 @@ You can monitor subscription state in the {% internal_link "GraphQL-Pro Dashboar
 
 #### Clear subscription data
 
-At any time, you can reset your subscription database with the __"Reset"__ button in the {% internal_link "GraphQL-Pro Dashboard", "/pro/dashboard" %}, or in Ruby:
+At any time, you can reset your subscription database with the __"Reset"__ button in the {% internal_link "GraphQL8-Pro Dashboard", "/pro/dashboard" %}, or in Ruby:
 
 ```ruby
 # Wipe all subscription data from the DB:

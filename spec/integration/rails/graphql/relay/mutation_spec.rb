@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe GraphQL::Relay::Mutation do
+describe GraphQL8::Relay::Mutation do
   let(:query_string) {%|
     mutation addBagel($clientMutationId: String, $shipName: String = "Bagel") {
       introduceShip(input: {shipName: $shipName, factionId: "1", clientMutationId: $clientMutationId}) {
@@ -35,7 +35,7 @@ describe GraphQL::Relay::Mutation do
         "shipEdge" => {
           "node" => {
             "name" => nil,
-            "id" => GraphQL::Schema::UniqueWithinType.encode("Ship", "9"),
+            "id" => GraphQL8::Schema::UniqueWithinType.encode("Ship", "9"),
           },
         },
         "faction" => {"name" => StarWars::DATA["Faction"]["1"].name }
@@ -50,7 +50,7 @@ describe GraphQL::Relay::Mutation do
   end
 
   it "raises when using a generated return type and resolve doesnt return a Hash" do
-    bad_mutation = GraphQL::Relay::Mutation.define do
+    bad_mutation = GraphQL8::Relay::Mutation.define do
       name 'BadMutation'
       description 'A mutation type that doesnt return a hash'
 
@@ -63,15 +63,15 @@ describe GraphQL::Relay::Mutation do
       }
     end
 
-    root = GraphQL::ObjectType.define do
+    root = GraphQL8::ObjectType.define do
       name "MutationRoot"
       field :bad, bad_mutation.field
     end
 
-    schema = GraphQL::Schema.define { mutation(root) }
+    schema = GraphQL8::Schema.define { mutation(root) }
 
     exception = assert_raises(StandardError) do
-      schema.execute('mutation { bad(input: { input: "graphql" }) { return } }')
+      schema.execute('mutation { bad(input: { input: "graphql8" }) { return } }')
     end
 
     expected_message = "Expected `my_bad_return_value` to be a Hash."\
@@ -87,7 +87,7 @@ describe GraphQL::Relay::Mutation do
         "shipEdge" => {
           "node" => {
             "name" => "Bagel",
-            "id" => GraphQL::Schema::UniqueWithinType.encode("Ship", "9"),
+            "id" => GraphQL8::Schema::UniqueWithinType.encode("Ship", "9"),
           },
         },
         "faction" => {"name" => StarWars::DATA["Faction"]["1"].name }
@@ -103,12 +103,12 @@ describe GraphQL::Relay::Mutation do
   end
 
   it "applies the description to the derived field" do
-    field = GraphQL::Schema::Field.from_options(name: "x", **StarWars::IntroduceShipMutation.field_options)
+    field = GraphQL8::Schema::Field.from_options(name: "x", **StarWars::IntroduceShipMutation.field_options)
     assert_equal "Add a ship to this faction", field.description
   end
 
   it "inserts itself into the derived objects' metadata" do
-    field = GraphQL::Schema::Field.from_options(name: "x", **StarWars::IntroduceShipMutation.field_options)
+    field = GraphQL8::Schema::Field.from_options(name: "x", **StarWars::IntroduceShipMutation.field_options)
     assert_equal StarWars::IntroduceShipMutation, field.mutation
     assert_equal StarWars::IntroduceShipMutation, field.to_graphql.mutation
     assert_equal StarWars::IntroduceShipMutation, StarWars::IntroduceShipMutation.payload_type.mutation
@@ -133,7 +133,7 @@ describe GraphQL::Relay::Mutation do
   describe "aliased methods" do
     describe "on an unreached mutation" do
       it 'still ensures definitions' do
-        UnreachedMutation = GraphQL::Relay::Mutation.define do
+        UnreachedMutation = GraphQL8::Relay::Mutation.define do
           name 'UnreachedMutation'
           description 'A mutation type not directly used in the schema.'
 
@@ -149,7 +149,7 @@ describe GraphQL::Relay::Mutation do
 
   describe "providing a return type" do
     let(:custom_return_type) {
-      GraphQL::ObjectType.define do
+      GraphQL8::ObjectType.define do
         name "CustomReturnType"
         field :name, types.String
       end
@@ -157,7 +157,7 @@ describe GraphQL::Relay::Mutation do
 
     let(:mutation) {
       custom_type = custom_return_type
-      GraphQL::Relay::Mutation.define do
+      GraphQL8::Relay::Mutation.define do
         name "CustomReturnTypeTest"
 
         input_field :nullDefault, types.String, default_value: nil
@@ -176,12 +176,12 @@ describe GraphQL::Relay::Mutation do
     let(:schema) {
       mutation_field = mutation.field
 
-      mutation_root = GraphQL::ObjectType.define do
+      mutation_root = GraphQL8::ObjectType.define do
         name "Mutation"
         field :custom, mutation_field
       end
 
-      GraphQL::Schema.define do
+      GraphQL8::Schema.define do
         mutation(mutation_root)
       end
     }
@@ -216,7 +216,7 @@ describe GraphQL::Relay::Mutation do
 
   describe "specifying return interfaces" do
     let(:result_interface) {
-      GraphQL::InterfaceType.define do
+      GraphQL8::InterfaceType.define do
         name "ResultInterface"
         field :success, !types.Boolean
         field :notice, types.String
@@ -224,7 +224,7 @@ describe GraphQL::Relay::Mutation do
     }
 
     let(:error_interface) {
-      GraphQL::InterfaceType.define do
+      GraphQL8::InterfaceType.define do
         name "ErrorInterface"
         field :error, types.String
       end
@@ -232,7 +232,7 @@ describe GraphQL::Relay::Mutation do
 
     let(:mutation) {
       interfaces = [result_interface, error_interface]
-      GraphQL::Relay::Mutation.define do
+      GraphQL8::Relay::Mutation.define do
         name "ReturnTypeWithInterfaceTest"
 
         return_field :name, types.String
@@ -253,12 +253,12 @@ describe GraphQL::Relay::Mutation do
     let(:schema) {
       mutation_field = mutation.field
 
-      mutation_root = GraphQL::ObjectType.define do
+      mutation_root = GraphQL8::ObjectType.define do
         name "Mutation"
         field :custom, mutation_field
       end
 
-      GraphQL::Schema.define do
+      GraphQL8::Schema.define do
         mutation(mutation_root)
         resolve_type NO_OP_RESOLVE_TYPE
       end

@@ -3,11 +3,11 @@ layout: guide
 search: true
 section: Authorization
 title: Visibility
-desc: Programatically hide parts of the GraphQL schema from some users.
+desc: Programatically hide parts of the GraphQL8 schema from some users.
 index: 1
 ---
 
-With GraphQL-Ruby, it's possible to _hide_ parts of your schema from some users. This isn't exactly part of the GraphQL spec, but it's roughly within the bounds of the spec.
+With GraphQL8-Ruby, it's possible to _hide_ parts of your schema from some users. This isn't exactly part of the GraphQL8 spec, but it's roughly within the bounds of the spec.
 
 Here are some reasons you might want to hide parts of your schema:
 
@@ -43,7 +43,7 @@ end
 
 (Always call `super` to inherit the default behavior.)
 
-Now, the following bits of GraphQL will return validation errors:
+Now, the following bits of GraphQL8 will return validation errors:
 
 - Fields that return `SecretFeature`, eg `query { findSecretFeature { ... } }`
 - Fragments on `SecretFeature`, eg `Fragment SF on SecretFeature`

@@ -82,7 +82,7 @@ Provide a `prepare` function to modify or validate the value of an argument befo
 field :posts, [PostType], null: false do
   argument :start_date, String, required: true, prepare: ->(startDate, ctx) {
     # return the prepared argument.
-    # raise a GraphQL::ExecutionError to halt the execution of the field and
+    # raise a GraphQL8::ExecutionError to halt the execution of the field and
     # add the exception's message to the `errors` key.
   }
 end
@@ -92,7 +92,7 @@ def posts(start_date:)
 end
 ```
 
-Arguments that are snake_cased will be camelized in the GraphQL schema. Using the example of:
+Arguments that are snake_cased will be camelized in the GraphQL8 schema. Using the example of:
 
 ```ruby
 field :posts, [PostType], null: false do
@@ -100,7 +100,7 @@ field :posts, [PostType], null: false do
 end
 ```
 
-The corresponding GraphQL query will look like:
+The corresponding GraphQL8 query will look like:
 
 ```graphql
 {
@@ -118,7 +118,7 @@ field :posts, [PostType], null: false do
 end
 ```
 
-Furthermore, if your argument is already camelCased, then it will remain camelized in the GraphQL schema. However, the argument will be converted to snake_case when it is passed to the resolver method:
+Furthermore, if your argument is already camelCased, then it will remain camelized in the GraphQL8 schema. However, the argument will be converted to snake_case when it is passed to the resolver method:
 
 ```ruby
 field :posts, [PostType], null: false do
@@ -132,8 +132,8 @@ end
 
 Only certain types are valid for arguments:
 
-- {{ "GraphQL::ScalarType" | api_doc }}, including built-in scalars (string, int, float, boolean, ID)
-- {{ "GraphQL::EnumType" | api_doc }}
-- {{ "GraphQL::InputObjectType" | api_doc }}, which allows key-value pairs as input
-- {{ "GraphQL::ListType" | api_doc }}s of a valid input type
-- {{ "GraphQL::NonNullType" | api_doc }}s of a valid input type
+- {{ "GraphQL8::ScalarType" | api_doc }}, including built-in scalars (string, int, float, boolean, ID)
+- {{ "GraphQL8::EnumType" | api_doc }}
+- {{ "GraphQL8::InputObjectType" | api_doc }}, which allows key-value pairs as input
+- {{ "GraphQL8::ListType" | api_doc }}s of a valid input type
+- {{ "GraphQL8::NonNullType" | api_doc }}s of a valid input type

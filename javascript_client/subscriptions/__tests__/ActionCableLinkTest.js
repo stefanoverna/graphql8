@@ -1,5 +1,5 @@
 var ActionCableLink = require("../ActionCableLink")
-var graphql = require("graphql")
+var graphql = require("graphql8")
 
 describe("ActionCableLink", () => {
   it("delegates to the cable", () => {

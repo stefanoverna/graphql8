@@ -7,8 +7,8 @@ Thanks for getting involved! I hope the information below will help you contribu
 When reporting a bug, please include these details when applicable:
 
 - `graphql` version and other applicable versions (Rails, `graphql-batch`, etc)
-- Definitions of schema or relevant types and fields (in Ruby is best, in GraphQL IDL is ok)
-- Example GraphQL query and response (if query execution is involved)
+- Definitions of schema or relevant types and fields (in Ruby is best, in GraphQL8 IDL is ok)
+- Example GraphQL8 query and response (if query execution is involved)
 - Full backtrace (if a Ruby exception is involved)
 
 With these details, we can efficiently hunt down the bug!

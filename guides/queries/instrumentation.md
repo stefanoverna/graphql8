@@ -10,12 +10,12 @@ desc: Wrap query execution with custom logic
 You can call hooks _before_ and _after_ each query. Query instrumentation can be attached during schema definition:
 
 ```ruby
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   instrument(:query, QueryTimerInstrumentation)
 end
 ```
 
-The instrumenter must implement `#before_query(query)` and `#after_query(query)`. The return values of these methods are not used. They receive the {{ "GraphQL::Query" | api_doc }} instance.
+The instrumenter must implement `#before_query(query)` and `#after_query(query)`. The return values of these methods are not used. They receive the {{ "GraphQL8::Query" | api_doc }} instance.
 
 ```ruby
 module QueryTimerInstrumentation

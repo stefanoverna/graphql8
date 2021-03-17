@@ -2,7 +2,7 @@
 layout: guide
 doc_stub: false
 search: true
-section: GraphQL Pro - OperationStore
+section: GraphQL8 Pro - OperationStore
 title: Server Management
 desc: Tips for administering persisted queries with OperationStore
 index: 3
@@ -13,9 +13,9 @@ After {% internal_link "getting started","/operation_store/getting_started" %}, 
 
 ### Rejecting Arbitrary Queries
 
-With persisted queries, you can stop accepting arbitrary GraphQL input. This way, malicious users can't run large or inappropriate queries on your server.
+With persisted queries, you can stop accepting arbitrary GraphQL8 input. This way, malicious users can't run large or inappropriate queries on your server.
 
-In short, you can ignore arbitrary GraphQL by _skipping_ the first argument of `MySchema.execute`:
+In short, you can ignore arbitrary GraphQL8 by _skipping_ the first argument of `MySchema.execute`:
 
 ```ruby
 # app/controllers/graphql.rb
@@ -30,13 +30,13 @@ MySchema.execute(
 
 However, take these points into consideration:
 
-- Are any previous clients using arbitrary GraphQL? (For example, old versions of native apps or old web pages may still be sending GraphQL.)
+- Are any previous clients using arbitrary GraphQL8? (For example, old versions of native apps or old web pages may still be sending GraphQL8.)
 - Should some users still be allowed to send custom strings? (For example, do staff members use GraphiQL to develop new features or debug issues?)
 
 If those apply to you, you can apply some logic to `query_string`:
 
 ```ruby
-# Allow arbitrary GraphQL:
+# Allow arbitrary GraphQL8:
 # - from staff users
 # - in development
 query_string = if current_user.staff? || Rails.env.development?

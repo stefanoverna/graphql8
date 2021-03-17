@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 module StarTrek
   # Adapted from graphql-relay-js
-  # https://github.com/graphql/graphql-relay-js/blob/master/src/__tests__/StarTrekSchema.js
+  # https://github.com/graphql8/graphql-relay-js/blob/master/src/__tests__/StarTrekSchema.js
 
-  class Ship < GraphQL::Schema::Object
-    implements GraphQL::Relay::Node.interface
+  class Ship < GraphQL8::Schema::Object
+    implements GraphQL8::Relay::Node.interface
     global_id_field :id
     field :name, String, null: true
     # Test cyclical connection types:
     field :ships, Ship.connection_type, null: false
   end
 
-  class ResidentType < GraphQL::Schema::Object
+  class ResidentType < GraphQL8::Schema::Object
     global_id_field :id
     field :name, String, null: true
   end
 
-  class BaseType < GraphQL::Schema::Object
+  class BaseType < GraphQL8::Schema::Object
     graphql_name "Base"
-    implements GraphQL::Relay::Node.interface
+    implements GraphQL8::Relay::Node.interface
     global_id_field :id
     field :name, String, null: false, resolve: ->(obj, args, ctx) {
       LazyWrapper.new {
         if obj.id.nil?
-          raise GraphQL::ExecutionError, "Boom!"
+          raise GraphQL8::ExecutionError, "Boom!"
         else
           obj.name
         end
@@ -33,7 +33,7 @@ module StarTrek
     field :residents, ResidentType.connection_type, null: true
   end
 
-  class BaseConnectionWithTotalCountType < GraphQL::Types::Relay::BaseConnection
+  class BaseConnectionWithTotalCountType < GraphQL8::Types::Relay::BaseConnection
     graphql_name "BasesConnectionWithTotalCount"
     edge_type(BaseType.edge_type)
     field :total_count, Integer, null: true
@@ -43,7 +43,7 @@ module StarTrek
     end
   end
 
-  class CustomBaseEdge < GraphQL::Relay::Edge
+  class CustomBaseEdge < GraphQL8::Relay::Edge
     def upcased_name
       node.name.upcase
     end
@@ -53,7 +53,7 @@ module StarTrek
     end
   end
 
-  class CustomBaseEdgeType < GraphQL::Types::Relay::BaseEdge
+  class CustomBaseEdgeType < GraphQL8::Types::Relay::BaseEdge
     node_type(BaseType)
     graphql_name "CustomBaseEdge"
     field :upcased_name, String, null: true
@@ -65,7 +65,7 @@ module StarTrek
     end
   end
 
-  class CustomEdgeBaseConnectionType < GraphQL::Types::Relay::BaseConnection
+  class CustomEdgeBaseConnectionType < GraphQL8::Types::Relay::BaseConnection
     edge_type(CustomBaseEdgeType, edge_class: CustomBaseEdge)
 
     field :total_count_times_100, Integer, null: true
@@ -79,9 +79,9 @@ module StarTrek
     end
   end
 
-  # Example of GraphQL::Function used with the connection helper:
-  class ShipsWithMaxPageSize < GraphQL::Function
-    argument :nameIncludes, GraphQL::STRING_TYPE
+  # Example of GraphQL8::Function used with the connection helper:
+  class ShipsWithMaxPageSize < GraphQL8::Function
+    argument :nameIncludes, GraphQL8::STRING_TYPE
     def call(obj, args, ctx)
       all_ships = obj.ships.map { |ship_id| StarTrek::DATA["Ship"][ship_id] }
       if args[:nameIncludes]
@@ -93,7 +93,7 @@ module StarTrek
     type Ship.connection_type
   end
 
-  class ShipConnectionWithParentType < GraphQL::Types::Relay::BaseConnection
+  class ShipConnectionWithParentType < GraphQL8::Types::Relay::BaseConnection
     edge_type(Ship.edge_type)
     graphql_name "ShipConnectionWithParent"
     field :parent_class_name, String, null: false
@@ -102,23 +102,23 @@ module StarTrek
     end
   end
 
-  class Faction < GraphQL::Schema::Object
-    implements GraphQL::Relay::Node.interface
+  class Faction < GraphQL8::Schema::Object
+    implements GraphQL8::Relay::Node.interface
 
-    field :id, ID, null: false, resolve: GraphQL::Relay::GlobalIdResolve.new(type: Faction)
+    field :id, ID, null: false, resolve: GraphQL8::Relay::GlobalIdResolve.new(type: Faction)
     field :name, String, null: true
     field :ships, ShipConnectionWithParentType, connection: true, max_page_size: 1000, null: true, resolve: ->(obj, args, ctx) {
       all_ships = obj.ships.map {|ship_id| StarTrek::DATA["Ship"][ship_id] }
       if args[:nameIncludes]
         case args[:nameIncludes]
         when "error"
-          all_ships = GraphQL::ExecutionError.new("error from within connection")
+          all_ships = GraphQL8::ExecutionError.new("error from within connection")
         when "raisedError"
-          raise GraphQL::ExecutionError.new("error raised from within connection")
+          raise GraphQL8::ExecutionError.new("error raised from within connection")
         when "lazyError"
-          all_ships = LazyWrapper.new { GraphQL::ExecutionError.new("lazy error from within connection") }
+          all_ships = LazyWrapper.new { GraphQL8::ExecutionError.new("lazy error from within connection") }
         when "lazyRaisedError"
-          all_ships = LazyWrapper.new { raise GraphQL::ExecutionError.new("lazy raised error from within connection") }
+          all_ships = LazyWrapper.new { raise GraphQL8::ExecutionError.new("lazy raised error from within connection") }
         when "null"
           all_ships = nil
         when "lazyObject"
@@ -167,7 +167,7 @@ module StarTrek
     field :basesWithCustomEdge, CustomEdgeBaseConnectionType, null: true, connection: true, resolve: ->(o, a, c) { LazyNodesWrapper.new(o.bases) }
   end
 
-  class IntroduceShipMutation < GraphQL::Schema::RelayClassicMutation
+  class IntroduceShipMutation < GraphQL8::Schema::RelayClassicMutation
     description "Add a ship to this faction"
 
     # Nested under `input` in the query:
@@ -184,13 +184,13 @@ module StarTrek
     end
   end
 
-  class IntroduceShipFunction < GraphQL::Function
+  class IntroduceShipFunction < GraphQL8::Function
     description "Add a ship to this faction"
 
-    argument :shipName, GraphQL::STRING_TYPE
-    argument :factionId, !GraphQL::ID_TYPE
+    argument :shipName, GraphQL8::STRING_TYPE
+    argument :factionId, !GraphQL8::ID_TYPE
 
-    type(GraphQL::ObjectType.define do
+    type(GraphQL8::ObjectType.define do
       name "IntroduceShipFunctionPayload"
       field :shipEdge, Ship.edge_type, hash_key: :shipEdge
       field :faction, Faction, hash_key: :shipEdge
@@ -201,17 +201,17 @@ module StarTrek
       ship_name = args["shipName"] || args[:ship_name]
       faction_id = args["factionId"] || args[:faction_id]
       if ship_name == 'USS Voyager'
-        GraphQL::ExecutionError.new("Sorry, USS Voyager ship is reserved")
+        GraphQL8::ExecutionError.new("Sorry, USS Voyager ship is reserved")
       elsif ship_name == 'IKS Korinar'
-        raise GraphQL::ExecutionError.new("🔥")
+        raise GraphQL8::ExecutionError.new("🔥")
       elsif ship_name == 'Scimitar'
-        LazyWrapper.new { raise GraphQL::ExecutionError.new("💥")}
+        LazyWrapper.new { raise GraphQL8::ExecutionError.new("💥")}
       else
         ship = DATA.create_ship(ship_name, faction_id)
         faction = DATA["Faction"][faction_id]
-        connection_class = GraphQL::Relay::BaseConnection.connection_for_nodes(faction.ships)
+        connection_class = GraphQL8::Relay::BaseConnection.connection_for_nodes(faction.ships)
         ships_connection = connection_class.new(faction.ships, args)
-        ship_edge = GraphQL::Relay::Edge.new(ship, ships_connection)
+        ship_edge = GraphQL8::Relay::Edge.new(ship, ships_connection)
         result = {
           shipEdge: ship_edge,
           ship_edge: ship_edge, # support new-style, too
@@ -227,13 +227,13 @@ module StarTrek
     end
   end
 
-  IntroduceShipFunctionMutation = GraphQL::Relay::Mutation.define do
+  IntroduceShipFunctionMutation = GraphQL8::Relay::Mutation.define do
     # Used as the root for derived types:
     name "IntroduceShipFunction"
     function IntroduceShipFunction.new
   end
 
-  # GraphQL-Batch knockoff
+  # GraphQL8-Batch knockoff
   class LazyLoader
     def self.defer(ctx, model, id)
       ids = ctx.namespace(:loading)[model] ||= []
@@ -279,7 +279,7 @@ module StarTrek
   end
 
   LazyNodesWrapper = Struct.new(:relation)
-  class LazyNodesRelationConnection < GraphQL::Relay::RelationConnection
+  class LazyNodesRelationConnection < GraphQL8::Relay::RelationConnection
     def initialize(wrapper, *args)
       super(wrapper.relation, *args)
     end
@@ -289,9 +289,9 @@ module StarTrek
     end
   end
 
-  GraphQL::Relay::BaseConnection.register_connection_implementation(LazyNodesWrapper, LazyNodesRelationConnection)
+  GraphQL8::Relay::BaseConnection.register_connection_implementation(LazyNodesWrapper, LazyNodesRelationConnection)
 
-  class QueryType < GraphQL::Schema::Object
+  class QueryType < GraphQL8::Schema::Object
     graphql_name "Query"
 
     field :federation, Faction, null: true, resolve: ->(obj, args, ctx) { StarTrek::DATA["Faction"]["1"]}
@@ -318,15 +318,15 @@ module StarTrek
       [OpenStruct.new(id: nil)]
     }
 
-    field :node, field: GraphQL::Relay::Node.field
+    field :node, field: GraphQL8::Relay::Node.field
 
-    custom_node_field = GraphQL::Relay::Node.field do
+    custom_node_field = GraphQL8::Relay::Node.field do
       resolve ->(_, _, _) { StarTrek::DATA["Faction"]["1"] }
     end
     field :nodeWithCustomResolver, field: custom_node_field
 
-    field :nodes, field: GraphQL::Relay::Node.plural_field
-    field :nodesWithCustomResolver, field: GraphQL::Relay::Node.plural_field(
+    field :nodes, field: GraphQL8::Relay::Node.plural_field
+    field :nodesWithCustomResolver, field: GraphQL8::Relay::Node.plural_field(
       resolve: ->(_, _, _) { [StarTrek::DATA["Faction"]["1"], StarTrek::DATA["Faction"]["2"]] }
     )
 
@@ -339,7 +339,7 @@ module StarTrek
     end
   end
 
-  class MutationType < GraphQL::Schema::Object
+  class MutationType < GraphQL8::Schema::Object
     graphql_name "Mutation"
     field :introduceShip, mutation: IntroduceShipMutation
     # To hook up a Relay::Mutation
@@ -366,7 +366,7 @@ module StarTrek
     end
   end
 
-  class Schema < GraphQL::Schema
+  class Schema < GraphQL8::Schema
     query(QueryType)
     mutation(MutationType)
     default_max_page_size 3
@@ -386,12 +386,12 @@ module StarTrek
     end
 
     def self.object_from_id(node_id, ctx)
-      type_name, id = GraphQL::Schema::UniqueWithinType.decode(node_id)
+      type_name, id = GraphQL8::Schema::UniqueWithinType.decode(node_id)
       StarTrek::DATA[type_name][id]
     end
 
     def self.id_from_object(object, type, ctx)
-      GraphQL::Schema::UniqueWithinType.encode(type.name, object.id)
+      GraphQL8::Schema::UniqueWithinType.encode(type.name, object.id)
     end
 
     lazy_resolve(LazyWrapper, :value)

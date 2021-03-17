@@ -13,7 +13,7 @@ You can install `graphql` from RubyGems by adding to your application's `Gemfile
 
 ```ruby
 # Gemfile
-gem "graphql"
+gem "graphql8"
 ```
 
 Then, running `bundle install`:
@@ -24,16 +24,16 @@ $ bundle install
 
 ## Getting Started
 
-On Rails, you can get started with a few [GraphQL generators](https://rmosolgo.github.io/graphql-ruby/schema/generators#graphqlinstall):
+On Rails, you can get started with a few [GraphQL8 generators](https://rmosolgo.github.io/graphql-ruby/schema/generators#graphqlinstall):
 
 ```sh
 # Add graphql-ruby boilerplate and mount graphiql in development
-rails g graphql:install
+rails g graphql8:install
 # Make your first object type
-rails g graphql:object Post title:String rating:Int comments:[Comment]
+rails g graphql8:object Post title:String rating:Int comments:[Comment]
 ```
 
-Or, you can build a GraphQL server by hand:
+Or, you can build a GraphQL8 server by hand:
 
 - Define some types
 - Connect them to a schema
@@ -41,10 +41,10 @@ Or, you can build a GraphQL server by hand:
 
 ### Declare types
 
-Types describe objects in your application and form the basis for [GraphQL's type system](http://graphql.org/learn/schema/#type-system).
+Types describe objects in your application and form the basis for [GraphQL8's type system](http://graphql.org/learn/schema/#type-system).
 
 ```ruby
-# app/graphql/types/post_type.rb
+# app/graphql8/types/post_type.rb
 class Types::PostType < Types::BaseObject
   description "A blog post"
   field :id, ID, null: false
@@ -57,7 +57,7 @@ class Types::PostType < Types::BaseObject
     description: "This post's comments, or null if this post has comments disabled."
 end
 
-# app/graphql/types/comment_type.rb
+# app/graphql8/types/comment_type.rb
 class Types::CommentType < Types::BaseObject
   field :id, ID, null: false
   field :post, PostType, null: false
@@ -69,7 +69,7 @@ end
 Before building a schema, you have to define an [entry point to your system, the "query root"](http://graphql.org/learn/schema/#the-query-and-mutation-types):
 
 ```ruby
-class QueryType < GraphQL::Schema::Object
+class QueryType < GraphQL8::Schema::Object
   description "The query root of this schema"
 
   # First describe the field signature:
@@ -88,12 +88,12 @@ end
 Then, build a schema with `QueryType` as the query entry point:
 
 ```ruby
-class Schema < GraphQL::Schema
+class Schema < GraphQL8::Schema
   query QueryType
 end
 ```
 
-This schema is ready to serve GraphQL queries! {% internal_link "Browse the guides","/guides" %} to learn about other GraphQL Ruby features.
+This schema is ready to serve GraphQL8 queries! {% internal_link "Browse the guides","/guides" %} to learn about other GraphQL8 Ruby features.
 
 ### Execute queries
 
@@ -113,8 +113,8 @@ result_hash = Schema.execute(query_string)
 #   "data" => {
 #     "post" => {
 #        "id" => 1,
-#        "title" => "GraphQL is nice"
-#        "truncatedPreview" => "GraphQL is..."
+#        "title" => "GraphQL8 is nice"
+#        "truncatedPreview" => "GraphQL8 is..."
 #     }
 #   }
 # }
@@ -126,13 +126,13 @@ See {% internal_link "Executing Queries","/queries/executing_queries" %} for mor
 
 If you're building a backend for [Relay](http://facebook.github.io/relay/), you'll need:
 
-- A JSON dump of the schema, which you can get by sending [`GraphQL::Introspection::INTROSPECTION_QUERY`](https://github.com/rmosolgo/graphql-ruby/blob/master/lib/graphql/introspection/introspection_query.rb)
-- Relay-specific helpers for GraphQL, see the `GraphQL::Relay` guides.
+- A JSON dump of the schema, which you can get by sending [`GraphQL8::Introspection::INTROSPECTION_QUERY`](https://github.com/rmosolgo/graphql-ruby/blob/master/lib/graphql8/introspection/introspection_query.rb)
+- Relay-specific helpers for GraphQL8, see the `GraphQL8::Relay` guides.
 
 ## Use with Apollo Client
 
-[Apollo Client](http://dev.apollodata.com/) is a full featured, simple to use GraphQL client with convenient integrations for popular view layers. You don't need to do anything special to connect Apollo Client to a `graphql-ruby` server.
+[Apollo Client](http://dev.apollodata.com/) is a full featured, simple to use GraphQL8 client with convenient integrations for popular view layers. You don't need to do anything special to connect Apollo Client to a `graphql-ruby` server.
 
-## Use with GraphQL.js Client
+## Use with GraphQL8.js Client
 
-[GraphQL.js Client](https://github.com/f/graphql.js) is a tiny client that is platform- and framework-agnostic. It works well with `graphql-ruby` servers, since GraphQL requests are simple query strings transport over HTTP.
+[GraphQL8.js Client](https://github.com/f/graphql.js) is a tiny client that is platform- and framework-agnostic. It works well with `graphql-ruby` servers, since GraphQL8 requests are simple query strings transport over HTTP.

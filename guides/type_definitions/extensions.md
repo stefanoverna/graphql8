@@ -3,7 +3,7 @@ layout: guide
 doc_stub: false
 search: true
 section: Type Definitions
-title: Extending the GraphQL-Ruby Type Definition System
+title: Extending the GraphQL8-Ruby Type Definition System
 desc: Adding metadata and custom helpers to the DSL
 index: 8
 class_based_api: true
@@ -11,7 +11,7 @@ redirect_from:
   - /schema/extending_the_dsl/
 ---
 
-While integrating GraphQL into your app, you can customize the definition DSL. For example, you might:
+While integrating GraphQL8 into your app, you can customize the definition DSL. For example, you might:
 
 - Assign "area of responsibility" to different types and fields
 - DRY up shared logic between types and fields
@@ -23,25 +23,25 @@ This guide describes various options for extending the class-based definition AP
 
 In general, the schema definition process goes like this:
 
-- The application defines lots of classes for the GraphQL types
+- The application defines lots of classes for the GraphQL8 types
 - The first time the schema is used, it "boots"...
 - Which involves calling `.to_graphql` on all the application-defined classes
-  - `.to_graphql` returns a "legacy" GraphQL object (eg, `GraphQL::ObjectType`, `GraphQL::ScalarType`)
+  - `.to_graphql` returns a "legacy" GraphQL8 object (eg, `GraphQL8::ObjectType`, `GraphQL8::ScalarType`)
 - Non-type objects (fields, arguments, enum values) have a slightly different process:
-  - During a type's `.to_graphql` method, definition objects are initialized (eg `GraphQL::Schema::Field.new(...)`)
-  - Then, the initialized object receives `.to_graphql` (eg {{ "GraphQL::Schema::Field#to_graphql" | api_doc }})
-  - `.to_graphql` a "legacy" GraphQL object (eg `GraphQL::Field`)
+  - During a type's `.to_graphql` method, definition objects are initialized (eg `GraphQL8::Schema::Field.new(...)`)
+  - Then, the initialized object receives `.to_graphql` (eg {{ "GraphQL8::Schema::Field#to_graphql" | api_doc }})
+  - `.to_graphql` a "legacy" GraphQL8 object (eg `GraphQL8::Field`)
 
-This process will certainly change over time. The goal to entirely remove "legacy" GraphQL objects from the system. So, at that time, `.to_graphql` will no longer be used.
+This process will certainly change over time. The goal to entirely remove "legacy" GraphQL8 objects from the system. So, at that time, `.to_graphql` will no longer be used.
 
-Another important note: after GraphQL-Ruby converts a class to a "legacy" object, the "legacy" object may be accessed using `.graphql_definition`. This cached instance is the "one true instance" used by GraphQL-Ruby.
+Another important note: after GraphQL8-Ruby converts a class to a "legacy" object, the "legacy" object may be accessed using `.graphql_definition`. This cached instance is the "one true instance" used by GraphQL8-Ruby.
 
 ## Customizing type definitions
 
 In your custom classes, you can override `.to_graphql` to customize the type that will be used at runtime. For example, to assign metadata values to an ObjectType:
 
 ```ruby
-class BaseObject < GraphQL::Schema::Object
+class BaseObject < GraphQL8::Schema::Object
   # Call this method in an Object class to set the permission level:
   def self.required_permission(permission_level)
     @required_permission = permission_level
@@ -49,7 +49,7 @@ class BaseObject < GraphQL::Schema::Object
 
   # This method is overridden to customize object types:
   def self.to_graphql
-    type_defn = super # returns a GraphQL::ObjectType
+    type_defn = super # returns a GraphQL8::ObjectType
     # Get a configured value and assign it to metadata
     type_defn.metadata[:required_permission] = @required_permission
     type_defn
@@ -67,7 +67,7 @@ Now, any runtime code which uses `.metadata[:required_permission]` will get the 
 
 ### Customizing fields
 
-Fields are generated in a different way. Instead of using classes, they are generated with instances of `GraphQL::Schema::Field` (or a subclass). In short, the definition process works like this:
+Fields are generated in a different way. Instead of using classes, they are generated with instances of `GraphQL8::Schema::Field` (or a subclass). In short, the definition process works like this:
 
 ```ruby
 # This is what happens under the hood, roughly:
@@ -75,21 +75,21 @@ Fields are generated in a different way. Instead of using classes, they are gene
 field :name, String, null: false
 # ...
 # Leads to:
-field_config = GraphQL::Schema::Field.new(:name, String, null: false)
+field_config = GraphQL8::Schema::Field.new(:name, String, null: false)
 # Then, later:
-field_config.to_graphql # => returns a GraphQL::Field instance
+field_config.to_graphql # => returns a GraphQL8::Field instance
 ```
 
 So, you can customize this process by:
 
-- creating a custom class which extends `GraphQL::Schema::Field`
+- creating a custom class which extends `GraphQL8::Schema::Field`
 - overriding `#initialize` and `#to_graphql` on that class (instance methods)
 - registering that class as the `field_class` on Objects and Interfaces which should use the customized field.
 
 For example, you can create a custom class which accepts a new parameter to `initialize`:
 
 ```ruby
-class AuthorizedField < GraphQL::Schema::Field
+class AuthorizedField < GraphQL8::Schema::Field
   # Override #initialize to take a new argument:
   def initialize(*args, required_permission:, **kwargs, &block)
     @required_permission = required_permission
@@ -98,7 +98,7 @@ class AuthorizedField < GraphQL::Schema::Field
   end
 
   def to_graphql
-    field_defn = super # Returns a GraphQL::Field
+    field_defn = super # Returns a GraphQL8::Field
     field_defn.metadata[:required_permission] = @required_permission
     field_defn
   end
@@ -108,30 +108,30 @@ end
 Then, pass the field class as `field_class(...)` wherever it should be used:
 
 ```ruby
-class BaseObject < GraphQL::Schema::Object
+class BaseObject < GraphQL8::Schema::Object
   # Use this class for defining fields
   field_class AuthorizedField
 end
 
 # And/Or
-class BaseInterface < GraphQL::Schema::Interface
+class BaseInterface < GraphQL8::Schema::Interface
   field_class AuthorizedField
 end
 ```
 
-Now, `AuthorizedField.new(*args, &block).to_graphql` will be used to create `GraphQL::Field`s.
+Now, `AuthorizedField.new(*args, &block).to_graphql` will be used to create `GraphQL8::Field`s.
 
 ### Customizing Connections
 
 Connections may be customized in a similar way to Fields.
 
-- Create a new class extending 'GraphQL::Types::Relay::BaseConnection'
+- Create a new class extending 'GraphQL8::Types::Relay::BaseConnection'
 - Assign it to your object/interface type with `connection_type_class(MyCustomConnection)`
 
 For example, you can create a custom connection:
 
 ```ruby
-class MyCustomConnection < GraphQL::Types::Relay::BaseConnection
+class MyCustomConnection < GraphQL8::Types::Relay::BaseConnection
   field :total_count, Integer, null: false
 
   def total_count
@@ -144,7 +144,7 @@ Then, pass the field class as `connection_type_class(...)` wherever it should be
 
 ```ruby
 module Types
-  class BaseObject < GraphQL::Schema::Object
+  class BaseObject < GraphQL8::Schema::Object
     # Use this class for defining connections
     connection_type_class MyCustomConnection
   end
@@ -157,32 +157,32 @@ Now, all type classes that extend `BaseObject` will have a connection_type with 
 
 Edges may be customized in a similar way to Connections.
 
-- Create a new class extending 'GraphQL::Types::Relay::BaseEdge'
+- Create a new class extending 'GraphQL8::Types::Relay::BaseEdge'
 - Assign it to your object/interface type with `edge_type_class(MyCustomEdge)`
 
 ### Customizing Arguments
 
 Arguments may be customized in a similar way to Fields.
 
-- Create a new class extending `GraphQL::Schema::Argument`
+- Create a new class extending `GraphQL8::Schema::Argument`
 - Assign it to your field class with `argument_class(MyArgClass)`
 
 Then, in your custom argument class, you can use:
 
 - `#initialize(name, type, desc = nil, **kwargs)` to take input from the DSL
-- `#to_graphql` to modify the conversion to a {{ "GraphQL::Argument" | api_doc }}
+- `#to_graphql` to modify the conversion to a {{ "GraphQL8::Argument" | api_doc }}
 
 ### Customizing Enum Values
 
 Enum values may be customized in a similar way to Fields.
 
-- Create a new class extending `GraphQL::Schema::EnumValue`
+- Create a new class extending `GraphQL8::Schema::EnumValue`
 - Assign it to your base `Enum` class with `enum_value_class(MyEnumValueClass)`
 
 Then, in your custom argument class, you can use:
 
 - `#initialize(name, desc = nil, **kwargs)` to take input from the DSL
-- `#to_graphql` to modify the conversion to a {{ "GraphQL::EnumType::EnumValue" | api_doc }}
+- `#to_graphql` to modify the conversion to a {{ "GraphQL8::EnumType::EnumValue" | api_doc }}
 
 ### Customization compatibility
 
@@ -192,10 +192,10 @@ __Pass-through with `accepts_definition`__. New schema classes have an `accepts_
 
 ```ruby
 # Given a legacy-style configuration function:
-GraphQL::ObjectType.accepts_definitions({ permission_level: ->(...) { ... } })
+GraphQL8::ObjectType.accepts_definitions({ permission_level: ->(...) { ... } })
 
 # Prepare the config method in the base class:
-class BaseObject < GraphQL::Schema::Object
+class BaseObject < GraphQL8::Schema::Object
   accepts_definition :permission_level
 end
 
@@ -209,12 +209,12 @@ MySchema.find("Account").metadata[:permission_level]
 # => 1
 ```
 
-See {{ "GraphQL::Schema::Member::AcceptsDefinition" | api_doc }} for the implementation.
+See {{ "GraphQL8::Schema::Member::AcceptsDefinition" | api_doc }} for the implementation.
 
 __Invoke `.call` directly__. If you defined a module with a `.call` method, you can invoke that method during `.to_graphql`. For example:
 
 ```ruby
-class BaseObject < GraphQL::Schema::Object
+class BaseObject < GraphQL8::Schema::Object
   def self.to_graphql
     type_defn = super
     # Re-use the accepts_definition callback manually:
@@ -227,7 +227,7 @@ end
 __Use `.redefine`__. You can re-open a `.define` block at any time with `.redefine`. It returns a new, updated instance based on the old one. For example:
 
 ```ruby
-class BaseObject < GraphQL::Schema::Object
+class BaseObject < GraphQL8::Schema::Object
   def self.to_graphql
     type_defn = super
     # Read the value from the instance variable, since ivars don't work in `.define {...}` blocks

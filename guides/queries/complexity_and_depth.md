@@ -39,7 +39,7 @@ end
 Then, define your `max_complexity` at the schema-level:
 
 ```ruby
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
  # ...
  max_complexity 100
 end
@@ -62,8 +62,8 @@ To get a feeling for complexity of queries in your system, you can use the `Quer
 
 ```ruby
 
-class MySchema < GraphQL::Schema
-  log_query_complexity = GraphQL::Analysis::QueryComplexity.new { |query, complexity| Rails.logger.info("[GraphQL Query Complexity] #{complexity}  | staff? #{query.context[:current_user].staff?}")}
+class MySchema < GraphQL8::Schema
+  log_query_complexity = GraphQL8::Analysis::QueryComplexity.new { |query, complexity| Rails.logger.info("[GraphQL8 Query Complexity] #{complexity}  | staff? #{query.context[:current_user].staff?}")}
   query_analyzer(log_query_complexity)
 end
 ```
@@ -74,7 +74,7 @@ You can also reject queries based on the depth of their nesting. You can define 
 
 ```ruby
 # Schema-level:
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   # ...
   max_depth 10
 end
@@ -93,8 +93,8 @@ MySchema.execute(query_string, max_depth: nil)
 To get a feeling for depth of queries in your system, you can use the `QueryDepth` query reducer. Hook it up to log out values from each query:
 
 ```ruby
-class MySchema < GraphQL::Schema
-  log_query_depth = GraphQL::Analysis::QueryDepth.new { |query, depth| Rails.logger.info("[GraphQL Query Depth] #{depth} || staff?  #{query.context[:current_user].staff?}")}
+class MySchema < GraphQL8::Schema
+  log_query_depth = GraphQL8::Analysis::QueryDepth.new { |query, depth| Rails.logger.info("[GraphQL8 Query Depth] #{depth} || staff?  #{query.context[:current_user].staff?}")}
   query_analyzer(log_query_depth)
 end
 ```

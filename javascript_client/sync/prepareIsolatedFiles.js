@@ -1,9 +1,9 @@
 var fs = require("fs")
-var graphql = require("graphql")
+var graphql = require("graphql8")
 var addTypenameToSelectionSet = require("./addTypenameToSelectionSet")
 
 /**
- * Read a bunch of GraphQL files and treat them as islands.
+ * Read a bunch of GraphQL8 files and treat them as islands.
  * Don't join any fragments from other files.
  * Don't make assertions about name uniqueness.
  *

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "spec_helper"
 
-describe GraphQL::Query::Variables do
+describe GraphQL8::Query::Variables do
   let(:query_string) {%|
   query getCheese(
     $animals: [DairyAnimal!],
@@ -14,13 +14,13 @@ describe GraphQL::Query::Variables do
     }
   }
   |}
-  let(:ast_variables) { GraphQL.parse(query_string).definitions.first.variables }
+  let(:ast_variables) { GraphQL8.parse(query_string).definitions.first.variables }
   let(:schema) { Dummy::Schema }
   let(:variables) {
-    GraphQL::Query::Variables.new(
+    GraphQL8::Query::Variables.new(
     OpenStruct.new({
       schema: schema,
-      warden: GraphQL::Schema::Warden.new(schema.default_filter, schema: schema, context: nil),
+      warden: GraphQL8::Schema::Warden.new(schema.default_filter, schema: schema, context: nil),
     }),
     ast_variables,
     provided_variables)
@@ -139,7 +139,7 @@ describe GraphQL::Query::Variables do
         end
       end
 
-      let(:schema) { GraphQL::Schema.from_definition(%|
+      let(:schema) { GraphQL8::Schema.from_definition(%|
         type Query {
           thingsCount(ids: [ID!]): Int!
         }
@@ -195,13 +195,13 @@ describe GraphQL::Query::Variables do
       let(:schema) {
         args_cache = args
 
-        complex_val = GraphQL::InputObjectType.define do
+        complex_val = GraphQL8::InputObjectType.define do
           name "ComplexVal"
           argument :val, types.Int
           argument :val_with_default, types.Int, default_value: 13
         end
 
-        query_type = GraphQL::ObjectType.define do
+        query_type = GraphQL8::ObjectType.define do
           name "Query"
           field :variables_test, types.Int do
             argument :val, types.Int
@@ -214,7 +214,7 @@ describe GraphQL::Query::Variables do
           end
         end
 
-        GraphQL::Schema.define do
+        GraphQL8::Schema.define do
           query(query_type)
         end
       }
@@ -264,10 +264,10 @@ describe GraphQL::Query::Variables do
 
       let(:run_query) { schema.execute(query_string, variables: provided_variables) }
 
-      let(:variables) { GraphQL::Query::Variables.new(
+      let(:variables) { GraphQL8::Query::Variables.new(
         OpenStruct.new({
           schema: schema,
-          warden: GraphQL::Schema::Warden.new(schema.default_mask, schema: schema, context: nil),
+          warden: GraphQL8::Schema::Warden.new(schema.default_mask, schema: schema, context: nil),
         }),
         ast_variables,
         provided_variables)

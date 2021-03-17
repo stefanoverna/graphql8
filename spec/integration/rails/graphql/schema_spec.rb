@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 require "spec_helper"
 
-describe GraphQL::Schema do
+describe GraphQL8::Schema do
   let(:schema) { Dummy::Schema }
   let(:relay_schema)  { StarWars::Schema }
-  let(:empty_schema) { GraphQL::Schema.define }
+  let(:empty_schema) { GraphQL8::Schema.define }
 
   describe "#graphql_definition" do
     it "returns itself" do
@@ -38,7 +38,7 @@ describe GraphQL::Schema do
 
   describe "#to_document" do
     it "returns the AST for the schema IDL" do
-      expected = GraphQL::Language::DocumentFromSchemaDefinition.new(schema).document
+      expected = GraphQL8::Language::DocumentFromSchemaDefinition.new(schema).document
       assert expected.eql?(schema.to_document)
     end
   end
@@ -69,7 +69,7 @@ describe GraphQL::Schema do
 
   describe "#to_definition" do
     it "prints out the schema definition" do
-      assert_equal schema.to_definition, GraphQL::Schema::Printer.print_schema(schema)
+      assert_equal schema.to_definition, GraphQL8::Schema::Printer.print_schema(schema)
     end
   end
 
@@ -107,17 +107,17 @@ describe GraphQL::Schema do
 
     describe "when a schema is defined with abstract types, but no resolve type hook" do
       it "raises not implemented" do
-        interface = GraphQL::InterfaceType.define do
+        interface = GraphQL8::InterfaceType.define do
           name "SomeInterface"
         end
 
-        query_type = GraphQL::ObjectType.define do
+        query_type = GraphQL8::ObjectType.define do
           name "Query"
           field :something, interface
         end
 
         assert_raises(NotImplementedError) {
-          GraphQL::Schema.define do
+          GraphQL8::Schema.define do
             query(query_type)
           end
         }
@@ -136,18 +136,18 @@ describe GraphQL::Schema do
 
     describe "when a schema is defined with a relay ID field, but no hook" do
       it "raises not implemented" do
-        thing_type = GraphQL::ObjectType.define do
+        thing_type = GraphQL8::ObjectType.define do
           name "Thing"
           global_id_field :id
         end
 
-        query_type = GraphQL::ObjectType.define do
+        query_type = GraphQL8::ObjectType.define do
           name "Query"
           field :thing, thing_type
         end
 
         assert_raises(NotImplementedError) {
-          GraphQL::Schema.define do
+          GraphQL8::Schema.define do
             query(query_type)
             resolve_type NO_OP_RESOLVE_TYPE
           end
@@ -167,13 +167,13 @@ describe GraphQL::Schema do
 
     describe "when a schema is defined with a node field, but no hook" do
       it "raises not implemented" do
-        query_type = GraphQL::ObjectType.define do
+        query_type = GraphQL8::ObjectType.define do
           name "Query"
-          field :node, GraphQL::Relay::Node.field
+          field :node, GraphQL8::Relay::Node.field
         end
 
         assert_raises(NotImplementedError) {
-          GraphQL::Schema.define do
+          GraphQL8::Schema.define do
             query(query_type)
             resolve_type NO_OP_RESOLVE_TYPE
           end
@@ -185,24 +185,24 @@ describe GraphQL::Schema do
   describe "directives" do
     describe "when directives are not overwritten" do
       it "contains built-in directives" do
-        schema = GraphQL::Schema.define
+        schema = GraphQL8::Schema.define
 
         assert_equal ['deprecated', 'include', 'skip'], schema.directives.keys.sort
 
-        assert_equal GraphQL::Directive::DeprecatedDirective, schema.directives['deprecated']
-        assert_equal GraphQL::Directive::IncludeDirective, schema.directives['include']
-        assert_equal GraphQL::Directive::SkipDirective, schema.directives['skip']
+        assert_equal GraphQL8::Directive::DeprecatedDirective, schema.directives['deprecated']
+        assert_equal GraphQL8::Directive::IncludeDirective, schema.directives['include']
+        assert_equal GraphQL8::Directive::SkipDirective, schema.directives['skip']
       end
     end
 
     describe "when directives are overwritten" do
       it "contains only specified directives" do
-        schema = GraphQL::Schema.define do
-          directives [GraphQL::Directive::DeprecatedDirective]
+        schema = GraphQL8::Schema.define do
+          directives [GraphQL8::Directive::DeprecatedDirective]
         end
 
         assert_equal ['deprecated'], schema.directives.keys.sort
-        assert_equal GraphQL::Directive::DeprecatedDirective, schema.directives['deprecated']
+        assert_equal GraphQL8::Directive::DeprecatedDirective, schema.directives['deprecated']
       end
     end
   end
@@ -215,13 +215,13 @@ type Query {
 }
       SCHEMA
 
-      built_schema = GraphQL::Schema.from_definition(schema)
-      assert_equal schema.chop, GraphQL::Schema::Printer.print_schema(built_schema)
+      built_schema = GraphQL8::Schema.from_definition(schema)
+      assert_equal schema.chop, GraphQL8::Schema::Printer.print_schema(built_schema)
     end
 
     it "builds from a file" do
-      schema = GraphQL::Schema.from_definition("spec/support/magic_cards/schema.graphql")
-      assert_instance_of GraphQL::Schema, schema
+      schema = GraphQL8::Schema.from_definition("spec/support/magic_cards/schema.graphql")
+      assert_instance_of GraphQL8::Schema, schema
       expected_types =  ["Card", "Color", "Expansion", "Printing"]
       assert_equal expected_types, (expected_types & schema.types.keys)
     end
@@ -229,21 +229,21 @@ type Query {
 
   describe ".from_introspection" do
     let(:schema) {
-      query_root = GraphQL::ObjectType.define do
+      query_root = GraphQL8::ObjectType.define do
         name 'Query'
         field :str, types.String
       end
 
-      GraphQL::Schema.define do
+      GraphQL8::Schema.define do
         query query_root
       end
     }
     let(:schema_json) {
-      schema.execute(GraphQL::Introspection::INTROSPECTION_QUERY)
+      schema.execute(GraphQL8::Introspection::INTROSPECTION_QUERY)
     }
     it "uses Schema::Loader to build a schema from an introspection result" do
-      built_schema = GraphQL::Schema.from_introspection(schema_json)
-      assert_equal GraphQL::Schema::Printer.print_schema(schema), GraphQL::Schema::Printer.print_schema(built_schema)
+      built_schema = GraphQL8::Schema.from_introspection(schema_json)
+      assert_equal GraphQL8::Schema::Printer.print_schema(schema), GraphQL8::Schema::Printer.print_schema(built_schema)
     end
   end
 
@@ -304,7 +304,7 @@ type Query {
       VariableCountInstrumenter.new
     }
     let(:query_type) {
-      GraphQL::ObjectType.define do
+      GraphQL8::ObjectType.define do
         name "Query"
         field :int, types.Int do
           argument :value, types.Int
@@ -315,7 +315,7 @@ type Query {
 
     let(:schema) {
       spec = self
-      GraphQL::Schema.define do
+      GraphQL8::Schema.define do
         query(spec.query_type)
         instrument(:field, MultiplyInstrumenter.new(3))
         instrument(:query, StackCheckInstrumenter.new(spec.variable_counter))
@@ -364,7 +364,7 @@ type Query {
 
     describe "field instrumenters which cause loops" do
       it "has a nice error message" do
-        assert_raises(GraphQL::Schema::CyclicalDefinitionError) do
+        assert_raises(GraphQL8::Schema::CyclicalDefinitionError) do
           schema.redefine {
             instrument(:field, CyclicalDependencyInstrumentation.new(self.target))
           }
@@ -378,8 +378,8 @@ type Query {
     class LazyObjChild < LazyObj; end
 
     let(:schema) {
-      query_type = GraphQL::ObjectType.define(name: "Query")
-      GraphQL::Schema.define do
+      query_type = GraphQL8::ObjectType.define(name: "Query")
+      GraphQL8::Schema.define do
         query(query_type)
         lazy_resolve(Integer, :itself)
         lazy_resolve(LazyObj, :dup)
@@ -426,7 +426,7 @@ type Query {
     end
 
     it "accepts a list of custom rules" do
-      custom_rules = GraphQL::StaticValidation::ALL_RULES - [GraphQL::StaticValidation::FragmentsAreNamed]
+      custom_rules = GraphQL8::StaticValidation::ALL_RULES - [GraphQL8::StaticValidation::FragmentsAreNamed]
       errors = schema.validate("fragment on Cheese { id }", rules: custom_rules)
       assert_equal([], errors)
     end
@@ -434,7 +434,7 @@ type Query {
 
   describe "#as_json / #to_json" do
     it "returns the instrospection result" do
-      result = schema.execute(GraphQL::Introspection::INTROSPECTION_QUERY)
+      result = schema.execute(GraphQL8::Introspection::INTROSPECTION_QUERY)
       assert_equal result, schema.as_json
       assert_equal result, JSON.parse(schema.to_json)
     end
@@ -442,7 +442,7 @@ type Query {
 
   describe "#as_json" do
     it "returns a hash" do
-      result = schema.execute(GraphQL::Introspection::INTROSPECTION_QUERY)
+      result = schema.execute(GraphQL8::Introspection::INTROSPECTION_QUERY)
       assert_equal result.as_json.class, Hash
     end
   end
@@ -450,7 +450,7 @@ type Query {
   describe "#get_field" do
     it "returns fields by type or type name" do
       field = schema.get_field("Cheese", "id")
-      assert_instance_of GraphQL::Field, field
+      assert_instance_of GraphQL8::Field, field
       field_2 = schema.get_field(Dummy::Cheese.graphql_definition, "id")
       assert_equal field, field_2
     end

@@ -4,12 +4,12 @@ doc_stub: false
 search: true
 section: Schema
 title: Class-based API
-desc: Define your GraphQL schema with Ruby classes (1.8.x alpha releases)
+desc: Define your GraphQL8 schema with Ruby classes (1.8.x alpha releases)
 class_based_api: true
 index: 10
 ---
 
-In GraphQL `1.8`+, you can use Ruby classes to build your schema. You can __mix__ class-style and `.define`-style type definitions in a schema.
+In GraphQL8 `1.8`+, you can use Ruby classes to build your schema. You can __mix__ class-style and `.define`-style type definitions in a schema.
 
 You can get an overview of this new feature:
 
@@ -33,7 +33,7 @@ And learn about the APIs:
 
 ## Rationale & Goals
 
-This new API aims to improve the "getting started" experience and the schema customization experience by replacing GraphQL-Ruby-specific DSLs with familiar Ruby semantics (classes and methods).
+This new API aims to improve the "getting started" experience and the schema customization experience by replacing GraphQL8-Ruby-specific DSLs with familiar Ruby semantics (classes and methods).
 
 Additionally, this new API must be cross-compatible with the current schema definition API so that it can be adopted bit-by-bit.
 
@@ -45,17 +45,17 @@ Parts of your schema can be converted one-by-one, so you can convert definitions
 
 In general, each `.define { ... }` block will be converted to a class.
 
-- Instead of a `GraphQL::{X}Type`, classes inherit from `GraphQL::Schema::{X}`. For example, instead of `GraphQL::ObjectType.define { ... }`, a definition is made by extending `GraphQL::Schema::Object`
+- Instead of a `GraphQL8::{X}Type`, classes inherit from `GraphQL8::Schema::{X}`. For example, instead of `GraphQL8::ObjectType.define { ... }`, a definition is made by extending `GraphQL8::Schema::Object`
 - Any class hierarchy is supported; It's recommended to create a base class for your application, then extend the base class for each of your types (like `ApplicationController` in Rails, see [Customizing Definitions](#customizing-defintions)).
 
 See sections below for specific information about each schema definition class.
 
 ### Type Instances
 
-The previous `GraphQL::{X}Type` objects are still used under the hood. Each of the new `GraphQL::Schema::{X}` classes implements a few methods:
+The previous `GraphQL8::{X}Type` objects are still used under the hood. Each of the new `GraphQL8::Schema::{X}` classes implements a few methods:
 
-- `.to_graphql`: creates a new instance of `GraphQL::{X}Type`
-- `.graphql_definition`: returns a cached instance of `GraphQL::{X}Type`
+- `.to_graphql`: creates a new instance of `GraphQL8::{X}Type`
+- `.graphql_definition`: returns a cached instance of `GraphQL8::{X}Type`
 
 If you have custom code which breaks on new-style definitions, try calling `.graphql_definition` to get the underlying type object.
 
@@ -85,14 +85,14 @@ __A refinement__, activated in [file scope or class/module scope](https://docs.r
 
 ```ruby
 # Enable `!` method in this scope
-using GraphQL::DeprecatedDSL
+using GraphQL8::DeprecatedDSL
 ```
 
 __A monkeypatch__, activated in global scope:
 
 ```ruby
 # Enable `!` everywhere
-GraphQL::DeprecatedDSL.activate
+GraphQL8::DeprecatedDSL.activate
 ```
 
 ### Connection fields & types
@@ -112,14 +112,14 @@ field :projects, Types::ProjectType.connection_type
 
 ### Resolve function compatibility
 
-If you define a type with a class, you can use existing GraphQL-Ruby resolve functions with that class, for example:
+If you define a type with a class, you can use existing GraphQL8-Ruby resolve functions with that class, for example:
 
 ```ruby
 # Using a Proc literal or #call-able
 field :something, ... resolve: ->(obj, args, ctx) { ... }
 # Using a predefined field
 field :do_something, field: Mutations::DoSomething.field
-# Using a GraphQL::Function
+# Using a GraphQL8::Function
 field :something, function: Functions::Something.new
 ```
 
@@ -137,12 +137,12 @@ This transformation may not be perfect, but it should cover the most common case
 
 ### Using the Default Upgrade Task
 
-The upgrader ships with rake tasks, included as a railtie ([source](https://github.com/rmosolgo/graphql-ruby/blob/v1.8.0/lib/graphql/railtie.rb)). The railtie will be automatically installed by your Rails app, and it provides the following tasks:
+The upgrader ships with rake tasks, included as a railtie ([source](https://github.com/rmosolgo/graphql-ruby/blob/v1.8.0/lib/graphql8/railtie.rb)). The railtie will be automatically installed by your Rails app, and it provides the following tasks:
 
-- `graphql:upgrade:schema[path/to/schema.rb]`: upgrade the Schema file
-- `graphql:upgrade:member[path/to/some/type.rb]`: upgrade a type definition (object, interface, union, etc)
-- `graphql:upgrade[app/graphql/**/*]`: run the `member` upgrade on files which have a suffix of `_(type|interface|enum|union).rb`
-- `graphql:upgrade:create_base_objects[path/to/graphql/]`: add base classes to your project
+- `graphql8:upgrade:schema[path/to/schema.rb]`: upgrade the Schema file
+- `graphql8:upgrade:member[path/to/some/type.rb]`: upgrade a type definition (object, interface, union, etc)
+- `graphql8:upgrade[app/graphql8/**/*]`: run the `member` upgrade on files which have a suffix of `_(type|interface|enum|union).rb`
+- `graphql8:upgrade:create_base_objects[path/to/graphql8/]`: add base classes to your project
 
 ### Writing a Custom Upgrade Task
 
@@ -159,14 +159,14 @@ Here's the code to upgrade a type definition with the default transform pipeline
 # Read the original source code into a string
 original_source = File.read("path/to/type.rb")
 # Initialize an upgrader with the default transforms
-upgrader = GraphQL::Upgrader::Member.new(original_source)
+upgrader = GraphQL8::Upgrader::Member.new(original_source)
 # Perform the transformation, get the transformed source code
 transformed_source = upgrader.upgrade
 # Update the source file with the new code
 File.write("path/to/type.rb", transformed_source)
 ```
 
-In this custom code, you can pass some keywords to {{ "GraphQL::Upgrader::Member.new" | api_doc }}:
+In this custom code, you can pass some keywords to {{ "GraphQL8::Upgrader::Member.new" | api_doc }}:
 
 - `type_transforms:` Applied to the source code as a whole, applied first
 - `field_transforms:` Applied to each field/connection/argument definition (extracted from the source, transformed independently, then re-inserted)
@@ -179,24 +179,24 @@ For example, in `script/graphql-upgrade`:
 ```ruby
 #!/usr/bin/env ruby
 
-# @example Upgrade app/graphql/types/user_type.rb:
-#  script/graphql-upgrade app/graphql/types/user_type.rb
+# @example Upgrade app/graphql8/types/user_type.rb:
+#  script/graphql-upgrade app/graphql8/types/user_type.rb
 
 # Replace the default define-to-class transform with a custom one:
-type_transforms = GraphQL::Upgrader::Member::DEFAULT_TYPE_TRANSFORMS.map { |t|
-  if t == GraphQL::Upgrader::TypeDefineToClassTransform
-    GraphQL::Upgrader::TypeDefineToClassTransform.new(base_class_pattern: "Platform::\\2s::Base")
+type_transforms = GraphQL8::Upgrader::Member::DEFAULT_TYPE_TRANSFORMS.map { |t|
+  if t == GraphQL8::Upgrader::TypeDefineToClassTransform
+    GraphQL8::Upgrader::TypeDefineToClassTransform.new(base_class_pattern: "Platform::\\2s::Base")
   else
     t
   end
 }
 
 # Add this transformer at the beginning of the list:
-type_transforms.unshift(GraphQL::Upgrader::ConfigurationToKwargTransform.new(kwarg: "visibility"))
+type_transforms.unshift(GraphQL8::Upgrader::ConfigurationToKwargTransform.new(kwarg: "visibility"))
 
 # run the upgrader
 original_text = File.read(ARGV[0])
-upgrader = GraphQL::Upgrader::Member.new(original_text, type_transforms: type_transforms)
+upgrader = GraphQL8::Upgrader::Member.new(original_text, type_transforms: type_transforms)
 transformed_text = upgrader.upgrade
 File.write(filename, transformed_text)
 ```
@@ -208,13 +208,13 @@ Objects in the transform pipeline may be:
 - A class which responds to `.new.apply(input_text)` and returns the transformed code
 - An object which responds to `.apply(input_text)` and returns the transformed code
 
-The library provides a {{ "GraphQL::Upgrader::Transform" | api_doc }} base class with a few convenience methods. You can also customize the built-in transformers listed below.
+The library provides a {{ "GraphQL8::Upgrader::Transform" | api_doc }} base class with a few convenience methods. You can also customize the built-in transformers listed below.
 
 For example, here's a transform which rewrites type definitions from a `model_type(model) do ... end` factory method to the class-based syntax:
 
 ```ruby
 # Create a custom transform for our `model_type` factory:
-class ModelTypeToClassTransform < GraphQL::Upgrader::Transform
+class ModelTypeToClassTransform < GraphQL8::Upgrader::Transform
   def initialize
     # Find calls to the factory method, which have a type class inside
     @find_pattern = /^( +)([a-zA-Z_0-9:]*) = model_type\(-> ?\{ ?:{0,2}([a-zA-Z_0-9:]*) ?\} ?\) do/
@@ -235,45 +235,45 @@ type_transforms.unshift(ModelTypeToClassTransform)
 
 Follow links to the API doc to read the source of each transform:
 
-Type transforms ({{ "GraphQL::Upgrader::Member::DEFAULT_TYPE_TRANSFORMS" | api_doc }}):
+Type transforms ({{ "GraphQL8::Upgrader::Member::DEFAULT_TYPE_TRANSFORMS" | api_doc }}):
 
-- {{ "GraphQL::Upgrader::Transform" | api_doc }} base class, provides a `normalize_type_expression` helper
-- {{ "GraphQL::Upgrader::TypeDefineToClassTransform" | api_doc }} turns `.define` into `class ...` with a regexp substitution
-- {{ "GraphQL::Upgrader::NameTransform" | api_doc }} takes `name "..."` and removes it if it's redundant, or converts it to `graphql_name "..."`
-- {{ "GraphQL::Upgrader::InterfacesToImplementsTransform" | api_doc }} turns `interfaces [A, B...]` into `implements(A)\nimplements(B)...`
+- {{ "GraphQL8::Upgrader::Transform" | api_doc }} base class, provides a `normalize_type_expression` helper
+- {{ "GraphQL8::Upgrader::TypeDefineToClassTransform" | api_doc }} turns `.define` into `class ...` with a regexp substitution
+- {{ "GraphQL8::Upgrader::NameTransform" | api_doc }} takes `name "..."` and removes it if it's redundant, or converts it to `graphql_name "..."`
+- {{ "GraphQL8::Upgrader::InterfacesToImplementsTransform" | api_doc }} turns `interfaces [A, B...]` into `implements(A)\nimplements(B)...`
 
-Field transforms ({{ "GraphQL::Upgrader::Member::DEFAULT_FIELD_TRANSFORMS" | api_doc }}):
+Field transforms ({{ "GraphQL8::Upgrader::Member::DEFAULT_FIELD_TRANSFORMS" | api_doc }}):
 
-- {{ "GraphQL::Upgrader::RemoveNewlinesTransform" | api_doc }} removes newlines from field definitions to normalize them
-- {{ "GraphQL::Upgrader::PositionalTypeArgTransform" | api_doc }} moves `type X` from the `do ... end` block into a positional argument, to normalize the definition
-- {{ "GraphQL::Upgrader::ConfigurationToKwargTransform" | api_doc }} moves a `do ... end` configuration to a keyword argument. By default, this is used for `property` and `description`. You can add new instances of this transform to convert your custom DSL.
-- {{ "GraphQL::Upgrader::PropertyToMethodTransform" | api_doc }} turns `property:` to `method:`
-- {{ "GraphQL::Upgrader::UnderscoreizeFieldNameTransform" | api_doc }} converts field names to underscore-case. __NOTE__ that this conversion may be _wrong_ in the case of `bodyHTML => body_html`. When you find it is wrong, manually revert it and preserve the camel-case field name.
-- {{ "GraphQL::Upgrader::ResolveProcToMethodTransform" | api_doc }} converts `resolve -> { ... }` to `def {field_name} ... ` method definitions
-- {{ "GraphQL::Upgrader::UpdateMethodSignatureTransform" | api_doc }} converts the type name to the new syntax, and adds `null:`/`required:` to the method signature
+- {{ "GraphQL8::Upgrader::RemoveNewlinesTransform" | api_doc }} removes newlines from field definitions to normalize them
+- {{ "GraphQL8::Upgrader::PositionalTypeArgTransform" | api_doc }} moves `type X` from the `do ... end` block into a positional argument, to normalize the definition
+- {{ "GraphQL8::Upgrader::ConfigurationToKwargTransform" | api_doc }} moves a `do ... end` configuration to a keyword argument. By default, this is used for `property` and `description`. You can add new instances of this transform to convert your custom DSL.
+- {{ "GraphQL8::Upgrader::PropertyToMethodTransform" | api_doc }} turns `property:` to `method:`
+- {{ "GraphQL8::Upgrader::UnderscoreizeFieldNameTransform" | api_doc }} converts field names to underscore-case. __NOTE__ that this conversion may be _wrong_ in the case of `bodyHTML => body_html`. When you find it is wrong, manually revert it and preserve the camel-case field name.
+- {{ "GraphQL8::Upgrader::ResolveProcToMethodTransform" | api_doc }} converts `resolve -> { ... }` to `def {field_name} ... ` method definitions
+- {{ "GraphQL8::Upgrader::UpdateMethodSignatureTransform" | api_doc }} converts the type name to the new syntax, and adds `null:`/`required:` to the method signature
 
-Clean-up transforms ({{ "GraphQL::Upgrader::Member::DEFAULT_CLEAN_UP_TRANSFORMS" | api_doc }}):
+Clean-up transforms ({{ "GraphQL8::Upgrader::Member::DEFAULT_CLEAN_UP_TRANSFORMS" | api_doc }}):
 
-- {{ "GraphQL::Upgrader::RemoveExcessWhitespaceTransform" | api_doc }} removes redundant newlines
-- {{ "GraphQL::Upgrader::RemoveEmptyBlocksTransform" | api_doc }} removes `do end` with nothing inside them
+- {{ "GraphQL8::Upgrader::RemoveExcessWhitespaceTransform" | api_doc }} removes redundant newlines
+- {{ "GraphQL8::Upgrader::RemoveEmptyBlocksTransform" | api_doc }} removes `do end` with nothing inside them
 
 ## Roadmap
 
 Here is a working plan for rolling out this feature:
 
 - ongoing:
-  - ☐ Receive feedback from GraphQL schema owners about the new API (usability & goals)
+  - ☐ Receive feedback from GraphQL8 schema owners about the new API (usability & goals)
 - graphql 1.8:
   - ☑ Build a schema definition API based on classes instead of singletons
-  - ☑ Migrate a few components of GitHub's GraphQL schema to this new API
+  - ☑ Migrate a few components of GitHub's GraphQL8 schema to this new API
   - ☑ Build advanced class-based features:
     - ☑ Custom `Context` classes
     - ☑ Custom introspection types
     - ☐ ~~Custom directives~~ Probably will mess with execution soon, not worth the investment now
     - ☐ ~~Custom `Schema#execute` method~~ not necessary
-  - ☑ Migrate all of GitHub's GraphQL schema to this new API
+  - ☑ Migrate all of GitHub's GraphQL8 schema to this new API
 - graphql 1.9:
-  - ☐ Update all GraphQL-Ruby docs to reflect this new API
+  - ☐ Update all GraphQL8-Ruby docs to reflect this new API
 - graphql 1.10:
   - ☐ Begin sunsetting `.define`: isolate it in its own module
 - graphql 2.0:
@@ -284,15 +284,15 @@ Here is a working plan for rolling out this feature:
 Some configurations are used for _all_ types described below:
 
 - `graphql_name` overrides the type name. (The default value is the Ruby constant name, without any namespaces)
-- `description` provides a description for GraphQL introspection.
+- `description` provides a description for GraphQL8 introspection.
 
 For example:
 
 ```ruby
-class Types::TodoList < GraphQL::Schema::Object # or Scalar, Enum, Union, whatever
+class Types::TodoList < GraphQL8::Schema::Object # or Scalar, Enum, Union, whatever
   graphql_name "List" # Overrides the default of "TodoList"
   description "Things to do (may have already been done)"
 end
 ```
 
-(Implemented in {{ "GraphQL::Schema::Member" | api_doc }}).
+(Implemented in {{ "GraphQL8::Schema::Member" | api_doc }}).

@@ -4,12 +4,12 @@ doc_stub: false
 search: true
 section: Queries
 title: Executing Queries
-desc: Evaluate GraphQL queries with your schema
+desc: Evaluate GraphQL8 queries with your schema
 index: 0
 ---
 
 
-You can execute queries with your {{ "GraphQL::Schema" | api_doc }} and get a Ruby Hash as a result. For example, to execute a query from a string:
+You can execute queries with your {{ "GraphQL8::Schema" | api_doc }} and get a Ruby Hash as a result. For example, to execute a query from a string:
 
 ```ruby
 query_string = "{ ... }"
@@ -40,15 +40,15 @@ There are also several options you can use:
 - `context:` accepts application-specific data to pass to `resolve` functions
 - `root_value:` will be provided to root-level `resolve` functions as `obj`
 - `operation_name:` picks a [named operation](http://graphql.org/learn/queries/#operation-name) from the incoming string to execute
-- `document:` accepts an already-parsed query (instead of a string), see {{ "GraphQL.parse" | api_doc }}
+- `document:` accepts an already-parsed query (instead of a string), see {{ "GraphQL8.parse" | api_doc }}
 - `validate:` may be `false` to skip static validation for this query
 - `max_depth:` and `max_complexity:` may override schema-level values
 
-Some of these options are described in more detail below, see {{ "GraphQL::Query#initialize" | api_doc }} for more information.
+Some of these options are described in more detail below, see {{ "GraphQL8::Query#initialize" | api_doc }} for more information.
 
 ## Variables
 
-GraphQL provides [query variables](http://graphql.org/learn/queries/#variables) as a way to parameterize query strings. If your query string contains variables, you can provide values in a hash of `{ String => value }` pairs. The keys should _not_ contain `"$"`.
+GraphQL8 provides [query variables](http://graphql.org/learn/queries/#variables) as a way to parameterize query strings. If your query string contains variables, you can provide values in a hash of `{ String => value }` pairs. The keys should _not_ contain `"$"`.
 
 For example, to provide variables to a query:
 
@@ -65,7 +65,7 @@ variables = { "postId" => "1" }
 MySchema.execute(query_string, variables: variables)
 ```
 
-If the variable is a {{ "GraphQL::InputObjectType" | api_doc }}, you can provide a nested hash, for example:
+If the variable is a {{ "GraphQL8::InputObjectType" | api_doc }}, you can provide a nested hash, for example:
 
 ```ruby
 query_string = "
@@ -91,7 +91,7 @@ MySchema.execute(query_string, variables: variables)
 
 ## Context
 
-You can provide application-specific values to GraphQL as `context:`. This is available in many places:
+You can provide application-specific values to GraphQL8 as `context:`. This is available in many places:
 
 - `resolve` functions
 - `Schema#resolve_type` hook
@@ -121,7 +121,7 @@ def post(id:)
 end
 ```
 
-Note that `context` is _not_ the hash that you passed it. It's an instance of {{ "GraphQL::Query::Context" | api_doc }}, but it delegates `#[]`, `#[]=`, and a few other methods to the hash you provide.
+Note that `context` is _not_ the hash that you passed it. It's an instance of {{ "GraphQL8::Query::Context" | api_doc }}, but it delegates `#[]`, `#[]=`, and a few other methods to the hash you provide.
 
 ## Root Value
 
@@ -135,7 +135,7 @@ MySchema.execute(query_string, root_value: current_org)
 That value will be provided to root-level fields, such as mutation fields. For example:
 
 ```ruby
-class MutationType < GraphQL::Schema::Object
+class MutationType < GraphQL8::Schema::Object
   field :create_post, Post, null: true
 
   def create_post(**args)
@@ -145,4 +145,4 @@ class MutationType < GraphQL::Schema::Object
 end
 ```
 
-{{ "GraphQL::Relay::Mutation" | api_doc }} fields will also receive `root_value:` as `obj` (assuming they're attached directly to your `MutationType`).
+{{ "GraphQL8::Relay::Mutation" | api_doc }} fields will also receive `root_value:` as `obj` (assuming they're attached directly to your `MutationType`).

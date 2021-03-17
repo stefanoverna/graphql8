@@ -5,7 +5,7 @@ layout: null
 var client = algoliasearch('8VO8708WUV', '1f3e2b6f6a503fa82efdec331fd9c55e');
 var index = client.initIndex('prod_graphql_ruby');
 
-var GraphQLRubySearch = {
+var GraphQL8RubySearch = {
   // Respond to a change event on `el` by:
   // - Searching the index
   // - Rendering the results
@@ -99,7 +99,7 @@ var GraphQLRubySearch = {
 document.addEventListener("keydown", function(ev) {
   var diff = ev.keyCode == 38 ? -1 : (ev.keyCode == 40 ? 1 : 0)
   if (diff) {
-    var highlighted = GraphQLRubySearch._moveHighlight(diff)
+    var highlighted = GraphQL8RubySearch._moveHighlight(diff)
     if (highlighted) {
       ev.preventDefault()
     }

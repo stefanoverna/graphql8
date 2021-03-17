@@ -9,7 +9,7 @@ module Platform
       minimum_accepted_scopes ["z"]
 
       global_id_field :id
-      interfaces [GraphQL::Relay::Node.interface]
+      interfaces [GraphQL8::Relay::Node.interface]
 
       field :f1,    !Objects::O1, "The x being y."
       field :f2,    !Enums::E1, "x for the y.",

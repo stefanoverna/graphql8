@@ -7,12 +7,12 @@ title: Root Types
 desc: Root types are the entry points for queries, mutations and subscriptions.
 ---
 
-GraphQL queries begin from [root types](http://graphql.org/learn/schema/#the-query-and-mutation-types): `query`, `mutation`, and `subscription` (experimental).
+GraphQL8 queries begin from [root types](http://graphql.org/learn/schema/#the-query-and-mutation-types): `query`, `mutation`, and `subscription` (experimental).
 
 Attach these to your schema using methods with the same name:
 
 ```ruby
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   # required
   query Types::QueryType
   # optional
@@ -22,25 +22,25 @@ class MySchema < GraphQL::Schema
 end
 ```
 
-The types are `GraphQL::Schema::Object` classes, for example:
+The types are `GraphQL8::Schema::Object` classes, for example:
 
 ```ruby
-# app/graphql/types/query_type.rb
-class Types::QueryType < GraphQL::Schema::Object
+# app/graphql8/types/query_type.rb
+class Types::QueryType < GraphQL8::Schema::Object
   # ...
 end
 
 # Similarly:
-class Types::MutationType < GraphQL::Schema::Object
+class Types::MutationType < GraphQL8::Schema::Object
   # ...
 end
 # and
-class Types::SubscriptionType < GraphQL::Schema::Object
+class Types::SubscriptionType < GraphQL8::Schema::Object
   # ...
 end
 ```
 
-Each type is the entry point for the corresponding GraphQL query:
+Each type is the entry point for the corresponding GraphQL8 query:
 
 ```ruby
 query GetPost {

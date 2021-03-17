@@ -4,13 +4,13 @@ doc_stub: false
 search: true
 title: Lazy Execution
 section: Schema
-desc: Resolve functions can return "unfinished" results. GraphQL will defer finishing them until other fields have been resolved.
+desc: Resolve functions can return "unfinished" results. GraphQL8 will defer finishing them until other fields have been resolved.
 ---
 
 With lazy execution, you can optimize access to external services (such as databases) by making batched calls. Building a lazy loader has three steps:
 
 - Define a lazy-loading class with _one_ method for loading & returning a value
-- Connect it to your schema with {{ "GraphQL::Schema#lazy_resolve" | api_doc }}
+- Connect it to your schema with {{ "GraphQL8::Schema#lazy_resolve" | api_doc }}
 - In `resolve` functions, return instances of the lazy-loading class
 
 Lazy resolution can be {% internal_link "instrumented","/fields/instrumentation" %}.
@@ -59,7 +59,7 @@ class LazyFindPerson
 2. Connect the lazy resolve method
 
 ```ruby
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   # ...
   lazy_resolve(LazyFindPerson, :person)
 end
@@ -91,6 +91,6 @@ Will only make one query to load the `author` values.
 
 The example above is simple and has some shortcomings. Consider the following gems for a robust solution to batched resolution:
 
-* [`graphql-batch`](https://github.com/shopify/graphql-batch) provides a powerful, flexible toolkit for lazy resolution with GraphQL.
+* [`graphql-batch`](https://github.com/shopify/graphql-batch) provides a powerful, flexible toolkit for lazy resolution with GraphQL8.
 * [`dataloader`](https://github.com/sheerun/dataloader) is more general promise-based utility for batching queries within the same thread.
-* [`batch-loader`](https://github.com/exAspArk/batch-loader) works with any Ruby code including GraphQL, no extra dependencies or primitives.
+* [`batch-loader`](https://github.com/exAspArk/batch-loader) works with any Ruby code including GraphQL8, no extra dependencies or primitives.

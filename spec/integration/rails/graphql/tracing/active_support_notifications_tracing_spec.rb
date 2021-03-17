@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 require "spec_helper"
 
-describe GraphQL::Tracing::ActiveSupportNotificationsTracing do
+describe GraphQL8::Tracing::ActiveSupportNotificationsTracing do
   let(:schema) {
     StarWars::Schema.redefine {
-      tracer GraphQL::Tracing::ActiveSupportNotificationsTracing
+      tracer GraphQL8::Tracing::ActiveSupportNotificationsTracing
     }
   }
 
@@ -24,7 +24,7 @@ describe GraphQL::Tracing::ActiveSupportNotificationsTracing do
     first_id = StarWars::Base.first.id
     last_id = StarWars::Base.last.id
 
-    ActiveSupport::Notifications.subscribed(callback, /^graphql/) do
+    ActiveSupport::Notifications.subscribed(callback, /^graphql8/) do
       schema.execute(query_string, variables: {
         "id1" => first_id,
         "id2" => last_id,

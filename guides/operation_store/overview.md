@@ -2,14 +2,14 @@
 layout: guide
 doc_stub: false
 search: true
-section: GraphQL Pro - OperationStore
+section: GraphQL8 Pro - OperationStore
 title: Overview
 desc: Learn how persisted queries work and how OperationStore implements them.
 index: 0
 pro: true
 ---
 
-`GraphQL::Pro::OperationStore` uses `ActiveRecord` and `Rack` to maintain a normalized, deduplicated database of _persisted queries_ for your GraphQL system.
+`GraphQL8::Pro::OperationStore` uses `ActiveRecord` and `Rack` to maintain a normalized, deduplicated database of _persisted queries_ for your GraphQL8 system.
 
 In this guide, you'll find:
 
@@ -28,13 +28,13 @@ Also, you can find a [demo app on GitHub](https://github.com/rmosolgo/graphql-pr
 
 ### What are Persisted Queries?
 
-_Persisted queries_ are GraphQL queries (`query`, `mutation`, or `subscription`) that are saved on the server and invoked by clients by _reference_. In this arrangement, clients don't send GraphQL queries over the network. Instead, clients send:
+_Persisted queries_ are GraphQL8 queries (`query`, `mutation`, or `subscription`) that are saved on the server and invoked by clients by _reference_. In this arrangement, clients don't send GraphQL8 queries over the network. Instead, clients send:
 
 - __Client name__, to identify the client who is making the request
 - __Query alias__, to specify which stored operation to run
 - __Query variables__, to provide values for the stored operation
 
-Then, the server uses the identifier to fetch the full GraphQL document from the database.
+Then, the server uses the identifier to fetch the full GraphQL8 document from the database.
 
 Without persisted queries, clients send the whole document:
 
@@ -42,7 +42,7 @@ Without persisted queries, clients send the whole document:
 # Before, without persisted queries
 query_string = "query GetUserDetails($userId: ID!) { ... }"
 
-MyGraphQLEndpoint.post({
+MyGraphQL8Endpoint.post({
   query: query_string,
   operationName: "GetUserDetails",
   variables: { userId: "100" },
@@ -54,7 +54,7 @@ But with persisted queries, the full document isn't sent because the server alre
 
 ```ruby
 # After, with persisted queries:
-MyGraphQLEndpoint.post({
+MyGraphQL8Endpoint.post({
   operationId: { "relay-app-v1/fc84dbba3623383fdc",
   #               client name / query alias (eg, @relayHash)
   variables: { userId: "100" },
@@ -63,20 +63,20 @@ MyGraphQLEndpoint.post({
 
 ### Why Persisted Queries?
 
-Using persisted queries improves the _security_, _efficiency_ and _visibility_ of your GraphQL system.
+Using persisted queries improves the _security_, _efficiency_ and _visibility_ of your GraphQL8 system.
 
 
 #### Security
 
-Persisted queries improve security because you can reject arbitrary GraphQL queries, removing an attack vector from your system. The query database serves a whitelist, so you can be sure that no unexpected queries will hit your system.
+Persisted queries improve security because you can reject arbitrary GraphQL8 queries, removing an attack vector from your system. The query database serves a whitelist, so you can be sure that no unexpected queries will hit your system.
 
-For example, after all clients have migrated to persisted queries, you can reject arbitrary GraphQL in production:
+For example, after all clients have migrated to persisted queries, you can reject arbitrary GraphQL8 in production:
 
 ```ruby
 # app/controllers/graphql_controller.rb
 if Rails.env.production? && params[:query].present?
-  # Reject arbitrary GraphQL in production:
-  render json: { errors: [{ message: "Raw GraphQL is not accepted" }]}
+  # Reject arbitrary GraphQL8 in production:
+  render json: { errors: [{ message: "Raw GraphQL8 is not accepted" }]}
 else
   # ...
 end
@@ -84,28 +84,28 @@ end
 
 #### Efficiency
 
-Persisted queries improve the _efficiency_ of your system by reducing HTTP traffic. Instead of repeatedly sending GraphQL over the wire, queries are fetched from the database, so your requests require less bandwidth.
+Persisted queries improve the _efficiency_ of your system by reducing HTTP traffic. Instead of repeatedly sending GraphQL8 over the wire, queries are fetched from the database, so your requests require less bandwidth.
 
 For example, _before_ using persisted queries, the entire query is sent to the server:
 
-{{ "/operation_store/request_before.png" | link_to_img:"GraphQL request without persisted queries" }}
+{{ "/operation_store/request_before.png" | link_to_img:"GraphQL8 request without persisted queries" }}
 
 But _after_ using persisted queries, only the query identification info is sent to the server:
 
-{{ "/operation_store/request_after.png" | link_to_img:"GraphQL request with persisted queries" }}
+{{ "/operation_store/request_after.png" | link_to_img:"GraphQL8 request with persisted queries" }}
 
 #### Visibility
 
-Persisted queries improve _visibility_ because you can track GraphQL usage from a single location. `OperationStore` maintains an index of type, field and argument usage so that you can analyze your traffic.
+Persisted queries improve _visibility_ because you can track GraphQL8 usage from a single location. `OperationStore` maintains an index of type, field and argument usage so that you can analyze your traffic.
 
-{{ "/operation_store/operation_index.png" | link_to_img:"Index of GraphQL usage with persisted queries" }}
+{{ "/operation_store/operation_index.png" | link_to_img:"Index of GraphQL8 usage with persisted queries" }}
 
 
 ### How it Works
 
-`OperationStore` uses tables in your database to store normalized, deduplicated GraphQL strings. The database is immutable: new operations may be added, but operations are never modified or removed.
+`OperationStore` uses tables in your database to store normalized, deduplicated GraphQL8 strings. The database is immutable: new operations may be added, but operations are never modified or removed.
 
-When clients {% internal_link "sync their operations","/operation_store/client_workflow" %}, requests are {% internal_link "authenticated","/operation_store/access_control" %}, then the incoming GraphQL is validated, normalized, and added to the database if needed. Also, the incoming client name is associated with all operations in the payload.
+When clients {% internal_link "sync their operations","/operation_store/client_workflow" %}, requests are {% internal_link "authenticated","/operation_store/access_control" %}, then the incoming GraphQL8 is validated, normalized, and added to the database if needed. Also, the incoming client name is associated with all operations in the payload.
 
 Then, at runtime, clients send an _operation ID_ to run a persisted query. It looks like this in `params`:
 

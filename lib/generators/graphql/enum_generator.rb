@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'generators/graphql/type_generator'
+require 'generators/graphql8/type_generator'
 
 module Graphql
   module Generators
@@ -7,10 +7,10 @@ module Graphql
     # To add a `value:` option, add another value after a `:`.
     #
     # ```
-    # rails g graphql:enum ProgrammingLanguage RUBY PYTHON PERL PERL6:"PERL"
+    # rails g graphql8:enum ProgrammingLanguage RUBY PYTHON PERL PERL6:"PERL"
     # ```
     class EnumGenerator < TypeGeneratorBase
-      desc "Create a GraphQL::EnumType with the given name and values"
+      desc "Create a GraphQL8::EnumType with the given name and values"
       source_root File.expand_path('../templates', __FILE__)
 
       argument :values,

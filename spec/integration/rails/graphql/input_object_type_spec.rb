@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "spec_helper"
 
-describe GraphQL::InputObjectType do
+describe GraphQL8::InputObjectType do
   let(:input_object) { Dummy::DairyProductInput.graphql_definition }
   it "has a description" do
     assert(input_object.description)
@@ -13,7 +13,7 @@ describe GraphQL::InputObjectType do
 
   describe "on a type unused by the schema" do
     it "has input fields" do
-      UnreachedInputType = GraphQL::InputObjectType.define do
+      UnreachedInputType = GraphQL8::InputObjectType.define do
         name 'UnreachedInputType'
         description 'An input object type not directly used in the schema.'
 
@@ -43,7 +43,7 @@ describe GraphQL::InputObjectType do
     end
 
     describe "validate_input with null" do
-      let(:schema) { GraphQL::Schema.from_definition(%|
+      let(:schema) { GraphQL8::Schema.from_definition(%|
         type Query {
           a: Int
         }
@@ -191,7 +191,7 @@ describe GraphQL::InputObjectType do
       end
 
       describe "list with one invalid element" do
-        let(:list_type) { GraphQL::ListType.new(of_type: Dummy::DairyProductInput.graphql_definition) }
+        let(:list_type) { GraphQL8::ListType.new(of_type: Dummy::DairyProductInput.graphql_definition) }
         let(:result) do
           list_type.validate_isolated_input([
             { "source" => "COW", "fatContent" => 0.4 },
@@ -221,8 +221,8 @@ describe GraphQL::InputObjectType do
 
       describe 'with invalid name' do
         it 'raises the correct error' do
-          assert_raises(GraphQL::InvalidNameError) do
-            InvalidInputTest = GraphQL::InputObjectType.define do
+          assert_raises(GraphQL8::InvalidNameError) do
+            InvalidInputTest = GraphQL8::InputObjectType.define do
               name "Some::Invalid Name"
             end
 
@@ -243,7 +243,7 @@ describe GraphQL::InputObjectType do
   end
 
   describe "coercion of null inputs" do
-    let(:schema) { GraphQL::Schema.from_definition(%|
+    let(:schema) { GraphQL8::Schema.from_definition(%|
       type Query {
         a: Int
       }
@@ -356,7 +356,7 @@ describe GraphQL::InputObjectType do
   describe "#dup" do
     it "shallow-copies internal state" do
       input_object_2 = input_object.dup
-      input_object_2.arguments["nonsense"] = GraphQL::Argument.define(name: "int", type: GraphQL::INT_TYPE)
+      input_object_2.arguments["nonsense"] = GraphQL8::Argument.define(name: "int", type: GraphQL8::INT_TYPE)
       assert_equal 5, input_object.arguments.size
       assert_equal 6, input_object_2.arguments.size
     end

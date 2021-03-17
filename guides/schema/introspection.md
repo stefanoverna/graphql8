@@ -4,12 +4,12 @@ doc_stub: false
 search: true
 title: Introspection
 section: Schema
-desc: GraphQL has an introspection system that tells about the schema.
+desc: GraphQL8 has an introspection system that tells about the schema.
 class_based_api: true
 index: 2
 ---
 
-A GraphQL schema has a [built-in introspection system](http://graphql.org/learn/introspection/) that publishes the schema's structure. In fact, the introspection system can be queried using GraphQL, for example:
+A GraphQL8 schema has a [built-in introspection system](http://graphql.org/learn/introspection/) that publishes the schema's structure. In fact, the introspection system can be queried using GraphQL8, for example:
 
 ```graphql
 {
@@ -31,7 +31,7 @@ A GraphQL schema has a [built-in introspection system](http://graphql.org/learn/
 # }
 ```
 
-This system is used for GraphQL tooling like the [GraphiQL editor](https://github.com/graphql/graphiql).
+This system is used for GraphQL8 tooling like the [GraphiQL editor](https://github.com/graphql8/graphiql).
 
 Here are the default parts of the introspection system:
 
@@ -101,7 +101,7 @@ module Introspection
   # described below ...
 end
 
-class MySchema < GraphQL::Schema
+class MySchema < GraphQL8::Schema
   # ...
   # then pass the module as `introspection`
   introspection Introspection
@@ -122,16 +122,16 @@ The introspection namespace may contain a few different customizations:
 
 The `module` passed as `introspection` may contain classes with the following names, which replace the built-in introspection types:
 
-Custom class name | GraphQL type | Built-in class name
+Custom class name | GraphQL8 type | Built-in class name
 --|--|--
-`SchemaType` | `__Schema` | {{ "GraphQL::Introspection::SchemaType" | api_doc }}
-`TypeType` | `__Type` | {{ "GraphQL::Introspection::TypeType" | api_doc }}
-`DirectiveType` | `__Directive` | {{ "GraphQL::Introspection::DirectiveType" | api_doc }}
-`DirectiveLocationType` | `__DirectiveLocation` | {{ "GraphQL::Introspection::DirectiveLocationEnum" | api_doc }}
-`EnumValueType` | `__EnumValue` | {{ "GraphQL::Introspection::EnumValueType" | api_doc }}
-`FieldType` | `__Field` | {{ "GraphQL::Introspection::FieldType" | api_doc }}
-`InputValueType` | `__InputValue` | {{ "GraphQL::Introspection::InputValueType" | api_doc }}
-`TypeKindType` | `__TypeKind` | {{ "GraphQL::Introspection::TypeKindEnum" | api_doc }}
+`SchemaType` | `__Schema` | {{ "GraphQL8::Introspection::SchemaType" | api_doc }}
+`TypeType` | `__Type` | {{ "GraphQL8::Introspection::TypeType" | api_doc }}
+`DirectiveType` | `__Directive` | {{ "GraphQL8::Introspection::DirectiveType" | api_doc }}
+`DirectiveLocationType` | `__DirectiveLocation` | {{ "GraphQL8::Introspection::DirectiveLocationEnum" | api_doc }}
+`EnumValueType` | `__EnumValue` | {{ "GraphQL8::Introspection::EnumValueType" | api_doc }}
+`FieldType` | `__Field` | {{ "GraphQL8::Introspection::FieldType" | api_doc }}
+`InputValueType` | `__InputValue` | {{ "GraphQL8::Introspection::InputValueType" | api_doc }}
+`TypeKindType` | `__TypeKind` | {{ "GraphQL8::Introspection::TypeKindEnum" | api_doc }}
 
 The class-based definitions' names _must_ match the names of the types they replace.
 
@@ -141,7 +141,7 @@ The built-in classes listed above may be extended:
 
 ```ruby
 module Introspection
-  class SchemaType < GraphQL::Introspection::SchemaType
+  class SchemaType < GraphQL8::Introspection::SchemaType
     # ...
   end
 end
@@ -156,7 +156,7 @@ Inside the class definition, you may:
 
 ### Introspection Entry Points
 
-The GraphQL spec describes two entry points to the introspection system:
+The GraphQL8 spec describes two entry points to the introspection system:
 
 - `__schema` returns data about the schema (as type `__Schema`)
 - `__type(name:)` returns data about a type, if one is found by name (as type `__Type`)
@@ -165,7 +165,7 @@ You can re-implement these fields or create new ones by creating a custom `Entry
 
 ```ruby
 module Introspection
-  class EntryPoints < GraphQL::Introspection::EntryPoints
+  class EntryPoints < GraphQL8::Introspection::EntryPoints
     # ...
   end
 end
@@ -175,13 +175,13 @@ This class an object type definition, so you can override fields or add new ones
 
 ### Dynamic Fields
 
-The GraphQL spec describes a field which may be added to _any_ selection: `__typename`. It returns the name of the current GraphQL type.
+The GraphQL8 spec describes a field which may be added to _any_ selection: `__typename`. It returns the name of the current GraphQL8 type.
 
 You can add fields like this (or override `__typename`) by creating a custom `DynamicFields` defintion:
 
 ```ruby
 module Introspection
-  class DynamicFields < GraphQL::Introspection::DynamicFields
+  class DynamicFields < GraphQL8::Introspection::DynamicFields
     # ...
   end
 end

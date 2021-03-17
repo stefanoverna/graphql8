@@ -21,23 +21,23 @@ The different elements of field definition are addressed below:
 
 - [Return types](#field-return-type) say what kind of data this field returns
 - [Documentation](#field-documentation) includes description and deprecation notes
-- [Resolution behavior](#field-resolution) hooks up Ruby code to the GraphQL field
+- [Resolution behavior](#field-resolution) hooks up Ruby code to the GraphQL8 field
 - [Arguments](#field-arguments) allow fields to take input when they're queried
-- [Extra field metadata](#extra-field-metadata) for low-level access to the GraphQL-Ruby runtime
+- [Extra field metadata](#extra-field-metadata) for low-level access to the GraphQL8-Ruby runtime
 - [Add default values for field parameters](#field-parameter-default-values)
 
 ### Field Return Type
 
 The second argument to `field(...)` is the return type. This can be:
 
-- A built-in GraphQL type (`Integer`, `Float`, `String`, `ID`, or `Boolean`)
-- A GraphQL type from your application
+- A built-in GraphQL8 type (`Integer`, `Float`, `String`, `ID`, or `Boolean`)
+- A GraphQL8 type from your application
 - An _array_ of any of the above, which denotes a {% internal_link "list type", "/type_definitions/lists" %}.
 
 {% internal_link "Nullability", "/type_definitions/non_nulls" %} is expressed with the required `null:` keyword:
 
 - `null: true` means that the field _may_ return `nil`
-- `null: false` means the field is non-nullable; it may not return `nil`. If the implementation returns `nil`, GraphQL-Ruby will return an error to the client.
+- `null: false` means the field is non-nullable; it may not return `nil`. If the implementation returns `nil`, GraphQL8-Ruby will return an error to the client.
 
 Additionally, list types maybe nullable by adding `[..., null: true]` to the definition.
 
@@ -81,7 +81,7 @@ Fields with a `deprecation_reason:` will appear as "deprecated" in GraphiQL.
 
 ### Field Resolution
 
-In general, fields return Ruby values corresponding to their GraphQL return types. For example, a field with the return type `String` should return a Ruby string, and a field with the return type `[User!]!` should return a Ruby array with zero or more `User` objects in it.
+In general, fields return Ruby values corresponding to their GraphQL8 return types. For example, a field with the return type `String` should return a Ruby string, and a field with the return type `[User!]!` should return a Ruby array with zero or more `User` objects in it.
 
 By default, fields return values by:
 
@@ -141,7 +141,7 @@ end
 
 _Arguments_ allow fields to take input to their resolution. For example:
 
-- A `search()` field may take a `term:` argument, which is the query to use for searching, eg `search(term: "GraphQL")`
+- A `search()` field may take a `term:` argument, which is the query to use for searching, eg `search(term: "GraphQL8")`
 - A `user()` field may take an `id:` argument, which specifies which user to find, eg `user(id: 1)`
 - An `attachments()` field may take a `type:` argument, which filters the result by file type, eg `attachments(type: PHOTO)`
 
@@ -149,7 +149,7 @@ Read more in the {% internal_link "Arguments guide", "/fields/arguments" %}
 
 ### Extra Field Metadata
 
-Inside a field method, you can access some low-level objects from the GraphQL-Ruby runtime. Be warned, these APIs are subject to change, so check the changelog when updating.
+Inside a field method, you can access some low-level objects from the GraphQL8-Ruby runtime. Be warned, these APIs are subject to change, so check the changelog when updating.
 
 A few `extras` are available:
 
@@ -181,7 +181,7 @@ __Custom extras__ are also possible. Any method on your field class can be passe
 The field method requires you to pass `null:` keyword argument to determine whether the field is nullable or not. Another field you may want to overrid is `camelize`, which is `true` by default. You can override this behavior by adding a custom field.
 
 ```ruby
-class CustomField < GraphQL::Schema::Field
+class CustomField < GraphQL8::Schema::Field
   # Add `null: false` and `camelize: false` which provide default values
   # in case the caller doesn't pass anything for those arguments.
   # **kwargs is a catch-all that will get everything else

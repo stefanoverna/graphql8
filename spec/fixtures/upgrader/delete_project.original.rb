@@ -2,7 +2,7 @@
 
 module Platform
   module Mutations
-    DeleteProject = GraphQL::Relay::Mutation.define do
+    DeleteProject = GraphQL8::Relay::Mutation.define do
       name "DeleteProject"
       description "Deletes a project."
 

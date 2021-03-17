@@ -14,7 +14,7 @@ Before running a mutation, you probably want to do a few things:
 - Load some objects from the database, using some `ID` inputs
 - Check if the user has permission to modify those loaded objects
 
-This guide describes how to accomplish that workflow with GraphQL-Ruby.
+This guide describes how to accomplish that workflow with GraphQL8-Ruby.
 
 ## Checking the user permissions
 
@@ -26,7 +26,7 @@ This check can be implemented using the `#ready?` method in a mutation:
 class Mutations::PromoteEmployee < Mutations::BaseMutation
   def ready?(**args)
     if !context[:current_user].admin?
-      raise GraphQL::ExecutionError, "Only admins can run this mutation"
+      raise GraphQL8::ExecutionError, "Only admins can run this mutation"
     else
       # Return true to continue the mutation:
       true
@@ -53,7 +53,7 @@ end
 
 ## Loading and authorizing objects
 
-Often, mutations take `ID`s as input and use them to load records from the database. GraphQL-Ruby can load IDs for you when you provide a `loads:` option.
+Often, mutations take `ID`s as input and use them to load records from the database. GraphQL8-Ruby can load IDs for you when you provide a `loads:` option.
 
 In short, here's an example:
 
@@ -117,12 +117,12 @@ def authorized?(employee:)
 end
 ```
 
-Alternatively, you can add top-level errors by raising `GraphQL::ExecutionError`, for example:
+Alternatively, you can add top-level errors by raising `GraphQL8::ExecutionError`, for example:
 
 ```ruby
 def authorized?(employee:)
   if !context[:current_user].manager_of?(employee)
-    raise GraphQL::ExecutionError, "You can only promote your _own_ employees"
+    raise GraphQL8::ExecutionError, "You can only promote your _own_ employees"
   end
 end
 ```

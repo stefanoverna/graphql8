@@ -10,15 +10,15 @@ desc: You can define your schema dynamically based on other data
 Many examples show how to use `.define` and store the result in a Ruby constant:
 
 ```ruby
-PostType = GraphQL::ObjectType.define do ... end
+PostType = GraphQL8::ObjectType.define do ... end
 ```
 
 However, you can call `.define` anytime and store the result anywhere. For example, you can define a method which creates types:
 
 ```ruby
-# @return [GraphQL::ObjectType] a type derived from `model_class`
+# @return [GraphQL8::ObjectType] a type derived from `model_class`
 def create_type(model_class)
-  GraphQL::ObjectType.define do
+  GraphQL8::ObjectType.define do
     name(model_class.name)
     description("Generated programmatically from model: #{model_class.name}")
     # Make a field for each column:
@@ -28,7 +28,7 @@ def create_type(model_class)
   end
 end
 
-# @return [GraphQL::BaseType] a GraphQL type for `database_type`
+# @return [GraphQL8::BaseType] a GraphQL8 type for `database_type`
 def convert_type(database_type)
   # ...
 end
@@ -37,12 +37,12 @@ end
 You can also define fields for associated objects. You'll need a way to access them programmatically.
 
 ```ruby
-# Hash<Model => GraphQL::ObjectType>
+# Hash<Model => GraphQL8::ObjectType>
 MODEL_TO_TYPE = {}
 
 def create_type(model_class)
   # ...
-  GraphQL::ObjectType.define do
+  GraphQL8::ObjectType.define do
     # ...
     # Make a field for associations
     model_class.associations.each do |association|
@@ -66,13 +66,13 @@ class DynamicTypeDefinition
 
   def to_graphql_type
     # This doesn't work because `model` is actually `self.model`, which doesn't work inside `.define`
-    # GraphQL::ObjectType.define do
+    # GraphQL8::ObjectType.define do
     #   name(model.name)
     # end
     #
     # Instead, assign a local variable first:
     model_name = model.name
-    GraphQL::ObjectType.define do
+    GraphQL8::ObjectType.define do
       name(model_name)
     end
     # 👌

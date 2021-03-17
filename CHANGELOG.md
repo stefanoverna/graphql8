@@ -42,12 +42,12 @@
 
 ### New features
 
-- `extras: [:lookahead]` injects a `GraphQL::Execution::Lookahead`
+- `extras: [:lookahead]` injects a `GraphQL8::Execution::Lookahead`
 
 ### Bug fixes
 
 - Fix type printing in Printer #1902
-- Rescue `GraphQL::ExecutionError` in `.before_query` hooks #1898
+- Rescue `GraphQL8::ExecutionError` in `.before_query` hooks #1898
 - Properly load default values that are lists of input objects from the IDL #1874
 
 ## 1.8.10 (21 Sep 2018)
@@ -55,12 +55,12 @@
 ### Bug fixes
 
 - When using `loads:` with a nullable mutation input field, allow `null` values to be provided. #1851
-- When an invalid Base64 encoded cursor is provided, raise a `GraphQL::ExecutionError` instead of `ArgumentError`. #1855
+- When an invalid Base64 encoded cursor is provided, raise a `GraphQL8::ExecutionError` instead of `ArgumentError`. #1855
 - Fix an issue with `extras: [:path]` would use the field's `path` instead of the `context`. #1859
 
 ### New features
 
-- Add scalar type generator `rails g graphql:scalar` #1847
+- Add scalar type generator `rails g graphql8:scalar` #1847
 - Add `#dig` method to `Query::Context` #1861
 
 ## 1.8.9 (13 Sep 2018)
@@ -129,14 +129,14 @@
 
 ### New features
 
-- Support string descriptions (from June 2018 GraphQL spec) #1725
+- Support string descriptions (from June 2018 GraphQL8 spec) #1725
 - Add some accessors to Schema members #1722
 - Yield argument for definition block with arity of one #1714
 - Yield field for definition blocks with arity of one #1712
 - Support grouping by "endpoint" with skylight instrumentation #1663
 - Validation: Don't traverse irep if no handlers are registered #1696
 - Add `nodes_field` option to `edge_type` to hide nodes field #1693
-- Add `GraphQL::Types::ISO8601DateTime` to documentation #1694
+- Add `GraphQL8::Types::ISO8601DateTime` to documentation #1694
 - Conditional Analyzers #1690
 - Improve error messages in `ActionCableSubscriptions` #1675
 - Add Prometheus tracing #1672
@@ -155,7 +155,7 @@
 
 ### Breaking changes
 
-- GraphQL validation errors now include `"filename"` if the parsed document had a `filename` #1618
+- GraphQL8 validation errors now include `"filename"` if the parsed document had a `filename` #1618
 
 ### Deprecations
 
@@ -165,7 +165,7 @@
 
 - Add Mutation loading/authorization system #1609
 - Interface `definition_methods` are inherited by object type classes #1635
-- include `"filename"` in GraphQL errors if the parsed document has a filename #1618
+- include `"filename"` in GraphQL8 errors if the parsed document has a filename #1618
 - Add `Schema::InputObject#empty?` #1651
 - require `ISO8601DateTime` by default #1660
 - Support `extend` in the parser #1620
@@ -202,7 +202,7 @@
 
 - Fix `Language::Visitor` when visiting `InputObjectTypeDefinition` nodes to include child `Directive` nodes. #1584
 - Fix an issue preventing proper subclassing of `TimeoutMiddleware`. #1579
-- Fix `graphql:interface` generator such that it generates working code. #1577
+- Fix `graphql8:interface` generator such that it generates working code. #1577
 - Update the description of auto-generated `before` and `after` arguments to better describe their input type. #1572
 - Add `Language::Nodes::DirectiveLocation` AST node to represent directive locations in directive definitions. #1564
 
@@ -232,7 +232,7 @@
 
 ### New features
 
-- `GraphQL::ExecutionError.new` accepts an `extensions:` option which will be merged into the `"extensions"` key in that error's JSON #1552
+- `GraphQL8::ExecutionError.new` accepts an `extensions:` option which will be merged into the `"extensions"` key in that error's JSON #1552
 
 ### Bug fixes
 
@@ -252,8 +252,8 @@
 
 #### Breaking Changes
 
-- GraphQL-Ruby is not tested on Ruby 2.1. #1070 Because Ruby 2.1 doesn't garbage collect Symbols, it's possible that GraphQL-Ruby will introduce a OOM vulnerability where unique symbols are dynamically created, for example, turning user input into Symbols. No instances of this are known in GraphQL-Ruby ... yet!
-- `GraphQL::Delegate`, a duplicate of Ruby's `Forwardable`, was removed. Use `Forwardable` instead, and update your Ruby if you're on `2.4.0`, due to a performance regression in `Forwardable` in that version.
+- GraphQL8-Ruby is not tested on Ruby 2.1. #1070 Because Ruby 2.1 doesn't garbage collect Symbols, it's possible that GraphQL8-Ruby will introduce a OOM vulnerability where unique symbols are dynamically created, for example, turning user input into Symbols. No instances of this are known in GraphQL8-Ruby ... yet!
+- `GraphQL8::Delegate`, a duplicate of Ruby's `Forwardable`, was removed. Use `Forwardable` instead, and update your Ruby if you're on `2.4.0`, due to a performance regression in `Forwardable` in that version.
 - `MySchema.subscriptions.trigger` asserts that its inputs are valid arguments #1400. So if you were previously passing invalid options there, you'll get an error. Remove those options.
 
 #### New Features
@@ -271,13 +271,13 @@
 
 #### Breaking Changes
 
-- `GraphQL::Schema::Field#initialize`'s signature changed to accept keywords and a block only. `type:`, `description:` and `name:` were moved to keywords. See `Field.from_options` for how the `field(...)` helper's arguments are merged to go to `Field.new`. #1508
+- `GraphQL8::Schema::Field#initialize`'s signature changed to accept keywords and a block only. `type:`, `description:` and `name:` were moved to keywords. See `Field.from_options` for how the `field(...)` helper's arguments are merged to go to `Field.new`. #1508
 
 #### New Features
 
-- `Schema::Resolver` is a replacement for `GraphQL::Function` #1472
+- `Schema::Resolver` is a replacement for `GraphQL8::Function` #1472
 - Fix subscriptions with class-based schema #1478
-- `Tracing::NewRelicTracing` accepts `set_transaction_name:` to use the GraphQL operation name as the NewRelic transaction name #1430
+- `Tracing::NewRelicTracing` accepts `set_transaction_name:` to use the GraphQL8 operation name as the NewRelic transaction name #1430
 
 #### Bug fixes
 
@@ -291,12 +291,12 @@
 ### Breaking changes
 
 - `Schema::Mutation.resolve_mutation` was moved to an instance method; see changes to `Schema::RelayClassicMutation` in #1469 for an example refactor
-- `GraphQL::Delegate` was removed, use Ruby's `Forwardable` instead (warning: bad performance on Ruby 2.4.0)
-- `GraphQL::Schema::Interface` is a module, not a class #1372. To refactor, use a base module instead of a base class:
+- `GraphQL8::Delegate` was removed, use Ruby's `Forwardable` instead (warning: bad performance on Ruby 2.4.0)
+- `GraphQL8::Schema::Interface` is a module, not a class #1372. To refactor, use a base module instead of a base class:
 
   ```ruby
   module BaseInterface
-    include GraphQL::Schema::Interface
+    include GraphQL8::Schema::Interface
   end
   ```
 
@@ -319,7 +319,7 @@
 
 ### New features
 
-- `GraphQL::Schema::Interface` is a module
+- `GraphQL8::Schema::Interface` is a module
 - Support `prepare:` and `as:` argument options #1469
 - First-class support for Mongoid connections #1452
 - More type inspection helpers for class-based types #1446
@@ -432,7 +432,7 @@
 
 ### New Features
 
-- Add `rake graphql:upgrade[app/graphql]` for automatic upgrade #1110
+- Add `rake graphql8:upgrade[app/graphql]` for automatic upgrade #1110
 - Automatically camelize field names and argument names #1143, #1126
 - Improved error message when defining `name` instead of `graphql_name` #1104
 
@@ -468,7 +468,7 @@
 
 ### Bug fixes
 
-- `Schema#as_json` returns a hash, not a `GraphQL::Query::Result` #1288
+- `Schema#as_json` returns a hash, not a `GraphQL8::Query::Result` #1288
 
 ## 1.7.12 (13 Feb 2018)
 
@@ -486,7 +486,7 @@
 
 ### Breaking Changes
 
-- Empty selections (`{ }`) are invalid in the GraphQL spec, but were previously allowed by graphql-ruby. They now return a parse error. #1268
+- Empty selections (`{ }`) are invalid in the GraphQL8 spec, but were previously allowed by graphql-ruby. They now return a parse error. #1268
 
 ### Bug fixes
 
@@ -525,14 +525,14 @@
 - `Schema#to_document` returns a `Language::Nodes::Document` #1134
 - Add `trace_scalars` and `trace: true|false` to monitoring #1103
 - Add `Tracing::DataDogPlatform` monitoring #1129
-- Support namespaces in `rails g graphql:function` and `:loader` #1127
+- Support namespaces in `rails g graphql8:function` and `:loader` #1127
 - Support `serializer:` option for `ActionCableSubscriptions` #1085
 
 ### Bug fixes
 
 - Properly count the column after a closing quote #1136
 - Fix default value input objects in `Schema.from_definition` #1135
-- Fix `rails destroy graphql:mutation` #1119
+- Fix `rails destroy graphql8:mutation` #1119
 - Avoid unneeded query in RelationConnection with Sequel #1101
 - Improve & document instrumentation stack behavior #1101
 
@@ -540,7 +540,7 @@
 
 ### Bug fixes
 
-- Serialize symbols in with `GraphQL::Subscriptions::Serialize` #1084
+- Serialize symbols in with `GraphQL8::Subscriptions::Serialize` #1084
 
 ## 1.7.5 (7 Nov 2017)
 
@@ -567,13 +567,13 @@
 
 ### Deprecations
 
-- `GraphQL::Tracing.install` is deprecated, use schema-local or query-local tracers instead #996
+- `GraphQL8::Tracing.install` is deprecated, use schema-local or query-local tracers instead #996
 
 ### New features
 
 - Add monitoring plugins for AppSignal, New Relic, Scout and Skylight #994, #1013
 - Custom coercion errors for custom scalars #988
-- Extra `options` for `GraphQL::ExecutionError` #1002
+- Extra `options` for `GraphQL8::ExecutionError` #1002
 - Use `GlobalID` for subscription serialization when available #1004
 - Schema- and query-local, threadsafe tracers #996
 
@@ -604,13 +604,13 @@
 
 ### Breaking changes
 
-- `GraphQL::Result` is the returned from GraphQL execution. #898 `Schema#execute` and `Query#result` both return a `GraphQL::Result`. It implements Hash-like methods to preserve compatibility.
+- `GraphQL8::Result` is the returned from GraphQL8 execution. #898 `Schema#execute` and `Query#result` both return a `GraphQL8::Result`. It implements Hash-like methods to preserve compatibility.
 
 ### New features
 
-- `puts ctx.backtrace` prints out a GraphQL backtrace table #946
-- `GraphQL::Backtrace.enable` wraps unhandled errors with GraphQL backtraces #946
-- `GraphQL::Relay::ConnectionType.bidrectional_pagination = true` turns on _true_ bi-directional pagination checks for `hasNextPage`/`hasPreviousPage` fields. This will become the default behavior in a future version. #960
+- `puts ctx.backtrace` prints out a GraphQL8 backtrace table #946
+- `GraphQL8::Backtrace.enable` wraps unhandled errors with GraphQL8 backtraces #946
+- `GraphQL8::Relay::ConnectionType.bidrectional_pagination = true` turns on _true_ bi-directional pagination checks for `hasNextPage`/`hasPreviousPage` fields. This will become the default behavior in a future version. #960
 - Field arguments may be accessed as methods on the `args` object. This is an alternative to `#[]` syntax which provides did-you-mean behavior instead of returning `nil` on a typo. #924 For example:
 
   ```ruby
@@ -628,17 +628,17 @@
   - If a type is not referenced by anything, it's hidden
   - If a type is an abstract type, but has no visible members, it's hidden
 
-- `GraphQL::Argument.define` builds re-usable arguments #948
-- `GraphQL::Subscriptions` provides hooks for subscription platforms #672
-- `GraphQL::Subscriptions::ActionCableSubscriptions` implements subscriptions over ActionCable #672
+- `GraphQL8::Argument.define` builds re-usable arguments #948
+- `GraphQL8::Subscriptions` provides hooks for subscription platforms #672
+- `GraphQL8::Subscriptions::ActionCableSubscriptions` implements subscriptions over ActionCable #672
 - More runtime values are accessble from a `ctx` object #923 :
   - `ctx.parent` returns the `ctx` from the parent field
   - `ctx.object` returns the current `obj` for that field
-  - `ctx.value` returns the resolved GraphQL value for that field
+  - `ctx.value` returns the resolved GraphQL8 value for that field
 
   These can be used together, for example, `ctx.parent.object` to get the parent object.
-- `GraphQL::Tracing` provides more hooks into gem internals for performance monitoring #917
-- `GraphQL::Result` provides access to the original `query` and `context` after executing a query #898
+- `GraphQL8::Tracing` provides more hooks into gem internals for performance monitoring #917
+- `GraphQL8::Result` provides access to the original `query` and `context` after executing a query #898
 
 ### Bug fixes
 
@@ -674,7 +674,7 @@
 
 ### New features
 
-- Add `GraphQL.parse_file` and `AbstractNode#filename` #873
+- Add `GraphQL8.parse_file` and `AbstractNode#filename` #873
 - Support `.graphql` filepaths with `Schema.from_definition` #872
 
 ### Bug fixes
@@ -688,7 +688,7 @@
 
 ### New features
 
-- Validate `graphql-pro` downloads with `rake graphql:pro:validate[$VERSION]` #846
+- Validate `graphql-pro` downloads with `rake graphql8:pro:validate[$VERSION]` #846
 
 ### Bug fixes
 
@@ -716,7 +716,7 @@
 - `Schema#resolve_type` is now called with `(abstract_type, obj, ctx)` instead of `(obj, ctx)` #834 . To update, add an unused parameter to the beginning of your `resolve_type` hook:
 
   ```ruby
-  MySchema = GraphQL::Schema.define do
+  MySchema = GraphQL8::Schema.define do
     # Old way:
     resolve_type ->(obj, ctx) { ... }
     # New way:
@@ -726,7 +726,7 @@
 
 ### New features
 
-- `rails g graphql:mutation` will add Mutation boilerplate if it wasn't added already #812
+- `rails g graphql8:mutation` will add Mutation boilerplate if it wasn't added already #812
 - `InterfaceType` and `UnionType` both accept `resolve_type ->(obj, ctx) { ... }` functions for type-specific resolution. This function takes precedence over `Schema#resolve_type` #829 #834
 - `Schema#resolve_type` is called with three arguments, `(abstract_type, obj, ctx)`, so you can distinguish object type based on interface or union.
 - `Query#operation_name=` may be assigned during query instrumentation #833
@@ -755,8 +755,8 @@
 
 ### Bug fixes
 
-- `graphql:install` adds `operation_name: params[:operationName]` #786
-- `graphql:install` skips `graphiql-rails` for API-only apps #772
+- `graphql8:install` adds `operation_name: params[:operationName]` #786
+- `graphql8:install` skips `graphiql-rails` for API-only apps #772
 - `SerialExecution` calls `.is_a?(Skip)` to avoid user-defined `#==` methods #794
 - `prepare:` functions which return `ExecutionError` are properly handled when default values are present #801
 
@@ -802,7 +802,7 @@
 
 - `InternalRepresentation::Node#return_type` will now return the wrapping type. Use `return_type.unwrap` to access the old value #704
 - `instrument(:query, ...)` instrumenters are applied as a stack instead of a queue #735. If you depend on queue-based behavior, move your `before_query` and `after_query` hooks to separate instrumenters.
-- In a `Relay::Mutation`, Raising or returning a `GraphQL::Execution` will nullify the mutation field, not the field's children. #731
+- In a `Relay::Mutation`, Raising or returning a `GraphQL8::Execution` will nullify the mutation field, not the field's children. #731
 - `args.to_h` returns a slightly different hash #714
   - keys are always `String`s
   - if an argument is aliased with `as:`, the alias is used as the key
@@ -829,7 +829,7 @@
 ### New features
 
 - `Schema#multiplex(queries)` runs multiple queries concurrently #691
-- `GraphQL::RakeTask` supports dumping the schema to IDL or JSON #687
+- `GraphQL8::RakeTask` supports dumping the schema to IDL or JSON #687
 - Improved support for `Schema.from_definition` #699 :
   - Custom scalars are supported with `coerce_input` and `coerce_result` functions
   - `resolve_type` function will be used for abstract types
@@ -839,7 +839,7 @@
 - Argument `prepare` functions are invoked with `(val, ctx)` (previously, it was only `(val)`) #730
 - `args.to_h` returns stringified, aliased arguments #714
 - `ctx.namespace(:my_namespace)` provides namespaced key-value storage #689
-- `GraphQL::Query` can be initialized without a query_string; it can be added after initialization #710
+- `GraphQL8::Query` can be initialized without a query_string; it can be added after initialization #710
 - Improved filter support #713
   - `Schema.execute(only:, except:)` accept a callable _or_ an array of callables (multiple filters)
   - Filters can be added to a query via `Query#merge_filters(only:, except:)`. You can add a filter to every query by merging it in during query instrumentation.
@@ -920,22 +920,22 @@
 ### Bug fixes
 
 - `InternalRepresentation::Node#definition` returns `nil` instead of raising NoMethodError for operation fields #675
-- `Field#function` is properly populated for fields derived from `GraphQL::Function`s #674
+- `Field#function` is properly populated for fields derived from `GraphQL8::Function`s #674
 
 ## 1.5.6 (9 Apr 2017)
 
 ## Breaking Changes
 
-- Returned strings which aren't encoded as UTF-8 or ASCII will raise `GraphQL::StringEncodingError` instead of becoming `nil` #661
+- Returned strings which aren't encoded as UTF-8 or ASCII will raise `GraphQL8::StringEncodingError` instead of becoming `nil` #661
 
   To preserve the previous behavior, Implement `Schema#type_error` to return `nil` for this error, eg:
 
   ```ruby
-  GraphQL::Schema.define do
+  GraphQL8::Schema.define do
     type_error ->(err, ctx) {
       case err
       # ...
-      when GraphQL::StringEncodingError
+      when GraphQL8::StringEncodingError
         nil
       end
     }
@@ -958,14 +958,14 @@
 
 ## New Features
 
-- Include `#types` in `GraphQL::Function` #654
+- Include `#types` in `GraphQL8::Function` #654
 - Accept `prepare:` function for arguments #646
 - Scalar coerce functions receive `ctx` #667
 
 ## Bug Fixes
 
 - Properly apply default values of `false` #658
-- Fix application of argument options in `GraphQL::Relay::Mutation` #660
+- Fix application of argument options in `GraphQL8::Relay::Mutation` #660
 - Support concurrent-ruby `>1.0.0` #663
 - Only raise schema validation errors on `#execute` to avoid messing with Rails constant loading #665
 
@@ -1016,7 +1016,7 @@
 - Parse errors are no longer raised to the application. #607 Instead, they're returned to the client in the `"errors"` key. To preserve the previous behavior, you can implement `Schema#parse_error` to raise the error:
 
   ```ruby
-  MySchema = GraphQL::Schema.define do
+  MySchema = GraphQL8::Schema.define do
     # ...
     parse_error ->(err, ctx) { raise(err) }
   end
@@ -1030,7 +1030,7 @@
 ### Bug Fixes
 
 - Handle negative cursor pagination args as `0` #612
-- Properly handle returned `GraphQL::ExecutionError`s from connection resolves #610
+- Properly handle returned `GraphQL8::ExecutionError`s from connection resolves #610
 - Properly handle invalid nulls in lazy scalar fields #609
 - Properly handle invalid input objects passed to enum arguments #604
 - Fix introspection response of enum default values #605
@@ -1041,7 +1041,7 @@
 ### Bug fixes
 
 - Fix rewrite performance regressions from 1.5.0 #599
-- Remove unused `GraphQL::Execution::Lazy` initialization API #597
+- Remove unused `GraphQL8::Execution::Lazy` initialization API #597
 
 ## 1.5.0 (10 Mar 2017), yanked
 
@@ -1049,14 +1049,14 @@
 
 - _Only_ UTF-8-encoded strings will be returned by `String` fields. Strings with other encodings (or objects whose `#to_s` method returns a string with a different encoding) will return `nil` instead of that string. #517
 
-  To opt into the _previous_ behavior, you can modify `GraphQL::STRING_TYPE`:
+  To opt into the _previous_ behavior, you can modify `GraphQL8::STRING_TYPE`:
 
   ```ruby
-  # app/graphql/my_schema.rb
+  # app/graphql8/my_schema.rb
   # Restore previous string behavior:
-  GraphQL::STRING_TYPE.coerce_result = ->(value) { value.to_s }
+  GraphQL8::STRING_TYPE.coerce_result = ->(value) { value.to_s }
 
-  MySchema = GraphQL::Schema.define { ... }
+  MySchema = GraphQL8::Schema.define { ... }
   ```
 
 - Substantial changes to the internal query representation (#512, #536). Query analyzers may notice some changes:
@@ -1076,10 +1076,10 @@
 
 - `Schema#validate` returns a list of errors for a query string #513
 - `implements ...` adds interfaces to object types _without_ inherit-by-default #548, #574
-- `GraphQL::Relay::RangeAdd` for implementing `RANGE_ADD` mutations #587
+- `GraphQL8::Relay::RangeAdd` for implementing `RANGE_ADD` mutations #587
 - `use ...` definition method for plugins #565
 - Rails generators #521, #580
-- `GraphQL::Function` for reusable resolve behavior with arguments & return type #545
+- `GraphQL8::Function` for reusable resolve behavior with arguments & return type #545
 - Support for Ruby 2.4 #475
 - Relay `node` & `nodes` field can be extended with a custom block #552
 - Performance improvements:
@@ -1129,7 +1129,7 @@
 
 ### New features
 
-- `GraphQL::Relay::Node.plural_field` finds multiple nodes by UUID #525
+- `GraphQL8::Relay::Node.plural_field` finds multiple nodes by UUID #525
 
 ### Bug fixes
 
@@ -1186,11 +1186,11 @@
   FriendsConnectionType = FriendType.define_connection(nodes_field: true)
   ```
 
-  Or, set `GraphQL::Relay::ConnectionType.default_nodes_field = true` before defining your schema, for example:
+  Or, set `GraphQL8::Relay::ConnectionType.default_nodes_field = true` before defining your schema, for example:
 
   ```ruby
-  GraphQL::Relay::ConnectionType.default_nodes_field = true
-  MySchema = GraphQL::Schema.define { ... }
+  GraphQL8::Relay::ConnectionType.default_nodes_field = true
+  MySchema = GraphQL8::Schema.define { ... }
   ```
 
 - Middleware performance was dramatically improved by reducing object allocations. #462 `next_middleware` is now passed as a block. In general, [`yield` is faster than calling a captured block](https://github.com/JuanitoFatas/fast-ruby#proccall-and-block-arguments-vs-yieldcode).
@@ -1256,8 +1256,8 @@
 ### Bug fixes
 
 - `Mutation#input_fields` should trigger lazy definition #392
-- `ObjectType#connection` doesn't modify the provided `GraphQL::Field` #411
-- `Mutation#resolve` may return a `GraphQL::ExecutionError` #405
+- `ObjectType#connection` doesn't modify the provided `GraphQL8::Field` #411
+- `Mutation#resolve` may return a `GraphQL8::ExecutionError` #405
 - `Arguments` can handle nullable arguments passed as `nil` #410
 
 ## 1.2.4 (14 Nov 2016)
@@ -1288,7 +1288,7 @@
 
 ### Bug fixes
 
-- Implement `Query::Context#strategy` and `FieldResolutionContext#strategy` to support GraphQL::Batch #382
+- Implement `Query::Context#strategy` and `FieldResolutionContext#strategy` to support GraphQL8::Batch #382
 
 ## 1.2.0 (7 Nov 2016)
 
@@ -1338,9 +1338,9 @@
 
 - `null` support for the whole library: as a query literal, variable value, and argument default value. To check for the presence of a nullable, use `Arguments#key?` #369
 
-- `GraphQL::Schema::UniqueWithinType.default_id_separator` may be assigned to a custom value #381
+- `GraphQL8::Schema::UniqueWithinType.default_id_separator` may be assigned to a custom value #381
 
-- `Context#add_error(err)` may be used to add a `GraphQL::ExecutionError` to the response's `"errors"` key (and the resolve function can still return a value) #367
+- `Context#add_error(err)` may be used to add a `GraphQL8::ExecutionError` to the response's `"errors"` key (and the resolve function can still return a value) #367
 
 - The third argument of `resolve` is now a `FieldResolutionContext`, which behaves just like a `Query::Context`, except that it is not modified during query execution. This means you can capture a reference to that context and access some field-level details after the fact: `#path`, `#ast_node`, `#irep_node`. (Other methods are delegated to the underlying `Query::Context`) #379
 
@@ -1364,14 +1364,14 @@
 ### Breaking changes
 
 - Two-character `"\\u"` is no longer treated as the Unicode escape character, only the Unicode escape character `"\u"` is treated that way. (This behavior was a bug, the migration path is to use the Unicode escape character.) #366
-- `GraphQL::Language::ParserTests` was removed, use `GraphQL::Compatibility` instead. #366
+- `GraphQL8::Language::ParserTests` was removed, use `GraphQL8::Compatibility` instead. #366
 - Non-null arguments can't be defined with default values, because those values would never be used #361
 
 ### New features
 
-- `Schema.from_definition(definition_string)` builds a `GraphQL::Schema` out of a schema definition. #346
+- `Schema.from_definition(definition_string)` builds a `GraphQL8::Schema` out of a schema definition. #346
 - Schema members (types, fields, arguments, enum values) can be hidden on a per-query basis with the `except:` option #300
-- `GraphQL::Compatibility` contains `.build_suite` functions for testing user-provided parsers and execution strategies with GraphQL internals. #366
+- `GraphQL8::Compatibility` contains `.build_suite` functions for testing user-provided parsers and execution strategies with GraphQL8 internals. #366
 - Schema members respond to `#redefine { ... }` for making shallow copies with extended definitions. #357
 - `Schema#instrument` provides an avenue for observing query and field resolution with no overhead.
 - Some `SerialExecution` objects were converted to functions, resulting in a modest performance improvement for query resolution.
@@ -1391,7 +1391,7 @@
   - `BaseConnection.connection_for_items` was removed, use `BaseConnection#connection_for_nodes`
   - Two-argument resolve functions for `Relay::Mutation`s are not supported, use three arguments instead: `(root_obj, input, ctx)`
   - `Schema.new` no longer accepts initialization options, use `Schema.define` instead
-  - `GraphQL::ObjectType::UnresolvedTypeError` was removed, use `GraphQL::UnresolvedTypeError` instead
+  - `GraphQL8::ObjectType::UnresolvedTypeError` was removed, use `GraphQL8::UnresolvedTypeError` instead
 - Fragment type conditions should be parsed as `TypeName` nodes, not strings. (Users of `graphql-libgraphqlparser` should update to `1.0.0` of that gem.) #342
 
 ### New Features
@@ -1428,7 +1428,7 @@
 
 ### Breaking Changes
 
-- `GraphQL::Query::Arguments.new` requires `argument_definitions:` of type `{String => GraphQL::Argument }` #304
+- `GraphQL8::Query::Arguments.new` requires `argument_definitions:` of type `{String => GraphQL8::Argument }` #304
 
 ### Deprecations
 
@@ -1466,7 +1466,7 @@
 
 ### New features
 
-- If a list entry has a `GraphQL::ExecutionError`, replace the entry with `nil` and return the error #295
+- If a list entry has a `GraphQL8::ExecutionError`, replace the entry with `nil` and return the error #295
 
 ### Bug fixes
 
@@ -1493,24 +1493,24 @@
 
 ### Breaking changes
 
-- `GraphQL::Relay::GlobalNodeIdentification` was removed. Its features were moved to `GraphQL::Schema` or `GraphQL::Relay::Node`. The new hooks support more robust & flexible global IDs. #243
+- `GraphQL8::Relay::GlobalNodeIdentification` was removed. Its features were moved to `GraphQL8::Schema` or `GraphQL8::Relay::Node`. The new hooks support more robust & flexible global IDs. #243
 
-  - Relay's `"Node"` interface and `node(id: "...")` field were both moved to `GraphQL::Relay::Node`. To use them in your schema, call `.field` and `.interface`. For example:
+  - Relay's `"Node"` interface and `node(id: "...")` field were both moved to `GraphQL8::Relay::Node`. To use them in your schema, call `.field` and `.interface`. For example:
 
     ```ruby
     # Adding a Relay-compliant `node` field:
-    field :node, GraphQL::Relay::Node.field
+    field :node, GraphQL8::Relay::Node.field
     ```
 
     ```ruby
     # This object type implements Relay's `Node` interface:
-    interfaces [GraphQL::Relay::Node.interface]
+    interfaces [GraphQL8::Relay::Node.interface]
     ```
 
-  - UUID hooks were renamed and moved to `GraphQL::Schema`. You should define `id_from_object` and `object_from_id` in your `Schema.define { ... }` block. For example:
+  - UUID hooks were renamed and moved to `GraphQL8::Schema`. You should define `id_from_object` and `object_from_id` in your `Schema.define { ... }` block. For example:
 
     ```ruby
-    MySchema = GraphQL::Schema.define do
+    MySchema = GraphQL8::Schema.define do
       # Fetch an object by UUID
       object_from_id ->(id, ctx) {
         MyApp::RelayLookup.find(id)
@@ -1522,20 +1522,20 @@
     end
     ```
 
-  - The new hooks have no default implementation. To use the previous default, use `GraphQL::Schema::UniqueWithinType`, for example:
+  - The new hooks have no default implementation. To use the previous default, use `GraphQL8::Schema::UniqueWithinType`, for example:
 
       ```ruby
-      MySchema = GraphQL::Schema.define do
+      MySchema = GraphQL8::Schema.define do
         object_from_id ->(id, ctx) {
           # Break the id into its parts:
-          type_name, object_id = GraphQL::Schema::UniqueWithinType.decode(id)
+          type_name, object_id = GraphQL8::Schema::UniqueWithinType.decode(id)
           # Fetch the identified object
           # ...
         }
 
         id_from_object ->(obj, type_defn, ctx) {
           # Provide the the type name & the object's `id`:
-          GraphQL::Schema::UniqueWithinType.encode(type_defn.name, obj.id)
+          GraphQL8::Schema::UniqueWithinType.encode(type_defn.name, obj.id)
         }
       end
       ```
@@ -1544,18 +1544,18 @@
 
       ```ruby
       # use "---" as a ID separator
-      GraphQL::Schema::UniqueWithinType.encode(type_name, object_id, separator: "---")
-      GraphQL::Schema::UniqueWithinType.decode(relay_id, separator: "---")
+      GraphQL8::Schema::UniqueWithinType.encode(type_name, object_id, separator: "---")
+      GraphQL8::Schema::UniqueWithinType.decode(relay_id, separator: "---")
       ```
 
   - `type_from_object` was previously deprecated and has been replaced by `Schema#resolve_type`. You should define this hook in your schema to return a type definition for a given object:
 
     ```ruby
-    MySchema = GraphQL::Schema.define do
+    MySchema = GraphQL8::Schema.define do
       # ...
       resolve_type ->(obj, ctx) {
         # based on `obj` and `ctx`,
-        # figure out which GraphQL type to use
+        # figure out which GraphQL8 type to use
         # and return the type
       }
     end
@@ -1565,12 +1565,12 @@
 
 - `Argument` default values have been changed to be consistent with `InputObjectType` default values. #267
 
-  Previously, arguments expected GraphQL values as `default_value`s. Now, they expect application values.   (`InputObjectType`s always worked this way.)
+  Previously, arguments expected GraphQL8 values as `default_value`s. Now, they expect application values.   (`InputObjectType`s always worked this way.)
 
   Consider an enum like this one, where custom values are provided:
 
   ```ruby
-  PowerStateEnum = GraphQL::EnumType.define do
+  PowerStateEnum = GraphQL8::EnumType.define do
     name "PowerState"
     value("ON", value: 1)
     value("OFF", value: 0)
@@ -1602,7 +1602,7 @@
   - Custom scalars (previously, the `default_value` was a string, now it should be the application value, eg `Date` or `BigDecimal`)
   - Enums with custom `value:`s (previously, the `default_value` was the name, now it's the value)
 
-  If you can't replace `default_value`s, you can also use a type's `#coerce_input` method to translate a GraphQL value into an application value. For example:
+  If you can't replace `default_value`s, you can also use a type's `#coerce_input` method to translate a GraphQL8 value into an application value. For example:
 
   ```ruby
   # Using a custom scalar, "Date"
@@ -1647,7 +1647,7 @@
 
 ### Features
 
-- Query analyzers may emit errors by raising `GraphQL::AnalysisError`s during `#call` or returning a single error or an array of errors from `#final_value` #262
+- Query analyzers may emit errors by raising `GraphQL8::AnalysisError`s during `#call` or returning a single error or an array of errors from `#final_value` #262
 
 ### Bug fixes
 
@@ -1664,7 +1664,7 @@
 
 ### New features
 
-- `GraphQL::Analysis::FieldUsage` can be used to check for deprecated fields in the query analysis phase #245
+- `GraphQL8::Analysis::FieldUsage` can be used to check for deprecated fields in the query analysis phase #245
 
 ### Bug fixes
 
@@ -1675,7 +1675,7 @@
 
 ### New features
 
-- `GraphQL::Language::Nodes::Document#slice(operation_name)` finds that operation and its dependencies and puts them in a new `Document` #241
+- `GraphQL8::Language::Nodes::Document#slice(operation_name)` finds that operation and its dependencies and puts them in a new `Document` #241
 
 ### Bug fixes
 
@@ -1720,7 +1720,7 @@
 
 ### New features
 
-- ` GraphQL::Schema::Loader.load(schema_json)` turns an introspection result into a `GraphQL::Schema` #207
+- ` GraphQL8::Schema::Loader.load(schema_json)` turns an introspection result into a `GraphQL8::Schema` #207
 - `.define` accepts plural definitions for: object fields, interface fields field arguments, enum values #222
 
 ## 0.18.5 (27 Aug 2016)
@@ -1732,7 +1732,7 @@
   Before:
 
   ```ruby
-  schema = GraphQL::Schema.new(
+  schema = GraphQL8::Schema.new(
     query: QueryType,
     mutation: MutationType,
     max_complexity: 100,
@@ -1745,7 +1745,7 @@
   After:
 
   ```ruby
-  schema = GraphQL::Schema.define do
+  schema = GraphQL8::Schema.define do
     query QueryType
     mutation MutationType
     max_complexity 100
@@ -1763,11 +1763,11 @@
   Before:
 
   ```ruby
-  GraphQL::Relay::GlobalNodeIdentification.define do
+  GraphQL8::Relay::GlobalNodeIdentification.define do
     type_from_object ->(obj) { ... }
   end
 
-  GraphQL::InterfaceType.define do
+  GraphQL8::InterfaceType.define do
     resolve_type ->(obj, ctx) { ... }
   end
   ```
@@ -1775,7 +1775,7 @@
   After:
 
   ```ruby
-  GraphQL::Schema.define do
+  GraphQL8::Schema.define do
     resolve_type ->(obj, ctx) { ... }
   end
   ```
@@ -1811,7 +1811,7 @@
 
 ### New features
 
-- Connection objects expose the `GraphQL::Field` that created them via `Connection#field` #206
+- Connection objects expose the `GraphQL8::Field` that created them via `Connection#field` #206
 
 ## 0.18.1 (7 Aug 2016)
 
@@ -1836,9 +1836,9 @@
 
 ### New features
 
-- `GraphQL.parse` can turn schema definitions into a `GraphQL::Language::Nodes::Document`. The document can be stringified again with `Document#to_query_string` #191
+- `GraphQL8.parse` can turn schema definitions into a `GraphQL8::Language::Nodes::Document`. The document can be stringified again with `Document#to_query_string` #191
 - Validation errors include a `path` to the part of the query where the error was found #198
-- `.define` also accepts keywords for each helper method, eg `GraphQL::ObjectType.define(name: "PostType", ...)`
+- `.define` also accepts keywords for each helper method, eg `GraphQL8::ObjectType.define(name: "PostType", ...)`
 
 ### Bug fixes
 
@@ -1889,13 +1889,13 @@
 
 ### Breaking changes & deprecations
 
-- I don't _know_ that this breaks anything, but  `GraphQL::Query::SerialExecution` now iterates over a tree of `GraphQL::InternalRepresentation::Node`s instead of an AST (`GraphQL::Language::Nodes::Document`).
+- I don't _know_ that this breaks anything, but  `GraphQL8::Query::SerialExecution` now iterates over a tree of `GraphQL8::InternalRepresentation::Node`s instead of an AST (`GraphQL8::Language::Nodes::Document`).
 
 ### New features
 
 - Query context keys can be assigned with `Context#[]=` #178
 - Cancel further field resolution with `TimeoutMiddleware` #179
-- Add `GraphQL::InternalRepresentation` for normalizing queries from AST #180
+- Add `GraphQL8::InternalRepresentation` for normalizing queries from AST #180
 - Analyze the query before running it #180
 - Assign complexity cost to fields, enforce max complexity before running it #180
 - Log max complexity or max depth with `MaxComplexity` or `MaxDepth` analyzers #180
@@ -1940,7 +1940,7 @@
 - `debug:` is deprecated (#165). Propagating errors (`debug: true`) will become the default behavior. You can get a similar implementation of error gobbling with `CatchallMiddleware`. Add it to your schema:
 
     ```ruby
-    MySchema.middleware << GraphQL::Schema::CatchallMiddleware
+    MySchema.middleware << GraphQL8::Schema::CatchallMiddleware
     ```
 
 ### New features
@@ -1957,9 +1957,9 @@
 
 ### New features
 
-- `GraphQL::Language::Nodes::Document#to_query_string` will re-serialize a query AST #151
+- `GraphQL8::Language::Nodes::Document#to_query_string` will re-serialize a query AST #151
 - Accept `root_value:` when running a query #157
-- Accept a `GraphQL::Language::Nodes::Document` to `Query.new` (this allows you to cache parsed queries on the server) #152
+- Accept a `GraphQL8::Language::Nodes::Document` to `Query.new` (this allows you to cache parsed queries on the server) #152
 
 ### Bug fixes
 
@@ -1971,7 +1971,7 @@
 
 ### Breaking changes & deprecations
 
-- "Dangling" object types are not loaded into the schema. The must be passed in `GraphQL::Schema.new(types: [...])`. (This was deprecated in 0.12.1)
+- "Dangling" object types are not loaded into the schema. The must be passed in `GraphQL8::Schema.new(types: [...])`. (This was deprecated in 0.12.1)
 
 ### New features
 
@@ -2003,16 +2003,16 @@
   So, in a case like this:
 
   ```ruby
-  HatInterface = GraphQL::ObjectType.define do
+  HatInterface = GraphQL8::ObjectType.define do
     # ...
   end
 
-  FezType = GraphQL::ObjectType.define do
+  FezType = GraphQL8::ObjectType.define do
     # ...
     interfaces [HatInterface]
   end
 
-  QueryType = GraphQL::ObjectType.define do
+  QueryType = GraphQL8::ObjectType.define do
     field :randomHat, HatInterface # ...
   end
   ```
@@ -2038,28 +2038,28 @@
 
 ### Breaking changes & deprecations
 
-- `GraphQL::DefinitionConfig` was replaced by `GraphQL::Define` #116
+- `GraphQL8::DefinitionConfig` was replaced by `GraphQL8::Define` #116
 - Many scalar types are more picky about which inputs they allow (#115). To get the previous behavior, add this to your program:
 
   ```ruby
   # Previous coerce behavior for scalars:
-  GraphQL::BOOLEAN_TYPE.coerce = ->(value) { !!value }
-  GraphQL::ID_TYPE.coerce = ->(value) { value.to_s }
-  GraphQL::STRING_TYPE.coerce = ->(value) { value.to_s }
+  GraphQL8::BOOLEAN_TYPE.coerce = ->(value) { !!value }
+  GraphQL8::ID_TYPE.coerce = ->(value) { value.to_s }
+  GraphQL8::STRING_TYPE.coerce = ->(value) { value.to_s }
   # INT_TYPE and FLOAT_TYPE were unchanged
   ```
 
-- `GraphQL::Field`s can't be renamed because `#resolve` may depend on that name. (This was only a problem if you pass the _same_ `GraphQL::Field` instance to `field ... field:` definitions.)
-- `GraphQL::Query::DEFAULT_RESOLVE` was removed. `GraphQL::Field#resolve` handles that behavior.
+- `GraphQL8::Field`s can't be renamed because `#resolve` may depend on that name. (This was only a problem if you pass the _same_ `GraphQL8::Field` instance to `field ... field:` definitions.)
+- `GraphQL8::Query::DEFAULT_RESOLVE` was removed. `GraphQL8::Field#resolve` handles that behavior.
 
 ### New features
 
 - Can override `max_depth:` from `Schema#execute`
-- Base `GraphQL::Error` for all graphql-related errors
+- Base `GraphQL8::Error` for all graphql-related errors
 
 ### Bug fixes
 
-- Include `""` for String default values (so it's encoded as a GraphQL string literal)
+- Include `""` for String default values (so it's encoded as a GraphQL8 string literal)
 
 ## 0.11.1 (6 Mar 2016)
 
@@ -2073,16 +2073,16 @@
 
 ### Breaking changes & deprecations
 
-- `GraphQL::Query::BaseExecution` was removed, you should probably extend `SerialExecution` instead #96
-- `GraphQL::Language::Nodes` members no longer raise if they don't get inputs during `initialize` #92
-- `GraphQL.parse` no longer accepts `as:` for parsing partial queries.  #92
+- `GraphQL8::Query::BaseExecution` was removed, you should probably extend `SerialExecution` instead #96
+- `GraphQL8::Language::Nodes` members no longer raise if they don't get inputs during `initialize` #92
+- `GraphQL8.parse` no longer accepts `as:` for parsing partial queries.  #92
 
 ### New features
 
 - `Field#property` & `Field#property=` can be used to access & modify the method that will be sent to the underlying object when resolving a field #88
 - When defining a field, you can pass a string for as `type`. It will be looked up in the global namespace.
 - `Query::Arguments#to_h` unwraps `Arguments` objects recursively
-- If you raise `GraphQL::ExecutionError` during field resolution, it will be rescued and the message will be added to the response's `errors` key. #93
+- If you raise `GraphQL8::ExecutionError` during field resolution, it will be rescued and the message will be added to the response's `errors` key. #93
 - Raise an error when non-null fields are `nil` #94
 
 ### Bug fixes
@@ -2194,7 +2194,7 @@
 
 ### New features
 
-- Fields can return `GraphQL::ExecutionError`s to add errors to the response
+- Fields can return `GraphQL8::ExecutionError`s to add errors to the response
 
 ### Bug fixes
 
@@ -2206,7 +2206,7 @@
 
 - Add `Schema#execute` shorthand for running queries
 - Merge identical fields in fragments so they're only resolved once #34
-- An error during parsing raises `GraphQL::ParseError`  #33
+- An error during parsing raises `GraphQL8::ParseError`  #33
 
 ### Bug fixes
 
@@ -2223,13 +2223,13 @@
 
 ### Breaking changes & deprecations
 
-- remove `GraphQL::Query::ParallelExecution` (use [`graphql-parallel`](https://github.com/rmosolgo/graphql-parallel))
+- remove `GraphQL8::Query::ParallelExecution` (use [`graphql-parallel`](https://github.com/rmosolgo/graphql-parallel))
 
 ## 0.8.1 (10 Sept 2015)
 
 ### Breaking changes & deprecations
 
-- `GraphQL::Query::ParallelExecution` has been extracted to [`graphql-parallel`](https://github.com/rmosolgo/graphql-parallel)
+- `GraphQL8::Query::ParallelExecution` has been extracted to [`graphql-parallel`](https://github.com/rmosolgo/graphql-parallel)
 
 ## 0.8.0 (4 Sept 2015)
 

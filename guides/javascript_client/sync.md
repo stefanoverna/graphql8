@@ -4,11 +4,11 @@ doc_stub: false
 search: true
 section: JavaScript Client
 title: OperationStore Sync
-desc: Javascript tooling for persisted queries with GraphQL-Ruby
+desc: Javascript tooling for persisted queries with GraphQL8-Ruby
 index: 1
 ---
 
-JavaScript support for GraphQL projects using [graphql-pro](http://graphql.pro)'s `OperationStore` for persisted queries.
+JavaScript support for GraphQL8 projects using [graphql-pro](http://graphql.pro)'s `OperationStore` for persisted queries.
 
 - [`sync` CLI](#sync-utility)
 - [Relay support](#use-with-relay)
@@ -26,11 +26,11 @@ This package contains a command line utility, `graphql-ruby-client sync`:
 ```
 $ graphql-ruby-client sync # ...
 Authorizing with HMAC
-Syncing 4 operations to http://myapp.com/graphql/operations...
+Syncing 4 operations to http://myapp.com/graphql8/operations...
   3 added
   1 not modified
   0 failed
-Generating client module in app/javascript/graphql/OperationStoreClient.js...
+Generating client module in app/javascript/graphql8/OperationStoreClient.js...
 ✓ Done!
 ```
 
@@ -97,7 +97,7 @@ function fetchQuery(operation, variables, cacheConfig, uploadables) {
 Use the `--path` option to point at your `.graphql` files:
 
 ```
-$ graphql-ruby-client sync --path=src/graphql/ --url=...
+$ graphql-ruby-client sync --path=src/graphql8/ --url=...
 ```
 
 Then, load the generated module and add its `.apolloMiddleware` to your network interface with `.use([...])`:
@@ -120,7 +120,7 @@ Now, the middleware will replace query strings with `operationId`s.
 Use the `--path` option to point at your `.graphql` files:
 
 ```
-$ graphql-ruby-client sync --path=src/graphql/ --url=...
+$ graphql-ruby-client sync --path=src/graphql8/ --url=...
 ```
 
 Then, load the generated module and add its `.apolloLink` to your Apollo Link:
@@ -167,7 +167,7 @@ OperationStoreClient.getOperationId("AppHomeQuery")       // => "my-frontend-app
 OperationStoreClient.getOperationId("ProductDetailQuery") // => "my-frontend-app/6726a3b816e99b9971a1d25a1205ca81ecadc6eb1d5dd3a71028c4b01cc254c1"
 ```
 
-Post the `operationId` in your GraphQL requests:
+Post the `operationId` in your GraphQL8 requests:
 
 ```js
 // Lookup the operation name:

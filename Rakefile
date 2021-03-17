@@ -4,7 +4,7 @@ Bundler::GemHelper.install_tasks
 
 require "rake/testtask"
 require_relative "guides/_tasks/site"
-require_relative "lib/graphql/rake_task/validate"
+require_relative "lib/graphql8/rake_task/validate"
 
 Bundler.require
 
@@ -64,9 +64,9 @@ ERR
   assert_dependency_version("Ragel", "7.0.0.9", "ragel -v")
   assert_dependency_version("Racc", "1.4.14", %|ruby -e "require 'racc'; puts Racc::VERSION"|)
 
-  `rm -f lib/graphql/language/parser.rb lib/graphql/language/lexer.rb `
-  `racc lib/graphql/language/parser.y -o lib/graphql/language/parser.rb`
-  `ragel -R -F1 lib/graphql/language/lexer.rl`
+  `rm -f lib/graphql8/language/parser.rb lib/graphql8/language/lexer.rb `
+  `racc lib/graphql8/language/parser.y -o lib/graphql8/language/parser.rb`
+  `ragel -R -F1 lib/graphql8/language/lexer.rl`
 end
 
 namespace :bench do
@@ -78,19 +78,19 @@ namespace :bench do
   desc "Benchmark the introspection query"
   task :query do
     prepare_benchmark
-    GraphQLBenchmark.run("query")
+    GraphQL8Benchmark.run("query")
   end
 
   desc "Benchmark validation of several queries"
   task :validate do
     prepare_benchmark
-    GraphQLBenchmark.run("validate")
+    GraphQL8Benchmark.run("validate")
   end
 
   desc "Generate a profile of the introspection query"
   task :profile do
     prepare_benchmark
-    GraphQLBenchmark.profile
+    GraphQL8Benchmark.profile
   end
 end
 

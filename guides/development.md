@@ -4,10 +4,10 @@ doc_stub: false
 search: true
 title: Development
 section: Other
-desc: Hacking on GraphQL Ruby
+desc: Hacking on GraphQL8 Ruby
 ---
 
-So, you want to hack on GraphQL Ruby! Here are some tips for getting started.
+So, you want to hack on GraphQL8 Ruby! Here are some tips for getting started.
 
 - [Setup](#setup) your development environment
 - [Run the tests](#running-the-tests) to verify your setup
@@ -15,7 +15,7 @@ So, you want to hack on GraphQL Ruby! Here are some tips for getting started.
 - [Run the benchmarks](#running-the-benchmarks) to test performance in your environment
 - [Coding guidelines](#coding-guidelines) for working on your contribution
 - Special tools for building the [lexer and parser](#lexer-and-parser)
-- Building and publishing the [GraphQL Ruby website](#website)
+- Building and publishing the [GraphQL8 Ruby website](#website)
 - [Versioning](#versioning) describes how changes are managed and released
 - [Releasing](#releasing) Gem versions
 
@@ -43,14 +43,14 @@ bundle exec rake test   # tests only
 You can run a __specific file__ with `TEST=`:
 
 ```
-bundle exec rake test TEST=spec/graphql/query_spec.rb
+bundle exec rake test TEST=spec/graphql8/query_spec.rb
 # run tests in `query_spec.rb` only
 ```
 
 Alternatively, you can run a __specific file__ with the [m](https://github.com/qrush/m) gem:
 
 ```
-m spec/graphql/query_spec.rb
+m spec/graphql8/query_spec.rb
 # run tests in `query_spec.rb` only
 ```
 
@@ -86,7 +86,7 @@ You need to pick a specific gemfile from gemfiles/ to run integration tests. For
 
 ```
 BUNDLE_GEMFILE=gemfiles/rails_5.1.gemfile bundle install
-BUNDLE_GEMFILE=gemfiles/rails_5.1.gemfile bundle exec rake test TEST=spec/integration/rails/graphql/relay/array_connection_spec.rb
+BUNDLE_GEMFILE=gemfiles/rails_5.1.gemfile bundle exec rake test TEST=spec/integration/rails/graphql8/relay/array_connection_spec.rb
 ```
 
 #### Other tests
@@ -121,7 +121,7 @@ BUNDLE_GEMFILE=gemfiles/rails_5.gemfile bundle exec rake
 
 ### Debugging with Pry
 
-[`pry`](http://pryrepl.org/) is included with GraphQL-Ruby's development setup to help with debugging.
+[`pry`](http://pryrepl.org/) is included with GraphQL8-Ruby's development setup to help with debugging.
 
 To pause execution in Ruby code, add:
 
@@ -160,7 +160,7 @@ Keep these points in mind when using benchmarks:
 
 ### Coding Guidelines
 
-GraphQL-Ruby uses a thorough test suite to make sure things work reliably day-after-day. Please include tests that describe your changes, for example:
+GraphQL8-Ruby uses a thorough test suite to make sure things work reliably day-after-day. Please include tests that describe your changes, for example:
 
 - If you contribute a bug fix, include a test for the code that _was_ broken (and is now fixed)
 - If you contribute a feature, include tests for all intended uses of that feature
@@ -174,7 +174,7 @@ The lexer and parser use a multistep build process:
 
 - Write the definition (`lexer.rl` or `parser.y`)
 - Run the generator (Ragel or Racc) to create `.rb` files (`lexer.rb` or `parser.rb`)
-- `require` those `.rb` files in GraphQL-Ruby
+- `require` those `.rb` files in GraphQL8-Ruby
 
 To update the lexer or parser, you should update their corresponding _definitions_ (`lexer.rl` or `parser.y`). Then, you can run `bundle exec build_parser` to re-generate the `.rb` files.
 
@@ -202,7 +202,7 @@ bundle exec rake site:publish
 
 #### Search Index
 
-GraphQL-Ruby's search index is powered by Algolia. To update the index, you need the API key in an environment variable:
+GraphQL8-Ruby's search index is powered by Algolia. To update the index, you need the API key in an environment variable:
 
 ```
 $ export ALGOLIA_API_KEY=...
@@ -212,7 +212,7 @@ Without this key, the search index will fall out-of-sync with the website. Conta
 
 #### API Docs
 
-The GraphQL-Ruby website has its own rendered version of the gem's API docs. They're pushed to GitHub pages with a special process.
+The GraphQL8-Ruby website has its own rendered version of the gem's API docs. They're pushed to GitHub pages with a special process.
 
 First, generate local copies of the docs you want to publish:
 
@@ -237,7 +237,7 @@ Finally, check your work by visiting the docs on the website.
 
 ### Versioning
 
-GraphQL-Ruby does _not_ attempt to deliver "semantic versioning" for the reasons described in `jashkenas`'
+GraphQL8-Ruby does _not_ attempt to deliver "semantic versioning" for the reasons described in `jashkenas`'
 s post, ["Why Semantic Versioning Isn't"](https://gist.github.com/jashkenas/cbd2b088e20279ae2c8e). Instead, the following scheme is used as a guideline:
 
 - Version numbers consist of three parts, `MAJOR.MINOR.PATCH`
@@ -253,7 +253,7 @@ The [changelog](https://github.com/rmosolgo/graphql-ruby/blob/master/CHANGELOG.m
 
 ### Releasing
 
-GraphQL-Ruby doesn't have a strict release schedule. If you think it should, consider opening an issue to share your thoughts.
+GraphQL8-Ruby doesn't have a strict release schedule. If you think it should, consider opening an issue to share your thoughts.
 
 To cut a release:
 
@@ -261,9 +261,9 @@ To cut a release:
   - Add a new heading for the new version, and paste the four categories of changes into the new section
   - Open the GitHub milestone corresponding to the new version
   - Check each pull request and put it in the category (or categories) that it belongs in
-    - If a change affects the default behavior of GraphQL-Ruby in a disruptive way, add it to `### Breaking Changes` and include migration notes if possible
+    - If a change affects the default behavior of GraphQL8-Ruby in a disruptive way, add it to `### Breaking Changes` and include migration notes if possible
     - Include the PR number beside the change description for future reference
-- Update `lib/graphql/version.rb` with the new version number
+- Update `lib/graphql8/version.rb` with the new version number
 - Commit changes to master
 - Release to RubyGems with `bundle exec rake release`
 - Update the website:

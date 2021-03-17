@@ -4,23 +4,23 @@ doc_stub: false
 search: true
 title: Testing
 section: Schema
-desc: Techniques for testing your GraphQL system
+desc: Techniques for testing your GraphQL8 system
 index: 7
 ---
 
-There are a few ways to test the behavior of your GraphQL schema:
+There are a few ways to test the behavior of your GraphQL8 schema:
 
 - _Don't_ test the schema, test other objects instead
-- Execute GraphQL queries and test the result
+- Execute GraphQL8 queries and test the result
 
 ## Don't test the schema
 
-The easiest way to test behavior of a GraphQL schema is to extract behavior into separate objects and test those objects in isolation. For Rails, you don't test your models by running controller tests, right? Similarly, you can test "lower-level" parts of the system on their own without running end-to-end tests.
+The easiest way to test behavior of a GraphQL8 schema is to extract behavior into separate objects and test those objects in isolation. For Rails, you don't test your models by running controller tests, right? Similarly, you can test "lower-level" parts of the system on their own without running end-to-end tests.
 
 For example, consider a field which calculates its own value:
 
 ```ruby
-class PostType < GraphQL::Schema::Object
+class PostType < GraphQL8::Schema::Object
   # ...
   field :is_trending, Boolean, null: false
 
@@ -31,7 +31,7 @@ class PostType < GraphQL::Schema::Object
 end
 ```
 
-You can refactor this by creating a new class and applying it to your GraphQL schema:
+You can refactor this by creating a new class and applying it to your GraphQL8 schema:
 
 ```ruby
 # app/models/post/trending.rb
@@ -51,7 +51,7 @@ end
 
 # ....
 
-class PostType < GraphQL::Schema::Object
+class PostType < GraphQL8::Schema::Object
   # ...
   field :is_trending, Boolean, null: false
 
@@ -61,7 +61,7 @@ class PostType < GraphQL::Schema::Object
 end
 ```
 
-This is an improvement because your behavior is not coupled to your GraphQL schema. Besides that, it's easier to test: you can simply unit test the calculation class. For example:
+This is an improvement because your behavior is not coupled to your GraphQL8 schema. Besides that, it's easier to test: you can simply unit test the calculation class. For example:
 
 ```ruby
 # spec/models/post/trending_spec.rb
@@ -89,7 +89,7 @@ RSpec.describe Post::Trending do
 end
 ```
 
-## Executing GraphQL queries
+## Executing GraphQL8 queries
 
 Sometimes, you really need an end-to-end test. Although it requires a lot of overhead, it's nice to have a "sanity check" on the system as a whole (for example, authorization and database batching).
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "spec_helper"
 
-describe GraphQL::Relay::PageInfo do
+describe GraphQL8::Relay::PageInfo do
   def get_page_info(result)
     result["data"]["empire"]["bases"]["pageInfo"]
   end
@@ -38,7 +38,7 @@ describe GraphQL::Relay::PageInfo do
   |}
 
   it "is a default relay type" do
-    assert_equal true, GraphQL::Relay::PageInfo.default_relay?
+    assert_equal true, GraphQL8::Relay::PageInfo.default_relay?
   end
 
   describe 'hasNextPage / hasPreviousPage' do

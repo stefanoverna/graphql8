@@ -2,14 +2,14 @@
 layout: guide
 doc_stub: false
 search: true
-section: GraphQL Pro
+section: GraphQL8 Pro
 title: Installation
-desc: Get started with GraphQL::Pro
+desc: Get started with GraphQL8::Pro
 index: 1
 pro: true
 ---
 
-`GraphQL::Pro` is distributed as a Ruby gem. When you buy `GraphQL::Pro`, you'll receive credentials, which you can register with bundler:
+`GraphQL8::Pro` is distributed as a Ruby gem. When you buy `GraphQL8::Pro`, you'll receive credentials, which you can register with bundler:
 
 ```sh
 bundle config gems.graphql.pro #{YOUR_CREDENTIALS}
@@ -29,11 +29,11 @@ Then, install the gem with Bundler:
 bundle install
 ```
 
-Then, check out some of `GraphQL::Pro`'s features!
+Then, check out some of `GraphQL8::Pro`'s features!
 
 ## Updates
 
-To update `GraphQL::Pro`, use Bundler:
+To update `GraphQL8::Pro`, use Bundler:
 
 ```sh
 bundle update graphql-pro
@@ -49,17 +49,17 @@ Be sure to check the [changelog](https://github.com/rmosolgo/graphql-ruby/blob/m
 
 You can verify the integrity of `graphql-pro` by getting its checksum and comparing it to the [published checksums](https://github.com/rmosolgo/graphql-ruby/blob/master/guides/pro/checksums).
 
-Include the `graphql:pro:validate` task in your `Rakefile`:
+Include the `graphql8:pro:validate` task in your `Rakefile`:
 
 ```ruby
 # Rakefile
-require "graphql/rake_task/validate"
+require "graphql8/rake_task/validate"
 ```
 
 Then invoke it with a version:
 
 ```
-$ bundle exec rake graphql:pro:validate[1.0.0]
+$ bundle exec rake graphql8:pro:validate[1.0.0]
 Validating graphql-pro v1.0.0
   - Checking for graphql-pro credentials...
     ✓ found
@@ -71,7 +71,7 @@ Validating graphql-pro v1.0.0
 ✔ graphql-pro 1.0.0 validated successfully!
 ```
 
-In case of a failure, please {% open_an_issue "GraphQL Pro installation failure" %}:
+In case of a failure, please {% open_an_issue "GraphQL8 Pro installation failure" %}:
 
 ```
 Validating graphql-pro v1.4.800

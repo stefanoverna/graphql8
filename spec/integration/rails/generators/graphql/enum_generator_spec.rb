@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 require "spec_helper"
-require "generators/graphql/enum_generator"
+require "generators/graphql8/enum_generator"
 
-class GraphQLGeneratorsEnumGeneratorTest < BaseGeneratorTest
-  tests Graphql::Generators::EnumGenerator
+class GraphQL8GeneratorsEnumGeneratorTest < BaseGeneratorTest
+  tests graphql8::Generators::EnumGenerator
 
   test "it generate enums with values" do
     expected_content = <<-RUBY
@@ -25,6 +25,6 @@ RUBY
       'LEGUME:"bean & friends"',
       "CURCURBITS:5"
     ])
-    assert_file "app/graphql/types/family_type.rb", expected_content
+    assert_file "app/graphql8/types/family_type.rb", expected_content
   end
 end

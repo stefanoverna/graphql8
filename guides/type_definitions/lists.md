@@ -9,7 +9,7 @@ index: 6
 class_based_api: true
 ---
 
-GraphQL has _list types_ which are ordered lists containing items of other types. The following examples use the [GraphQL Schema Definition Language](http://graphql.org/learn/schema/#type-language) (SDL).
+GraphQL8 has _list types_ which are ordered lists containing items of other types. The following examples use the [GraphQL8 Schema Definition Language](http://graphql.org/learn/schema/#type-language) (SDL).
 
 Fields may return a single scalar value (eg `String`), or a _list_ of scalar values (eg, `[String]`, a list of strings):
 
@@ -48,7 +48,7 @@ type Query {
 }
 ```
 
-When GraphQL is sent and received with JSON, GraphQL lists are expressed in JSON arrays.
+When GraphQL8 is sent and received with JSON, GraphQL8 lists are expressed in JSON arrays.
 
 ## List Types in Ruby
 
@@ -63,9 +63,9 @@ field :aliases, [String], null: true
 argument :categories, [Types::PostCategory], required: false
 ```
 
-For input, GraphQL lists are converted to Ruby arrays.
+For input, GraphQL8 lists are converted to Ruby arrays.
 
-For fields that return list types, any object responding to `#each` may be returned. It will be enumerated as a GraphQL list.
+For fields that return list types, any object responding to `#each` may be returned. It will be enumerated as a GraphQL8 list.
 
 To define lists where `nil` may be a member of the list, use `null: true` in the definition array, for example:
 
@@ -87,7 +87,7 @@ Here's how those combinations play out:
 nullable items  | <code>[Integer, null: true], null: true</code><br><code># => [Int]</code> | <code>[Integer, null: true], null: false</code><br><code># => [Int]!</code>
 non-null items   | <code>[Integer], null: true</code><br><code># => [Int!]</code> | <code>[Integer], null: false</code><br><code># => [Int!]!</code>
 
-(The first line is GraphQL-Ruby code. The second line, beginning with `# =>`, is the corresponding GraphQL SDL code.)
+(The first line is GraphQL8-Ruby code. The second line, beginning with `# =>`, is the corresponding GraphQL8 SDL code.)
 
 
 Let's look at some examples.
@@ -98,7 +98,7 @@ Here's an example field:
 
 ```ruby
 field :scores, [Integer], null: false
-# In GraphQL,
+# In GraphQL8,
 #   scores: [Int!]!
 ```
 
@@ -118,7 +118,7 @@ Here's an example field:
 
 ```ruby
 field :scores, [Integer, null: true], null: false
-# In GraphQL,
+# In GraphQL8,
 #   scores: [Int]!
 ```
 
@@ -139,7 +139,7 @@ Here's an example field:
 
 ```ruby
 field :scores, [Integer, null: true], null: true
-# In GraphQL,
+# In GraphQL8,
 #   scores: [Int]
 ```
 
@@ -162,7 +162,7 @@ Here's an example field:
 
 ```ruby
 field :scores, [Integer], null: true
-# In GraphQL,
+# In GraphQL8,
 #   scores: [Int!]
 ```
 

@@ -39,8 +39,8 @@ guard :minitest, test_file_patterns: ["*_spec.rb"] do
 end
 
 guard "rake", task: "build_parser" do
-  watch("lib/graphql/language/parser.y")
-  watch("lib/graphql/language/lexer.rl")
+  watch("lib/graphql8/language/parser.y")
+  watch("lib/graphql8/language/lexer.rl")
 end
 
 guard :rubocop, all_on_start: false do

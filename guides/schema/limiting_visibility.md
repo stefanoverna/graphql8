@@ -51,10 +51,10 @@ end
 
 The `schema_member` may be any of:
 
-- Type ({{ "GraphQL::BaseType" | api_doc }} and subclasses)
-- Field ({{ "GraphQL::Field" | api_doc }})
-- Argument ({{ "GraphQL::Argument" | api_doc }})
-- Enum value ({{ "GraphQL::EnumType::EnumValue" | api_doc }})
+- Type ({{ "GraphQL8::BaseType" | api_doc }} and subclasses)
+- Field ({{ "GraphQL8::Field" | api_doc }})
+- Argument ({{ "GraphQL8::Argument" | api_doc }})
+- Enum value ({{ "GraphQL8::EnumType::EnumValue" | api_doc }})
 
 ## Use with Metadata
 
@@ -70,7 +70,7 @@ MySchema.execute(query_string, except: top_secret)
 
 ## Printing a Filtered Schema
 
-You can see how filters will be applied to the schema by printing the schema with that filter. {{ "GraphQL::Schema#to_definition" | api_doc }} accepts `only:` and `except:` options.
+You can see how filters will be applied to the schema by printing the schema with that filter. {{ "GraphQL8::Schema#to_definition" | api_doc }} accepts `only:` and `except:` options.
 
 For example, to see how the schema looks to a specific user:
 

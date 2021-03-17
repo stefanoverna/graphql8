@@ -4,13 +4,13 @@ require_relative 'core'
 
 module Graphql
   module Generators
-    # Add GraphQL to a Rails app with `rails g graphql:install`.
+    # Add GraphQL8 to a Rails app with `rails g graphql8:install`.
     #
-    # Setup a folder structure for GraphQL:
+    # Setup a folder structure for GraphQL8:
     #
     # ```
     # - app/
-    #   - graphql/
+    #   - graphql8/
     #     - resolvers/
     #     - types/
     #       - base_enum.rb
@@ -27,7 +27,7 @@ module Graphql
     #
     # (Add `.gitkeep`s by default, support `--skip-keeps`)
     #
-    # Add a controller for serving GraphQL queries:
+    # Add a controller for serving GraphQL8 queries:
     #
     # ```
     # app/controllers/graphql_controller.rb
@@ -43,7 +43,7 @@ module Graphql
     # Accept a `--relay` option which adds
     # The root `node(id: ID!)` field.
     #
-    # Accept a `--batch` option which adds `GraphQL::Batch` setup.
+    # Accept a `--batch` option which adds `GraphQL8::Batch` setup.
     #
     # Use `--no-graphiql` to skip `graphiql-rails` installation.
     #
@@ -51,7 +51,7 @@ module Graphql
     class InstallGenerator < Rails::Generators::Base
       include Core
 
-      desc "Install GraphQL folder structure and boilerplate code"
+      desc "Install GraphQL8 folder structure and boilerplate code"
       source_root File.expand_path('../templates', __FILE__)
 
       class_option :schema,
@@ -77,12 +77,12 @@ module Graphql
       class_option :relay,
         type: :boolean,
         default: false,
-        desc: "Include GraphQL::Relay installation"
+        desc: "Include GraphQL8::Relay installation"
 
       class_option :batch,
         type: :boolean,
         default: false,
-        desc: "Include GraphQL::Batch installation"
+        desc: "Include GraphQL8::Batch installation"
 
       # These two options are taken from Rails' own generators'
       class_option :api,

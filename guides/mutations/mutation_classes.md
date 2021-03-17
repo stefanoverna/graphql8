@@ -11,7 +11,7 @@ redirect_from:
   - /queries/mutations/
 ---
 
-GraphQL _mutations_ are special fields: instead of reading data or performing calculations, they may _modify_ the application state. For example, mutation fields may:
+GraphQL8 _mutations_ are special fields: instead of reading data or performing calculations, they may _modify_ the application state. For example, mutation fields may:
 
 - Create, update or destroy records in the database
 - Establish associations between already-existing records in the database
@@ -21,26 +21,26 @@ GraphQL _mutations_ are special fields: instead of reading data or performing ca
 
 These actions are called _side effects_.
 
-Like all GraphQL fields, mutation fields:
+Like all GraphQL8 fields, mutation fields:
 
 - Accept inputs, called _arguments_
 - Return values via _fields_
 
-GraphQL-Ruby includes two classes to help you write mutations:
+GraphQL8-Ruby includes two classes to help you write mutations:
 
-- {{ "GraphQL::Schema::Mutation" | api_doc }}, a bare-bones base class
-- {{ "GraphQL::Schema::RelayClassicMutation" | api_doc }}, a base class with a set of nice conventions that also supports the Relay Classic mutation specification.
+- {{ "GraphQL8::Schema::Mutation" | api_doc }}, a bare-bones base class
+- {{ "GraphQL8::Schema::RelayClassicMutation" | api_doc }}, a base class with a set of nice conventions that also supports the Relay Classic mutation specification.
 
 Besides those, you can also use the plain {% internal_link "field API", "/type_definitions/objects#fields" %} to write mutation fields.
 
-An additional `null` helper method is provided on classes inheriting from `GraphQL::Schema::Mutation` to allow setting the nullability of the mutation. This is not required and defaults to `true`.
+An additional `null` helper method is provided on classes inheriting from `GraphQL8::Schema::Mutation` to allow setting the nullability of the mutation. This is not required and defaults to `true`.
 
 ## Example mutation class
 
 You should add a base class to your application, for example:
 
 ```ruby
-class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
+class Mutations::BaseMutation < GraphQL8::Schema::RelayClassicMutation
 end
 ```
 
@@ -92,7 +92,7 @@ end
 
 ## Auto-loading arguments
 
-In most cases, a GraphQL mutation will act against a given global relay ID. Loading objects from these global relay IDs can require a lot of boilerplate code in the mutation's resolver.
+In most cases, a GraphQL8 mutation will act against a given global relay ID. Loading objects from these global relay IDs can require a lot of boilerplate code in the mutation's resolver.
 
 An alternative approach is to use the `loads:` argument when defining the argument:
 
