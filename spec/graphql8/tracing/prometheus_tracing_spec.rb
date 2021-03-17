@@ -22,7 +22,7 @@ describe GraphQL8::Tracing::PrometheusTracing do
       client = Minitest::Mock.new
 
       client.expect :send_json, true do |obj|
-        obj[:type] == 'graphql' &&
+        obj[:type] == 'graphql8' &&
           obj[:key] == 'execute_field' &&
           obj[:platform_key] == 'Query.int'
       end

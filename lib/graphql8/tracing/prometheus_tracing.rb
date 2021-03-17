@@ -4,7 +4,7 @@ module GraphQL8
   module Tracing
     class PrometheusTracing < PlatformTracing
       DEFAULT_WHITELIST = ['execute_field', 'execute_field_lazy'].freeze
-      DEFAULT_COLLECTOR_TYPE = 'graphql'.freeze
+      DEFAULT_COLLECTOR_TYPE = 'graphql8'.freeze
 
       self.platform_keys = {
         'lex' => "graphql.lex",

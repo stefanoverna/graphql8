@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'rails/generators/base'
-require 'graphql'
+require 'graphql8'
 require 'active_support'
 require 'active_support/core_ext/string/inflections'
 require_relative 'core'

@@ -18,7 +18,7 @@ Install from RubyGems by adding it to your `Gemfile`, then bundling.
 
 ```ruby
 # Gemfile
-gem 'graphql'
+gem 'graphql8'
 ```
 
 ```

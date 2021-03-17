@@ -12,7 +12,7 @@ module GraphQL8
         end
 
         def type
-          'graphql'
+          'graphql8'
         end
 
         def collect(object)
