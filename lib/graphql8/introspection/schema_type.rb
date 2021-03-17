@@ -3,7 +3,7 @@ module GraphQL8
   module Introspection
     class SchemaType < Introspection::BaseObject
       graphql_name "__Schema"
-      description "A GraphQL8 Schema defines the capabilities of a GraphQL8 server. It exposes all "\
+      description "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all "\
                   "available types and directives on the server, as well as the entry points for "\
                   "query, mutation, and subscription operations."
 

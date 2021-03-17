@@ -3,7 +3,7 @@ module GraphQL8
   module Introspection
     class TypeType < Introspection::BaseObject
       graphql_name "__Type"
-      description "The fundamental unit of any GraphQL8 Schema is the type. There are many kinds of types in "\
+      description "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in "\
                   "GraphQL8 as represented by the `__TypeKind` enum.\n\n"\
                   "Depending on the kind of a type, certain fields describe information about that type. "\
                   "Scalar types provide no information beyond a name and description, while "\

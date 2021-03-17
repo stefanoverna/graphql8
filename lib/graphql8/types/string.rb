@@ -3,7 +3,7 @@
 module GraphQL8
   module Types
     class String < GraphQL8::Schema::Scalar
-      description "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL8 to represent free-form human-readable text."
+      description "Represents textual data as UTF-8 character sequences. This type is most often used by GraphQL to represent free-form human-readable text."
 
       def self.coerce_result(value, ctx)
         str = value.to_s
