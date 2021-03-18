@@ -555,7 +555,7 @@ describe GraphQL8::Language::DocumentFromSchemaDefinition do
           description: String
           type: __Type!
 
-          # A GraphQL8-formatted string representing the default value for this input value.
+          # A GraphQL-formatted string representing the default value for this input value.
           defaultValue: String
         }
 

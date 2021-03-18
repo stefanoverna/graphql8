@@ -318,7 +318,7 @@ optionally a default value.
 """
 type __InputValue {
   """
-  A GraphQL8-formatted string representing the default value for this input value.
+  A GraphQL-formatted string representing the default value for this input value.
   """
   defaultValue: String
   description: String

@@ -9,7 +9,7 @@ module GraphQL8
       field :name, String, null: false
       field :description, String, null: true
       field :type, GraphQL8::Schema::LateBoundType.new("__Type"), null: false
-      field :default_value, String, "A GraphQL8-formatted string representing the default value for this input value.", null: true
+      field :default_value, String, "A GraphQL-formatted string representing the default value for this input value.", null: true
 
       def default_value
         if @object.default_value?
